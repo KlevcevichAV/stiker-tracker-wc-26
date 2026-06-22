@@ -151,6 +151,12 @@ struct TradeMessageView: View {
         )
         let allStickers = (try? context.fetch(stickerDesc)) ?? []
 
+        // Fetch active exchanges to exclude reserved duplicates
+        let exchDesc = FetchDescriptor<ExchangeModel>(
+            predicate: #Predicate { $0.statusRaw == "active" }
+        )
+        let activeExchanges = (try? context.fetch(exchDesc)) ?? []
+
         // Build ordered team codes preserving album order
         let orderedCodes = teams.map { $0.code }
 
@@ -158,11 +164,15 @@ struct TradeMessageView: View {
         var byCode: [String: [StickerModel]] = [:]
         for s in allStickers { byCode[s.teamCode, default: []].append(s) }
 
-        // MISSING: teams with at least one missing sticker — list numbers, blank line between groups
+        // MISSING: teams with at least one missing sticker — exclude those already incoming in active exchanges
         var missingLines: [String] = []
         var lastMissingGroup: String? = nil
         for code in orderedCodes {
-            let stickers = (byCode[code] ?? []).filter { $0.status == .missing }
+            let stickers = (byCode[code] ?? []).filter { s in
+                guard s.status == .missing else { return false }
+                // Не показываем в "Ищу" если уже ожидаем получить в обмене
+                return ExchangeService.incomingCount(for: s.id, in: activeExchanges) == 0
+            }
             guard !stickers.isEmpty else { continue }
             let team = teamByCode[code]
             let group = team?.groupLetter ?? ""
@@ -174,25 +184,28 @@ struct TradeMessageView: View {
             missingLines.append("\(label): \(numbers)")
         }
 
-        // DUPLICATES: teams with at least one duplicate sticker, blank line between groups
+        // DUPLICATES: subtract reserved from exchanges, only show available qty > 0
         var dupLines: [String] = []
         var lastDupGroup: String? = nil
         for code in orderedCodes {
             let stickers = (byCode[code] ?? []).filter { $0.status == .duplicate }
             guard !stickers.isEmpty else { continue }
+
+            var tokens: [String] = []
+            for s in stickers.sorted(by: { $0.number < $1.number }) {
+                let reserved = ExchangeService.reservedCount(for: s.id, in: activeExchanges)
+                let available = max(0, s.duplicateCount - reserved)
+                guard available > 0 else { continue }
+                tokens.append(available > 1 ? "\(s.number)*\(available)" : "\(s.number)")
+            }
+            guard !tokens.isEmpty else { continue }
+
             let team = teamByCode[code]
             let group = team?.groupLetter ?? ""
             if let last = lastDupGroup, last != group { dupLines.append("") }
             lastDupGroup = group
             let flag = team?.flagEmoji ?? ""
             let label = flag.isEmpty ? code : "\(code) \(flag)"
-
-            // Build number tokens: "5", "7*2" etc.
-            var tokens: [String] = []
-            for s in stickers.sorted(by: { $0.number < $1.number }) {
-                let qty = s.duplicateCount
-                tokens.append(qty > 1 ? "\(s.number)*\(qty)" : "\(s.number)")
-            }
             dupLines.append("\(label) \(tokens.joined(separator: ","))")
         }
 

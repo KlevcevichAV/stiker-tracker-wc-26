@@ -12,6 +12,7 @@ struct stiker_tracker_wc_26App: App {
             TeamModel.self,
             StickerModel.self,
             AchievementRecord.self,
+            ExchangeModel.self,
         ])
 
         // Конфигурация с разрешённой лёгкой миграцией

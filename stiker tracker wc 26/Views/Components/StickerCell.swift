@@ -8,6 +8,17 @@ struct StickerCell: View {
     @Environment(\.achievementsManager) private var achievements
     @Environment(\.appLanguage)         private var language
 
+    @Query(filter: #Predicate<ExchangeModel> { $0.statusRaw == "active" })
+    private var activeExchanges: [ExchangeModel]
+
+    private var reservedCount: Int {
+        ExchangeService.reservedCount(for: sticker.id, in: activeExchanges)
+    }
+
+    private var incomingCount: Int {
+        ExchangeService.incomingCount(for: sticker.id, in: activeExchanges)
+    }
+
     // Анимационное состояние «примагничивания»
     @State private var snapScale: CGFloat = 1.0
     @State private var snapOffset: CGSize = .zero
@@ -145,16 +156,28 @@ struct StickerCell: View {
     }
 
     private var missingContent: some View {
-        VStack(spacing: 3) {
-            Image(systemName: typeIcon)
-                .font(.system(size: 14))
-                .foregroundStyle(.tertiary)
-            Text(localizedName)
-                .font(.system(size: 7, weight: .medium))
-                .foregroundStyle(.tertiary)
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .padding(.horizontal, 4)
+        ZStack(alignment: .topTrailing) {
+            VStack(spacing: 3) {
+                Image(systemName: typeIcon)
+                    .font(.system(size: 14))
+                    .foregroundStyle(.tertiary)
+                Text(localizedName)
+                    .font(.system(size: 7, weight: .medium))
+                    .foregroundStyle(.tertiary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+                    .padding(.horizontal, 4)
+            }
+
+            if incomingCount > 0 {
+                Text("⇄")
+                    .font(.system(size: 7, weight: .black))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 2)
+                    .background(Color.teal, in: RoundedRectangle(cornerRadius: 4))
+                    .padding(3)
+            }
         }
     }
 
@@ -180,13 +203,24 @@ struct StickerCell: View {
         ZStack(alignment: .topTrailing) {
             pastedContent
 
-            Text(sticker.duplicateCount > 1 ? "×\(sticker.duplicateCount + 1)" : "×2")
-                .font(.system(size: 7, weight: .black))
-                .foregroundStyle(.white)
-                .padding(.horizontal, 4)
-                .padding(.vertical, 2)
-                .background(Color.orange, in: RoundedRectangle(cornerRadius: 4))
-                .padding(3)
+            VStack(spacing: 2) {
+                Text(sticker.duplicateCount > 1 ? "×\(sticker.duplicateCount + 1)" : "×2")
+                    .font(.system(size: 7, weight: .black))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 2)
+                    .background(Color.orange, in: RoundedRectangle(cornerRadius: 4))
+
+                if reservedCount > 0 {
+                    Text("⇄\(reservedCount)")
+                        .font(.system(size: 7, weight: .black))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 2)
+                        .background(Color.teal, in: RoundedRectangle(cornerRadius: 4))
+                }
+            }
+            .padding(3)
         }
     }
 

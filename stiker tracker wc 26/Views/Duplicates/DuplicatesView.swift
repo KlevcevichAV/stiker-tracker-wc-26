@@ -9,17 +9,29 @@ struct DuplicatesView: View {
 
     @State private var duplicates: [StickerModel] = []
     @State private var teams: [TeamModel] = []
+    @State private var activeExchanges: [ExchangeModel] = []
     @State private var sortByAlpha = false
 
     private var isRu: Bool { language.isRussian }
 
+    /// Доступное кол-во повторок с учётом зарезервированных в обменах
+    private func availableCount(_ sticker: StickerModel) -> Int {
+        let reserved = ExchangeService.reservedCount(for: sticker.id, in: activeExchanges)
+        return max(0, sticker.duplicateCount - reserved)
+    }
+
     private var totalDuplicates: Int {
-        duplicates.reduce(0) { $0 + $1.duplicateCount }
+        duplicates.reduce(0) { $0 + availableCount($1) }
+    }
+
+    /// Только наклейки у которых есть хотя бы 1 доступная повторка
+    private var visibleDuplicates: [StickerModel] {
+        duplicates.filter { availableCount($0) > 0 }
     }
 
     private var grouped: [(teamCode: String, stickers: [StickerModel])] {
         var byCode: [String: [StickerModel]] = [:]
-        for s in duplicates {
+        for s in visibleDuplicates {
             byCode[s.teamCode, default: []].append(s)
         }
         let codes: [String]
@@ -35,7 +47,7 @@ struct DuplicatesView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if duplicates.isEmpty {
+                if visibleDuplicates.isEmpty {
                     emptyState
                 } else {
                     list
@@ -89,7 +101,6 @@ struct DuplicatesView: View {
 
     private func teamHeader(_ code: String, stickers: [StickerModel]) -> some View {
         let flag = stickers.first.flatMap { s in
-            // Флаг берём из TeamModel через контекст
             let desc = FetchDescriptor<TeamModel>(
                 predicate: #Predicate { $0.code == code }
             )
@@ -109,7 +120,7 @@ struct DuplicatesView: View {
                 .foregroundStyle(.primary)
                 .textCase(nil)
             Spacer()
-            let total = stickers.reduce(0) { $0 + $1.duplicateCount }
+            let total = stickers.reduce(0) { $0 + availableCount($1) }
             Text("×\(total)")
                 .font(.system(size: 11, weight: .semibold, design: .rounded))
                 .foregroundStyle(.orange)
@@ -120,14 +131,17 @@ struct DuplicatesView: View {
     // MARK: - Duplicate row
 
     private func duplicateRow(_ sticker: StickerModel) -> some View {
-        HStack(spacing: 12) {
+        let available = availableCount(sticker)
+        let reserved  = sticker.duplicateCount - available
+
+        return HStack(spacing: 12) {
             // Бейдж с количеством
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.orange.opacity(0.15))
                     .frame(width: 44, height: 36)
                 VStack(spacing: 0) {
-                    Text("×\(sticker.duplicateCount)")
+                    Text("×\(available)")
                         .font(.system(size: 14, weight: .black, design: .rounded))
                         .foregroundStyle(.orange)
                 }
@@ -137,9 +151,17 @@ struct DuplicatesView: View {
                 Text(isRu ? sticker.nameRU : sticker.nameEN)
                     .font(.system(size: 14, weight: .medium))
                     .lineLimit(1)
-                Text(sticker.id)
-                    .font(.system(size: 11, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                HStack(spacing: 6) {
+                    Text(sticker.id)
+                        .font(.system(size: 11, design: .monospaced))
+                        .foregroundStyle(.secondary)
+                    if reserved > 0 {
+                        Label(isRu ? "в обмене: \(reserved)" : "in exchange: \(reserved)",
+                              systemImage: "arrow.2.squarepath")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundStyle(.teal)
+                    }
+                }
             }
 
             Spacer()
@@ -187,5 +209,10 @@ struct DuplicatesView: View {
         )
         duplicates = (try? context.fetch(desc)) ?? []
         teams = (try? context.fetch(FetchDescriptor<TeamModel>())) ?? []
+
+        let exchDesc = FetchDescriptor<ExchangeModel>(
+            predicate: #Predicate { $0.statusRaw == "active" }
+        )
+        activeExchanges = (try? context.fetch(exchDesc)) ?? []
     }
 }

@@ -37,6 +37,15 @@ struct MoreView: View {
                 }
 
                 NavigationLink {
+                    ExchangeView()
+                        .environment(\.achievementsManager, achievements)
+                } label: {
+                    moreRow(icon: "arrow.2.squarepath", color: .teal,
+                            title: isRu ? "Обмен" : "Exchange",
+                            subtitle: isRu ? "Создать и отслеживать обмены наклейками" : "Create and track sticker exchanges")
+                }
+
+                NavigationLink {
                     TradeAnalysisView()
                 } label: {
                     moreRow(icon: "arrow.triangle.2.circlepath.circle.fill", color: .purple,
