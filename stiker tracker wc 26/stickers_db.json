@@ -1,0 +1,5162 @@
+[
+  {
+    "sectionName": "We Are Panini",
+    "stickers": [
+      {
+        "stickerNumber": "0",
+        "fullName": "Panini Logo",
+        "isShiny": true
+      }
+    ]
+  },
+  {
+    "sectionName": "FIFA World Cup 2026",
+    "stickers": [
+      {
+        "stickerNumber": "FWC1",
+        "fullName": "Official Emblem 1",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC2",
+        "fullName": "Official Emblem 2",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC3",
+        "fullName": "Official Mascots",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC4",
+        "fullName": "Official Slogan",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC5",
+        "fullName": "Official Ball",
+        "isShiny": true
+      }
+    ]
+  },
+  {
+    "sectionName": "Host Countries and Cities",
+    "stickers": [
+      {
+        "stickerNumber": "FWC6",
+        "fullName": "Canada",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC7",
+        "fullName": "Mexico",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC8",
+        "fullName": "USA",
+        "isShiny": true
+      }
+    ]
+  },
+  {
+    "sectionName": "Mexico",
+    "stickers": [
+      {
+        "stickerNumber": "MEX1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "MEX2",
+        "fullName": "Luis Malagón",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX3",
+        "fullName": "Johan Vasquez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX4",
+        "fullName": "Jorge Sánchez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX5",
+        "fullName": "Cesar Montes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX6",
+        "fullName": "Jesus Gallardo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX7",
+        "fullName": "Israel Reyes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX8",
+        "fullName": "Diego Lainez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX9",
+        "fullName": "Carlos Rodriguez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX10",
+        "fullName": "Edson Alvarez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX11",
+        "fullName": "Orbelin Pineda",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX12",
+        "fullName": "Marcel Ruiz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX14",
+        "fullName": "Érick Sánchez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX15",
+        "fullName": "Hirving Lozano",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX16",
+        "fullName": "Santiago Giménez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX17",
+        "fullName": "Raúl Jiménez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX18",
+        "fullName": "Alexis Vega",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX19",
+        "fullName": "Roberto Alvarado",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MEX20",
+        "fullName": "Cesar Huerta",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "South Africa",
+    "stickers": [
+      {
+        "stickerNumber": "RSA1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "RSA2",
+        "fullName": "Ronwen Williams",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA3",
+        "fullName": "Sipho Chaine",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA4",
+        "fullName": "Aubrey Modiba",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA5",
+        "fullName": "Samukele Kabini",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA6",
+        "fullName": "Mbekezeli Mbokazi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA7",
+        "fullName": "Khulumani Ndamane",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA8",
+        "fullName": "Siyabonga Ngezana",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA9",
+        "fullName": "Khuliso Mudau",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA10",
+        "fullName": "Nkosinathi Sibisi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA11",
+        "fullName": "Teboho Mokoena",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA12",
+        "fullName": "Thalente Mbatha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA14",
+        "fullName": "Bathusi Aubaas",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA15",
+        "fullName": "Yaya Sithole",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA16",
+        "fullName": "Sipho Mbule",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA17",
+        "fullName": "Lyle Foster",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA18",
+        "fullName": "Iqraam Rayners",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA19",
+        "fullName": "Mohau Nkota",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "RSA20",
+        "fullName": "Oswin Appollis",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "South Korea",
+    "stickers": [
+      {
+        "stickerNumber": "KOR1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "KOR2",
+        "fullName": "Hyeon-woo Jo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR3",
+        "fullName": "Seung-Gyu Kim",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR4",
+        "fullName": "Min-jae Kim",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR5",
+        "fullName": "Yu-min Cho",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR6",
+        "fullName": "Young-woo Seol",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR7",
+        "fullName": "Han-beom Lee",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR8",
+        "fullName": "Tae-seok Lee",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR9",
+        "fullName": "Myung-jae Lee",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR10",
+        "fullName": "Jae-sung Lee",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR11",
+        "fullName": "In-beom Hwang",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR12",
+        "fullName": "Kang-in Lee",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR14",
+        "fullName": "Seung-ho Paik",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR15",
+        "fullName": "Jens Castrop",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR16",
+        "fullName": "Dongg-yeong Lee",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR17",
+        "fullName": "Gue-sung Cho",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR18",
+        "fullName": "Heung-min Son",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR19",
+        "fullName": "Hee-chan Hwang",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KOR20",
+        "fullName": "Hyeon-Gyu Oh",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Czechia",
+    "stickers": [
+      {
+        "stickerNumber": "CZE1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "CZE2",
+        "fullName": "Matej Kovar",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE3",
+        "fullName": "Jindrich Stanek",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE4",
+        "fullName": "Ladislav Krejci",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE5",
+        "fullName": "Vladimir Coufal",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE6",
+        "fullName": "Jaroslav Zeleny",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE7",
+        "fullName": "Tomas Holes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE8",
+        "fullName": "David Zima",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE9",
+        "fullName": "Michal Sadilek",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE10",
+        "fullName": "Lukas Provod",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE11",
+        "fullName": "Lukas Cerv",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE12",
+        "fullName": "Tomas Soucek",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE14",
+        "fullName": "Pavel Sulc",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE15",
+        "fullName": "Matej Vydra",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE16",
+        "fullName": "Vasil Kusej",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE17",
+        "fullName": "Tomas Chory",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE18",
+        "fullName": "Vaclav Cerny",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE19",
+        "fullName": "Adam Hlozek",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CZE20",
+        "fullName": "Patrik Schick",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Canada",
+    "stickers": [
+      {
+        "stickerNumber": "CAN1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "CAN2",
+        "fullName": "Dayne St.Clair",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN3",
+        "fullName": "Alphonso Davies",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN4",
+        "fullName": "Alistair Johnston",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN5",
+        "fullName": "Samuel Adekugbe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN6",
+        "fullName": "Richie Laryea",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN7",
+        "fullName": "Derek Cornelius",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN8",
+        "fullName": "Moïse Bombito",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN9",
+        "fullName": "Kamal Miller",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN10",
+        "fullName": "Stephen Eustáquio",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN11",
+        "fullName": "Ismaël Koné",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN12",
+        "fullName": "Jonathan Osorio",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN14",
+        "fullName": "Jacob Shaffelburg",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN15",
+        "fullName": "Mathieu Choinière",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN16",
+        "fullName": "Niko Sigur",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN17",
+        "fullName": "Tajon Buchanan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN18",
+        "fullName": "Liam Millar",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN19",
+        "fullName": "Cyle Larin",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CAN20",
+        "fullName": "Jonathan David",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Bosnia and Herzegovina",
+    "stickers": [
+      {
+        "stickerNumber": "BIH1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "BIH2",
+        "fullName": "Nikola Vasilj",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH3",
+        "fullName": "Amer Dedic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH4",
+        "fullName": "Sead Kolasinac",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH5",
+        "fullName": "Tarik Muharemovic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH6",
+        "fullName": "Nihad Mujakic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH7",
+        "fullName": "Nikola Katic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH8",
+        "fullName": "Amir Hadziahmetovic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH9",
+        "fullName": "Benjamin Tahirovic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH10",
+        "fullName": "Armin Gigovic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH11",
+        "fullName": "Ivan Sunjic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH12",
+        "fullName": "Ivan Basic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH14",
+        "fullName": "Dzenis Burnic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH15",
+        "fullName": "Esmir Bajraktarevic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH16",
+        "fullName": "Amar Memic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH17",
+        "fullName": "Ermedin Demirovic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH18",
+        "fullName": "Edin Dzeko",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH19",
+        "fullName": "Samed Bazdar",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BIH20",
+        "fullName": "Haris Tabakovic",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Qatar",
+    "stickers": [
+      {
+        "stickerNumber": "QAT1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "QAT2",
+        "fullName": "Meshaal Barsham",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT3",
+        "fullName": "Sultan Albrake",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT4",
+        "fullName": "Lucas Mendes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT5",
+        "fullName": "Homam Ahmed",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT6",
+        "fullName": "Boualem Khoukhi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT7",
+        "fullName": "Pedro Miguel",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT8",
+        "fullName": "Tarek Salman",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT9",
+        "fullName": "Mohamed Al-Mannai",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT10",
+        "fullName": "Karim Boudiaf",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT11",
+        "fullName": "Assim Madibo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT12",
+        "fullName": "Ahmed Fatehi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT14",
+        "fullName": "Mohammed Waad",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT15",
+        "fullName": "Abdulaziz Hatem",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT16",
+        "fullName": "Hassan Al-Haydos",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT17",
+        "fullName": "Edmilson Junior",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT18",
+        "fullName": "Akram Hassan Afif",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT19",
+        "fullName": "Ahmed Al Ganehi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "QAT20",
+        "fullName": "Almoez Ali",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Switzerland",
+    "stickers": [
+      {
+        "stickerNumber": "SUI1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "SUI2",
+        "fullName": "Gregor Kobel",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI3",
+        "fullName": "Yvon Mvogo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI4",
+        "fullName": "Manuel Akanji",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI5",
+        "fullName": "Ricardo Rodriguez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI6",
+        "fullName": "Nico Elvedi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI7",
+        "fullName": "Aurèle Amenda",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI8",
+        "fullName": "Silvan Widmer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI9",
+        "fullName": "Granit Xhaka",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI10",
+        "fullName": "Denis Zakaria",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI11",
+        "fullName": "Remo Freuler",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI12",
+        "fullName": "Fabian Rieder",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI14",
+        "fullName": "Ardon Jashari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI15",
+        "fullName": "Johan Manzambi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI16",
+        "fullName": "Michel Aebischer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI17",
+        "fullName": "Breel Embolo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI18",
+        "fullName": "Ruben Vargas",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI19",
+        "fullName": "Dan Ndoye",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SUI20",
+        "fullName": "Zeki Amdouni",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Brazil",
+    "stickers": [
+      {
+        "stickerNumber": "BRA1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "BRA2",
+        "fullName": "Alisson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA3",
+        "fullName": "Bento",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA4",
+        "fullName": "Marquinhos",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA5",
+        "fullName": "Éder Militão",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA6",
+        "fullName": "Gabriel Magalhães",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA7",
+        "fullName": "Danilo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA8",
+        "fullName": "Wesley",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA9",
+        "fullName": "Lucas Paquetá",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA10",
+        "fullName": "Casemiro",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA11",
+        "fullName": "Bruno Guimarães",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA12",
+        "fullName": "Luiz Henrique",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA14",
+        "fullName": "Vinicius Júnior",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA15",
+        "fullName": "Rodrygo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA16",
+        "fullName": "João Pedro",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA17",
+        "fullName": "Matheus Cunha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA18",
+        "fullName": "Gabriel Martinelli",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA19",
+        "fullName": "Raphinha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BRA20",
+        "fullName": "Estévão",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Morocco",
+    "stickers": [
+      {
+        "stickerNumber": "MAR1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "MAR2",
+        "fullName": "Yassine Bounou",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR3",
+        "fullName": "Munir El Kajoui",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR4",
+        "fullName": "Achraf Hakimi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR5",
+        "fullName": "Noussair Mazraoui",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR6",
+        "fullName": "Nayef Aguerd",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR7",
+        "fullName": "Romain Saïss",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR8",
+        "fullName": "Jawad El Yamiq",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR9",
+        "fullName": "Adam Masina",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR10",
+        "fullName": "Sofyan Amrabat",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR11",
+        "fullName": "Azzedine Ounahi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR12",
+        "fullName": "Eliesse Ben Seghir",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR14",
+        "fullName": "Bilal El Khannouss",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR15",
+        "fullName": "Ismael Saibari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR16",
+        "fullName": "Youssef En-Nesyri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR17",
+        "fullName": "Abde Ezzalzouli",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR18",
+        "fullName": "Soufiane Rahimi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR19",
+        "fullName": "Brahim Diaz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "MAR20",
+        "fullName": "Ayoub El Kaabi",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Haiti",
+    "stickers": [
+      {
+        "stickerNumber": "HAI1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "HAI2",
+        "fullName": "Johny Placide",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI3",
+        "fullName": "Carlens Arcus",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI4",
+        "fullName": "Martin Expérience",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI5",
+        "fullName": "Jean-Kevin Duverne",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI6",
+        "fullName": "Ricardo Adé",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI7",
+        "fullName": "Duke Lacroix",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI8",
+        "fullName": "Garven Metusala",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI9",
+        "fullName": "Hannes Delcroix",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI10",
+        "fullName": "Leverton Pierre",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI11",
+        "fullName": "Danley Jean Jacques",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI12",
+        "fullName": "Jean-Ricner Bellegarde",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI14",
+        "fullName": "Christopher Attys",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI15",
+        "fullName": "Derrick Etienne Jr",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI16",
+        "fullName": "Josue Casimir",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI17",
+        "fullName": "Ruben Providence",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI18",
+        "fullName": "Duckens Nazon",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI19",
+        "fullName": "Louicius Deedson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "HAI20",
+        "fullName": "Frantzdy Pierrot",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Scotland",
+    "stickers": [
+      {
+        "stickerNumber": "SCO1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "SCO2",
+        "fullName": "Angus Gunn",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO3",
+        "fullName": "Jack Hendry",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO4",
+        "fullName": "Kieran Tierney",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO5",
+        "fullName": "Aaron Hickey",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO6",
+        "fullName": "Andrew Robertson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO7",
+        "fullName": "Scott McKenna",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO8",
+        "fullName": "John Souttar",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO9",
+        "fullName": "Anthony Ralston",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO10",
+        "fullName": "Grant Hanley",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO11",
+        "fullName": "Scott McTominay",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO12",
+        "fullName": "Billy Gilmour",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO14",
+        "fullName": "Lewis Ferguson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO15",
+        "fullName": "Ryan Christie",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO16",
+        "fullName": "Kenny McLean",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO17",
+        "fullName": "John McGinn",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO18",
+        "fullName": "Lyndon Dykes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO19",
+        "fullName": "Che Adams",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SCO20",
+        "fullName": "Ben Gannon-Doak",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "USA",
+    "stickers": [
+      {
+        "stickerNumber": "USA1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "USA2",
+        "fullName": "Matt Freese",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA3",
+        "fullName": "Chris Richards",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA4",
+        "fullName": "Tim Ream",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA5",
+        "fullName": "Mark McKenzie",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA6",
+        "fullName": "Alex Freeman",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA7",
+        "fullName": "Antonee Robinson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA8",
+        "fullName": "Tyler Adams",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA9",
+        "fullName": "Tanner Tessmann",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA10",
+        "fullName": "Weston McKenny",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA11",
+        "fullName": "Christian Roldan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA12",
+        "fullName": "Timothy Weah",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA14",
+        "fullName": "Diego Luna",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA15",
+        "fullName": "Malik Tillman",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA16",
+        "fullName": "Christian Pulisic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA17",
+        "fullName": "Brenden Aaronson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA18",
+        "fullName": "Ricardo Pepi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA19",
+        "fullName": "Haji Wright",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "USA20",
+        "fullName": "Folarin Balogun",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Paraguay",
+    "stickers": [
+      {
+        "stickerNumber": "PAR1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "PAR2",
+        "fullName": "Roberto Fernandez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR3",
+        "fullName": "Orlando Gill",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR4",
+        "fullName": "Gustavo Gomez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR5",
+        "fullName": "Fabián Balbuena",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR6",
+        "fullName": "Juan José Cáceres",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR7",
+        "fullName": "Omar Alderete",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR8",
+        "fullName": "Junior Alonso",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR9",
+        "fullName": "Mathías Villasanti",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR10",
+        "fullName": "Diego Gomez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR11",
+        "fullName": "Damián Bobadilla",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR12",
+        "fullName": "Andres Cubas",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR14",
+        "fullName": "Matias Galarza Fonda",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR15",
+        "fullName": "Julio Enciso",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR16",
+        "fullName": "Alejandro Romero Gamarra",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR17",
+        "fullName": "Miguel Almirón",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR18",
+        "fullName": "Ramon Sosa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR19",
+        "fullName": "Angel Romero",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAR20",
+        "fullName": "Antonio Sanabria",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Australia",
+    "stickers": [
+      {
+        "stickerNumber": "AUS1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "AUS2",
+        "fullName": "Mathew Ryan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS3",
+        "fullName": "Joe Gauci",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS4",
+        "fullName": "Harry Souttar",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS5",
+        "fullName": "Alessandro Circati",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS6",
+        "fullName": "Jordan Bos",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS7",
+        "fullName": "Aziz Behich",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS8",
+        "fullName": "Cameron Burgess",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS9",
+        "fullName": "Lewis Miller",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS10",
+        "fullName": "Milos Degenek",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS11",
+        "fullName": "Jackson Irvine",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS12",
+        "fullName": "Riley McGree",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS14",
+        "fullName": "Aiden O'Neill",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS15",
+        "fullName": "Connor Metcalfe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS16",
+        "fullName": "Patrick Yazbek",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS17",
+        "fullName": "Craig Goodwin",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS18",
+        "fullName": "Kusini Yengi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS19",
+        "fullName": "Nestory Irankunda",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUS20",
+        "fullName": "Mohamed Touré",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Türkiye",
+    "stickers": [
+      {
+        "stickerNumber": "TUR1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "TUR2",
+        "fullName": "Ugurcan Cakir",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR3",
+        "fullName": "Mert Muldur",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR4",
+        "fullName": "Zeki Celik",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR5",
+        "fullName": "Abdulkerim Bardakci",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR6",
+        "fullName": "Caglar Soyuncu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR7",
+        "fullName": "Merih Demiral",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR8",
+        "fullName": "Ferdi Kadioglu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR9",
+        "fullName": "Kaan Ayhan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR10",
+        "fullName": "Ismail Yuksek",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR11",
+        "fullName": "Hakan Calhanoglu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR12",
+        "fullName": "Orkun Kokcu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR14",
+        "fullName": "Arda Guler",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR15",
+        "fullName": "Irfan Can Kahveci",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR16",
+        "fullName": "Yunus Akgun",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR17",
+        "fullName": "Can Uzun",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR18",
+        "fullName": "Baris Alper Yilmaz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR19",
+        "fullName": "Kerem Akturkoglu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUR20",
+        "fullName": "Kenan Yildiz",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Germany",
+    "stickers": [
+      {
+        "stickerNumber": "GER1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "GER2",
+        "fullName": "Marc-André ter Stegen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER3",
+        "fullName": "Jonathan Tah",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER4",
+        "fullName": "David Raum",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER5",
+        "fullName": "Nico Schlotterbeck",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER6",
+        "fullName": "Antonio Rüdiger",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER7",
+        "fullName": "Waldemar Anton",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER8",
+        "fullName": "Ridle Baku",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER9",
+        "fullName": "Maximilian Mittelstadt",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER10",
+        "fullName": "Joshua Kimmich",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER11",
+        "fullName": "Florian Wirtz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER12",
+        "fullName": "Felix Nmecha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER14",
+        "fullName": "Leon Goretzka",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER15",
+        "fullName": "Jamal Musiala",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER16",
+        "fullName": "Serge Gnabry",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER17",
+        "fullName": "Kai Havertz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER18",
+        "fullName": "Leroy Sane",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER19",
+        "fullName": "Karim Adeyemi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GER20",
+        "fullName": "Nick Woltemade",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Curaçao",
+    "stickers": [
+      {
+        "stickerNumber": "CUW1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "CUW2",
+        "fullName": "Eloy Room",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW3",
+        "fullName": "Armando Obispo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW4",
+        "fullName": "Sherel Floranus",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW5",
+        "fullName": "Jurien Gaari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW6",
+        "fullName": "Joshua Brenet",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW7",
+        "fullName": "Roshon Van Eijma",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW8",
+        "fullName": "Shurandy Sambo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW9",
+        "fullName": "Livano Comenencia",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW10",
+        "fullName": "Godfried Roemeratoe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW11",
+        "fullName": "Juninho Bacuna",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW12",
+        "fullName": "Leandro Bacuna",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW14",
+        "fullName": "Tahith Chong",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW15",
+        "fullName": "Kenji Gorre",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW16",
+        "fullName": "Jearl Margaritha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW17",
+        "fullName": "Jurgen Locadia",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW18",
+        "fullName": "Jeremy Antonisse",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW19",
+        "fullName": "Gervane Kastaneer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CUW20",
+        "fullName": "Sontje Hansen",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Ivory Coast",
+    "stickers": [
+      {
+        "stickerNumber": "CIV1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "CIV2",
+        "fullName": "Yahia Fofana",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV3",
+        "fullName": "Ghislain Konan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV4",
+        "fullName": "Wilfried Singo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV5",
+        "fullName": "Odilon Kossounou",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV6",
+        "fullName": "Evan Ndicka",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV7",
+        "fullName": "Willy Boly",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV8",
+        "fullName": "Emmanuel Agbadou",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV9",
+        "fullName": "Ousmane Diomande",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV10",
+        "fullName": "Franck Kessie",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV11",
+        "fullName": "Seko Fofana",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV12",
+        "fullName": "Ibrahim Sangare",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV14",
+        "fullName": "Jean-Philippe Gbamin",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV15",
+        "fullName": "Amad Diallo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV16",
+        "fullName": "Sébastien Haller",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV17",
+        "fullName": "Simon Adingra",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV18",
+        "fullName": "Yan Diomande",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV19",
+        "fullName": "Evann Guessand",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CIV20",
+        "fullName": "Oumar Diakite",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Ecuador",
+    "stickers": [
+      {
+        "stickerNumber": "ECU1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "ECU2",
+        "fullName": "Hernán Galíndez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU3",
+        "fullName": "Gonzalo Valle",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU4",
+        "fullName": "Piero Hincapié",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU5",
+        "fullName": "Pervis Estupiñán",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU6",
+        "fullName": "Willian Pacho",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU7",
+        "fullName": "Ángelo Preciado",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU8",
+        "fullName": "Joel Ordóñez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU9",
+        "fullName": "Moises Caicedo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU10",
+        "fullName": "Alan Franco",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU11",
+        "fullName": "Kendry Paez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU12",
+        "fullName": "Pedro Vite",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU14",
+        "fullName": "John Yeboah",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU15",
+        "fullName": "Leonardo Campana",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU16",
+        "fullName": "Gonzalo Plata",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU17",
+        "fullName": "Nilson Angulo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU18",
+        "fullName": "Alan Minda",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU19",
+        "fullName": "Kevin Rodriguez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ECU20",
+        "fullName": "Enner Valencia",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Netherlands",
+    "stickers": [
+      {
+        "stickerNumber": "NED1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "NED2",
+        "fullName": "Bart Verbruggen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED3",
+        "fullName": "Virgil van Dijk",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED4",
+        "fullName": "Micky van de Ven",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED5",
+        "fullName": "Jurrien Timber",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED6",
+        "fullName": "Denzel Dumfries",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED7",
+        "fullName": "Nathan Aké",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED8",
+        "fullName": "Jeremie Frimpong",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED9",
+        "fullName": "Jan Paul van Hecke",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED10",
+        "fullName": "Tijjani Reijnders",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED11",
+        "fullName": "Ryan Gravenberch",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED12",
+        "fullName": "Teun Koopmeiners",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED14",
+        "fullName": "Frenkie de Jong",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED15",
+        "fullName": "Xavi Simons",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED16",
+        "fullName": "Justin Kluivert",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED17",
+        "fullName": "Memphis Depay",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED18",
+        "fullName": "Donyell Malen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED19",
+        "fullName": "Wout Weghorst",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NED20",
+        "fullName": "Cody Gakpo",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Japan",
+    "stickers": [
+      {
+        "stickerNumber": "JPN1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "JPN2",
+        "fullName": "Zion Suzuki",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN3",
+        "fullName": "Henry Heroki Mochizuki",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN4",
+        "fullName": "Ayumu Seko",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN5",
+        "fullName": "Junnosuke Suzuki",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN6",
+        "fullName": "Shogo Taniguchi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN7",
+        "fullName": "Tsuyoshi Watanabe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN8",
+        "fullName": "Kaishu Sano",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN9",
+        "fullName": "Yuki Soma",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN10",
+        "fullName": "Ao Tanaka",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN11",
+        "fullName": "Daichi Kamada",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN12",
+        "fullName": "Takefusa Kubo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN14",
+        "fullName": "Ritsu Doan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN15",
+        "fullName": "Keito Nakamura",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN16",
+        "fullName": "Takumi Minamino",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN17",
+        "fullName": "Shuto Machino",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN18",
+        "fullName": "Junya Ito",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN19",
+        "fullName": "Koki Ogawa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JPN20",
+        "fullName": "Ayase Ueda",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Sweden",
+    "stickers": [
+      {
+        "stickerNumber": "SWE1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "SWE2",
+        "fullName": "Victor Johansson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE3",
+        "fullName": "Isak Hien",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE4",
+        "fullName": "Gabriel Gudmundsson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE5",
+        "fullName": "Emil Holm",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE6",
+        "fullName": "Victor Nilsson Lindelöf",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE7",
+        "fullName": "Gustaf Lagerbielke",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE8",
+        "fullName": "Lucas Bergvall",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE9",
+        "fullName": "Hugo Larsson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE10",
+        "fullName": "Jesper Karlström",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE11",
+        "fullName": "Yasin Ayari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE12",
+        "fullName": "Mattias Svanberg",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE14",
+        "fullName": "Daniel Svensson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE15",
+        "fullName": "Ken Sema",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE16",
+        "fullName": "Roony Bardghji",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE17",
+        "fullName": "Dejan Kulusevski",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE18",
+        "fullName": "Anthony Elanga",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE19",
+        "fullName": "Alexander Isak",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SWE20",
+        "fullName": "Viktor Gyökeres",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Tunisia",
+    "stickers": [
+      {
+        "stickerNumber": "TUN1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "TUN2",
+        "fullName": "Bechir Ben Said",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN3",
+        "fullName": "Aymen Dahmen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN4",
+        "fullName": "Yan Valery",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN5",
+        "fullName": "Montassar Talbi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN6",
+        "fullName": "Yassine Meriah",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN7",
+        "fullName": "Ali Abdi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN8",
+        "fullName": "Dylan Bronn",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN9",
+        "fullName": "Ellyes Skhiri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN10",
+        "fullName": "Aissa Laidouni",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN11",
+        "fullName": "Ferjani Sassi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN12",
+        "fullName": "Mohamed Ali Ben Romdhane",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN14",
+        "fullName": "Hannibal Mejbri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN15",
+        "fullName": "Elias Achouri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN16",
+        "fullName": "Elias Saad",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN17",
+        "fullName": "Hazem Mastouri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN18",
+        "fullName": "Ismael Gharbi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN19",
+        "fullName": "Sayfallah Ltaief",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "TUN20",
+        "fullName": "Naim Sliti",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Belgium",
+    "stickers": [
+      {
+        "stickerNumber": "BEL1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "BEL2",
+        "fullName": "Thibaut Courtois",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL3",
+        "fullName": "Arthur Theate",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL4",
+        "fullName": "Timothy Castagne",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL5",
+        "fullName": "Zeno Debast",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL6",
+        "fullName": "Brandon Mechele",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL7",
+        "fullName": "Maxim De Cuyper",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL8",
+        "fullName": "Thomas Meunier",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL9",
+        "fullName": "Youri Tielemans",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL10",
+        "fullName": "Amadou Onana",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL11",
+        "fullName": "Nicolas Raskin",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL12",
+        "fullName": "Alexis Saelemaekers",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL14",
+        "fullName": "Hans Vanaken",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL15",
+        "fullName": "Kevin De Bruyne",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL16",
+        "fullName": "Jérémy Doku",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL17",
+        "fullName": "Charles De Ketelaere",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL18",
+        "fullName": "Leandro Trossard",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL19",
+        "fullName": "Loïs Openda",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "BEL20",
+        "fullName": "Romelu Lukaku",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Egypt",
+    "stickers": [
+      {
+        "stickerNumber": "EGY1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "EGY2",
+        "fullName": "Mohamed El Shenawy",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY3",
+        "fullName": "Mohamed Hany",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY4",
+        "fullName": "Mohamed Hamdy",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY5",
+        "fullName": "Yasser Ibrahim",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY6",
+        "fullName": "Khaled Sobhi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY7",
+        "fullName": "Ramy Rabia",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY8",
+        "fullName": "Hossam Abdelmaguid",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY9",
+        "fullName": "Ahmed Fatouh",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY10",
+        "fullName": "Marwan Attia",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY11",
+        "fullName": "Zizo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY12",
+        "fullName": "Hamdy Fathy",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY14",
+        "fullName": "Mohamed Lasheen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY15",
+        "fullName": "Emam Ashour",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY16",
+        "fullName": "Osama Faisal",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY17",
+        "fullName": "Mohamed Salah",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY18",
+        "fullName": "Mostafa Mohamed",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY19",
+        "fullName": "Trezeguet",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "EGY20",
+        "fullName": "Omar Marmoush",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Iran",
+    "stickers": [
+      {
+        "stickerNumber": "IRN1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "IRN2",
+        "fullName": "Alireza Beiranvand",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN3",
+        "fullName": "Morteza Pouraliganji",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN4",
+        "fullName": "Ehsan Hajsafi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN5",
+        "fullName": "Milad Mohammadi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN6",
+        "fullName": "Shojae Khalilzadeh",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN7",
+        "fullName": "Ramin Rezaeian",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN8",
+        "fullName": "Hossein Kanaani",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN9",
+        "fullName": "Sadegh Moharrami",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN10",
+        "fullName": "Saleh Hardani",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN11",
+        "fullName": "Saeed Ezatolahi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN12",
+        "fullName": "Saman Ghoddos",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN14",
+        "fullName": "Omid Noorafkan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN15",
+        "fullName": "Roozbeh Cheshmi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN16",
+        "fullName": "Mohammad Mohebi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN17",
+        "fullName": "Sardar Azmoun",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN18",
+        "fullName": "Mehdi Taremi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN19",
+        "fullName": "Alireza Jahanbakhsh",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRN20",
+        "fullName": "Ali Gholizadeh",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "New Zealand",
+    "stickers": [
+      {
+        "stickerNumber": "NZL1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "NZL2",
+        "fullName": "Max Crocombe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL3",
+        "fullName": "Alex Paulsen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL4",
+        "fullName": "Michael Boxall",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL5",
+        "fullName": "Liberato Cacace",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL6",
+        "fullName": "Tim Payne",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL7",
+        "fullName": "Tyler Bindon",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL8",
+        "fullName": "Francis de Vries",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL9",
+        "fullName": "Finn Surman",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL10",
+        "fullName": "Joe Bell",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL11",
+        "fullName": "Sarpreet Singh",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL12",
+        "fullName": "Ryan Thomas",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL14",
+        "fullName": "Matthew Garbett",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL15",
+        "fullName": "Marko Stamenić",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL16",
+        "fullName": "Ben Old",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL17",
+        "fullName": "Chris Wood",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL18",
+        "fullName": "Elijah Just",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL19",
+        "fullName": "Callum McCowatt",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NZL20",
+        "fullName": "Kosta Barbarouses",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Spain",
+    "stickers": [
+      {
+        "stickerNumber": "ESP1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "ESP2",
+        "fullName": "Unai Simon",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP3",
+        "fullName": "Robin Le Normand",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP4",
+        "fullName": "Aymeric Laporte",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP5",
+        "fullName": "Dean Huijsen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP6",
+        "fullName": "Pedro Porro",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP7",
+        "fullName": "Dani Carvajal",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP8",
+        "fullName": "Marc Cucurella",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP9",
+        "fullName": "Martín Zubimendi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP10",
+        "fullName": "Rodri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP11",
+        "fullName": "Pedri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP12",
+        "fullName": "Fabian Ruiz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP14",
+        "fullName": "Mikel Merino",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP15",
+        "fullName": "Lamine Yamal",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP16",
+        "fullName": "Dani Olmo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP17",
+        "fullName": "Nico Williams",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP18",
+        "fullName": "Ferran Torres",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP19",
+        "fullName": "Álvaro Morata",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ESP20",
+        "fullName": "Mikel Oyarzabal",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Cape Verde",
+    "stickers": [
+      {
+        "stickerNumber": "CPV1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "CPV2",
+        "fullName": "Vozinha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV3",
+        "fullName": "Logan Costa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV4",
+        "fullName": "Pico",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV5",
+        "fullName": "Diney",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV6",
+        "fullName": "Steven Moreira",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV7",
+        "fullName": "Wagner Pina",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV8",
+        "fullName": "Joao Paulo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV9",
+        "fullName": "Yannick Semedo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV10",
+        "fullName": "Kevin Pina",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV11",
+        "fullName": "Patrick Andrade",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV12",
+        "fullName": "Jamiro Monteiro",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV14",
+        "fullName": "Deroy Duarte",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV15",
+        "fullName": "Garry Rodrigues",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV16",
+        "fullName": "Jovane Cabral",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV17",
+        "fullName": "Ryan Mendes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV18",
+        "fullName": "Dailon Livramento",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV19",
+        "fullName": "Willy Semedo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CPV20",
+        "fullName": "Bebe",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Saudi Arabia",
+    "stickers": [
+      {
+        "stickerNumber": "KSA1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "KSA2",
+        "fullName": "Nawaf Alaqidi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA3",
+        "fullName": "Abdulrahman Al-Sanbi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA4",
+        "fullName": "Saud Abdulhamid",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA5",
+        "fullName": "Nawaf Bouwashl",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA6",
+        "fullName": "Jihad Thakri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA7",
+        "fullName": "Moteb Al-Harbi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA8",
+        "fullName": "Hassan Altambakti",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA9",
+        "fullName": "Musab Aljuwayr",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA10",
+        "fullName": "Ziyad Aljohani",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA11",
+        "fullName": "Abdullah Alkhaibari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA12",
+        "fullName": "Nasser Aldawsari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA14",
+        "fullName": "Saleh Abu Alshamat",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA15",
+        "fullName": "Marwan Alsahafi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA16",
+        "fullName": "Salem Aldawsari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA17",
+        "fullName": "Abdulrahman Al-Aboud",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA18",
+        "fullName": "Feras Akbrikan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA19",
+        "fullName": "Saleh Alshehri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "KSA20",
+        "fullName": "Abdullah Al-Hamdan",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Uruguay",
+    "stickers": [
+      {
+        "stickerNumber": "URU1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "URU2",
+        "fullName": "Sergio Rochet",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU3",
+        "fullName": "Santiago Mele",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU4",
+        "fullName": "Ronald Araujo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU5",
+        "fullName": "José María Giménez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU6",
+        "fullName": "Sebastian Caceres",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU7",
+        "fullName": "Mathias Olivera",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU8",
+        "fullName": "Guillermo Varela",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU9",
+        "fullName": "Nahitan Nandez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU10",
+        "fullName": "Federico Valverde",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU11",
+        "fullName": "Giorgian De Arrascaeta",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU12",
+        "fullName": "Rodrigo Bentancur",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU14",
+        "fullName": "Manuel Ugarte",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU15",
+        "fullName": "Nicolás de la Cruz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU16",
+        "fullName": "Maxi Araujo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU17",
+        "fullName": "Darwin Núñez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU18",
+        "fullName": "Federico Viñas",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU19",
+        "fullName": "Rodrigo Aguirre",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "URU20",
+        "fullName": "Facundo Pellistri",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "France",
+    "stickers": [
+      {
+        "stickerNumber": "FRA1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FRA2",
+        "fullName": "Mike Maignan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA3",
+        "fullName": "Theo Hernandez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA4",
+        "fullName": "William Saliba",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA5",
+        "fullName": "Jules Kounde",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA6",
+        "fullName": "Ibrahima Konate",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA7",
+        "fullName": "Dayot Upamecano",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA8",
+        "fullName": "Lucas Digne",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA9",
+        "fullName": "Aurélien Tchouaméni",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA10",
+        "fullName": "Eduardo Camavinga",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA11",
+        "fullName": "Manu Kone",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA12",
+        "fullName": "Adrien Rabiot",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA14",
+        "fullName": "Michael Olise",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA15",
+        "fullName": "Ousmane Dembele",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA16",
+        "fullName": "Bradley Barcola",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA17",
+        "fullName": "Désiré Doué",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA18",
+        "fullName": "Kingsley Coman",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA19",
+        "fullName": "Hugo Ekitike",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "FRA20",
+        "fullName": "Kylian Mbappe",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Senegal",
+    "stickers": [
+      {
+        "stickerNumber": "SEN1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "SEN2",
+        "fullName": "Édouard Mendy",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN3",
+        "fullName": "Yehvann Diouf",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN4",
+        "fullName": "Moussa Niakhaté",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN5",
+        "fullName": "Abdoulaye Seck",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN6",
+        "fullName": "Ismail Jakobs",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN7",
+        "fullName": "El Hadji Malick Diouf",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN8",
+        "fullName": "Kalidou Koulibaly",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN9",
+        "fullName": "Idrissa Gana Gueye",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN10",
+        "fullName": "Pape Matar Sarr",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN11",
+        "fullName": "Pape Gueye",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN12",
+        "fullName": "Habib Diarra",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN14",
+        "fullName": "Lamine Camara",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN15",
+        "fullName": "Sadio Mane",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN16",
+        "fullName": "Ismaïla Sarr",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN17",
+        "fullName": "Boulaye Dia",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN18",
+        "fullName": "Iliman Ndiaye",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN19",
+        "fullName": "Nicolas Jackson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "SEN20",
+        "fullName": "Krepin Diatta",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Iraq",
+    "stickers": [
+      {
+        "stickerNumber": "IRQ1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "IRQ2",
+        "fullName": "Jalal Hassan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ3",
+        "fullName": "Rebin Sulaka",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ4",
+        "fullName": "Hussein Ali",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ5",
+        "fullName": "Akam Hashem",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ6",
+        "fullName": "Merchas Doski",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ7",
+        "fullName": "Zaid Tahseen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ8",
+        "fullName": "Manaf Younis",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ9",
+        "fullName": "Zidane Iqbal",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ10",
+        "fullName": "Amir Al-Ammari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ11",
+        "fullName": "Ibrahim Bavesh",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ12",
+        "fullName": "Ali Jasim",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ14",
+        "fullName": "Youssef Amyn",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ15",
+        "fullName": "Aimar Sher",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ16",
+        "fullName": "Marko Farji",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ17",
+        "fullName": "Osama Rashid",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ18",
+        "fullName": "Ali Al-Hamadi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ19",
+        "fullName": "Aymen Hussein",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "IRQ20",
+        "fullName": "Mohanad Ali",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Norway",
+    "stickers": [
+      {
+        "stickerNumber": "NOR1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "NOR2",
+        "fullName": "Orjan Nyland",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR3",
+        "fullName": "Julian Ryerson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR4",
+        "fullName": "Leo Ostigård",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR5",
+        "fullName": "Kristoffer Vassbakk Ajer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR6",
+        "fullName": "Marcus Holmgren Pedersen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR7",
+        "fullName": "David Møller Wolfe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR8",
+        "fullName": "Torbjørn Heggem",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR9",
+        "fullName": "Morten Thorsby",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR10",
+        "fullName": "Martin Ødegaard",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR11",
+        "fullName": "Sander Berge",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR12",
+        "fullName": "Andreas Schjelderup",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR14",
+        "fullName": "Patrick Berg",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR15",
+        "fullName": "Erling Haaland",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR16",
+        "fullName": "Alexander Sørloth",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR17",
+        "fullName": "Aron Dønnum",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR18",
+        "fullName": "Jorgen Strand Larsen",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR19",
+        "fullName": "Antonio Nusa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "NOR20",
+        "fullName": "Oscar Bobb",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Argentina",
+    "stickers": [
+      {
+        "stickerNumber": "ARG1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "ARG2",
+        "fullName": "Emiliano Martinez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG3",
+        "fullName": "Nahuel Molina",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG4",
+        "fullName": "Cristian Romero",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG5",
+        "fullName": "Nicolas Otamendi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG6",
+        "fullName": "Nicolas Tagliafico",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG7",
+        "fullName": "Leonardo Balerdi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG8",
+        "fullName": "Enzo Fernandez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG9",
+        "fullName": "Alexis Mac Allister",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG10",
+        "fullName": "Rodrigo De Paul",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG11",
+        "fullName": "Exequiel Palacios",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG12",
+        "fullName": "Leandro Paredes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG14",
+        "fullName": "Nico Paz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG15",
+        "fullName": "Franco Mastantuono",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG16",
+        "fullName": "Nico Gonzalez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG17",
+        "fullName": "Lionel Messi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG18",
+        "fullName": "Lautaro Martinez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG19",
+        "fullName": "Julian Alvarez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ARG20",
+        "fullName": "Giuliano Simeone",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Algeria",
+    "stickers": [
+      {
+        "stickerNumber": "ALG1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "ALG2",
+        "fullName": "Alexis Guendouz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG3",
+        "fullName": "Ramy Bensebaini",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG4",
+        "fullName": "Youcef Atal",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG5",
+        "fullName": "Rayan Aït-Nouri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG6",
+        "fullName": "Mohamed Amine Tougai",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG7",
+        "fullName": "Aïssa Mandi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG8",
+        "fullName": "Ismael Bennacer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG9",
+        "fullName": "Houssem Aouar",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG10",
+        "fullName": "Hicham Boudaoui",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG11",
+        "fullName": "Ramiz Zerrouki",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG12",
+        "fullName": "Nabil Bentaleb",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG14",
+        "fullName": "Farés Chaibi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG15",
+        "fullName": "Riyad Mahrez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG16",
+        "fullName": "Said Benrahma",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG17",
+        "fullName": "Anis Hadj Moussa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG18",
+        "fullName": "Amine Gouiri",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG19",
+        "fullName": "Baghdad Bounedjah",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ALG20",
+        "fullName": "Mohammed Amoura",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Austria",
+    "stickers": [
+      {
+        "stickerNumber": "AUT1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "AUT2",
+        "fullName": "Alexander Schlager",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT3",
+        "fullName": "Patrick Pentz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT4",
+        "fullName": "David Alaba",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT5",
+        "fullName": "Kevin Danso",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT6",
+        "fullName": "Philipp Lienhart",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT7",
+        "fullName": "Stefan Posch",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT8",
+        "fullName": "Phillipp Mwene",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT9",
+        "fullName": "Alexander Prass",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT10",
+        "fullName": "Xaver Schlager",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT11",
+        "fullName": "Marcel Sabitzer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT12",
+        "fullName": "Konrad Laimer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT14",
+        "fullName": "Florian Grillitsch",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT15",
+        "fullName": "Nicolas Seiwald",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT16",
+        "fullName": "Romano Schmid",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT17",
+        "fullName": "Patrick Wimmer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT18",
+        "fullName": "Christoph Baumgartner",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT19",
+        "fullName": "Michael Gregoritsch",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "AUT20",
+        "fullName": "Marko Arnautović",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Jordan",
+    "stickers": [
+      {
+        "stickerNumber": "JOR1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "JOR2",
+        "fullName": "Yazeed Abulaila",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR3",
+        "fullName": "Ihsan Haddad",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR4",
+        "fullName": "Mohammad Abu Hashish",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR5",
+        "fullName": "Yazan Al-Arab",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR6",
+        "fullName": "Abdallah Nasib",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR7",
+        "fullName": "Saleem Obaid",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR8",
+        "fullName": "Mohammad Abualnadi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR9",
+        "fullName": "Ibrahim Saadeh",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR10",
+        "fullName": "Nizar Al-Rashdan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR11",
+        "fullName": "Noor Al-Rawabdeh",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR12",
+        "fullName": "Mohannad Abu Taha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR14",
+        "fullName": "Amer Jamous",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR15",
+        "fullName": "Musa Al-Taamari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR16",
+        "fullName": "Yazan Al-Naimat",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR17",
+        "fullName": "Mahmoud Al-Mardi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR18",
+        "fullName": "Ali Olwan",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR19",
+        "fullName": "Mohammad Abu Zrayq",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "JOR20",
+        "fullName": "Ibrahim Sabra",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Portugal",
+    "stickers": [
+      {
+        "stickerNumber": "POR1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "POR2",
+        "fullName": "Diogo Costa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR3",
+        "fullName": "José Sá",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR4",
+        "fullName": "Ruben Dias",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR5",
+        "fullName": "João Cancelo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR6",
+        "fullName": "Diogo Dalot",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR7",
+        "fullName": "Nuno Mendes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR8",
+        "fullName": "Gonçalo Inácio",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR9",
+        "fullName": "Bernardo Silva",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR10",
+        "fullName": "Bruno Fernandes",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR11",
+        "fullName": "Ruben Neves",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR12",
+        "fullName": "Vitinha",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR14",
+        "fullName": "João Neves",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR15",
+        "fullName": "Cristiano Ronaldo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR16",
+        "fullName": "Francisco Trincao",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR17",
+        "fullName": "João Felix",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR18",
+        "fullName": "Gonçalo Ramos",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR19",
+        "fullName": "Pedro Neto",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "POR20",
+        "fullName": "Rafael Leão",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Congo DR",
+    "stickers": [
+      {
+        "stickerNumber": "COD1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "COD2",
+        "fullName": "Lionel Mpasi-Nzau",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD3",
+        "fullName": "Aaron Wan-Bissaka",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD4",
+        "fullName": "Axel Tuanzebe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD5",
+        "fullName": "Arthur Masuaku",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD6",
+        "fullName": "Chancel Mbemba",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD7",
+        "fullName": "Joris Kayembe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD8",
+        "fullName": "Charles Pickel",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD9",
+        "fullName": "Ngal'ayel Mukau",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD10",
+        "fullName": "Edo Kayembe",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD11",
+        "fullName": "Samuel Moutoussamy",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD12",
+        "fullName": "Noah Sadiki",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD14",
+        "fullName": "Théo Bongonda",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD15",
+        "fullName": "Meschak Elia",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD16",
+        "fullName": "Yoane Wissa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD17",
+        "fullName": "Brian Cipenga",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD18",
+        "fullName": "Fiston Mayele",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD19",
+        "fullName": "Cédric Bakambu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COD20",
+        "fullName": "Nathanaël Mbuku",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Uzbekistan",
+    "stickers": [
+      {
+        "stickerNumber": "UZB1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "UZB2",
+        "fullName": "Utkir Yusupov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB3",
+        "fullName": "Farrukh Savfiev",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB4",
+        "fullName": "Sherzod Nasrullaev",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB5",
+        "fullName": "Umar Eshmurodov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB6",
+        "fullName": "Husniddin Aliqulov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB7",
+        "fullName": "Rustamjon Ashurmatov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB8",
+        "fullName": "Khojiakbar Alijonov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB9",
+        "fullName": "Abdukodir Khusanov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB10",
+        "fullName": "Odiljon Hamrobekov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB11",
+        "fullName": "Otabek Shukurov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB12",
+        "fullName": "Jamshid Iskanderov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB14",
+        "fullName": "Azizbek Turgunboev",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB15",
+        "fullName": "Khojimat Erkinov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB16",
+        "fullName": "Eldor Shomurodov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB17",
+        "fullName": "Oston Urunov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB18",
+        "fullName": "Jaloliddin Masharipov",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB19",
+        "fullName": "Igor Sergeev",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "UZB20",
+        "fullName": "Abbosbek Fayzullaev",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Colombia",
+    "stickers": [
+      {
+        "stickerNumber": "COL1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "COL2",
+        "fullName": "Camilo Vargas",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL3",
+        "fullName": "David Ospina",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL4",
+        "fullName": "Dávinson Sánchez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL5",
+        "fullName": "Yerry Mina",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL6",
+        "fullName": "Daniel Munoz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL7",
+        "fullName": "Johan Mojica",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL8",
+        "fullName": "Jhon Lucumí",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL9",
+        "fullName": "Santiago Arias",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL10",
+        "fullName": "Jefferson Lerma",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL11",
+        "fullName": "Kevin Castaño",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL12",
+        "fullName": "Richard Rios",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL14",
+        "fullName": "James Rodriguez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL15",
+        "fullName": "Juan Fernando Quintero",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL16",
+        "fullName": "Jorge Carrascal",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL17",
+        "fullName": "Jhon Arias",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL18",
+        "fullName": "Jhon Cordova",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL19",
+        "fullName": "Luis Suarez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "COL20",
+        "fullName": "Luis Diaz",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "England",
+    "stickers": [
+      {
+        "stickerNumber": "ENG1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "ENG2",
+        "fullName": "Jordan Pickford",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG3",
+        "fullName": "John Stones",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG4",
+        "fullName": "Marc Guéhi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG5",
+        "fullName": "Ezri Konsa",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG6",
+        "fullName": "Trent Alexander-Arnold",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG7",
+        "fullName": "Reece James",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG8",
+        "fullName": "Dan Burn",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG9",
+        "fullName": "Jordan Henderson",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG10",
+        "fullName": "Declan Rice",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG11",
+        "fullName": "Jude Bellingham",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG12",
+        "fullName": "Cole Palmer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG14",
+        "fullName": "Morgan Rogers",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG15",
+        "fullName": "Anthony Gordon",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG16",
+        "fullName": "Phil Foden",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG17",
+        "fullName": "Bukayo Saka",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG18",
+        "fullName": "Harry Kane",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG19",
+        "fullName": "Marcus Rashford",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "ENG20",
+        "fullName": "Ollie Watkins",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Croatia",
+    "stickers": [
+      {
+        "stickerNumber": "CRO1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "CRO2",
+        "fullName": "Dominik Livaković",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO3",
+        "fullName": "Duje Caleta-Car",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO4",
+        "fullName": "Josko Gvardiol",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO5",
+        "fullName": "Josip Stanišić",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO6",
+        "fullName": "Luka Vušković",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO7",
+        "fullName": "Josip Sutalo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO8",
+        "fullName": "Kristijan Jakic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO9",
+        "fullName": "Luka Modrić",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO10",
+        "fullName": "Mateo Kovacic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO11",
+        "fullName": "Martin Baturina",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO12",
+        "fullName": "Lovro Majer",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO14",
+        "fullName": "Mario Pasalic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO15",
+        "fullName": "Petar Sucic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO16",
+        "fullName": "Ivan Perišić",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO17",
+        "fullName": "Marco Pasalic",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO18",
+        "fullName": "Ante Budimir",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO19",
+        "fullName": "Andrej Kramarić",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "CRO20",
+        "fullName": "Franjo Ivanovic",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Ghana",
+    "stickers": [
+      {
+        "stickerNumber": "GHA1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "GHA2",
+        "fullName": "Lawrence Ati Zigi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA3",
+        "fullName": "Tariq Lamptey",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA4",
+        "fullName": "Mohammed Salisu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA5",
+        "fullName": "Alidu Seidu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA6",
+        "fullName": "Alexander Djiku",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA7",
+        "fullName": "Gideon Mensah",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA8",
+        "fullName": "Caleb Yirenkyi",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA9",
+        "fullName": "Abdul Issahaku Fatawu",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA10",
+        "fullName": "Thomas Partey",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA11",
+        "fullName": "Salis Abdul Samed",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA12",
+        "fullName": "Kamaldeen Sulemana",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA14",
+        "fullName": "Mohammed Kudus",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA15",
+        "fullName": "Inaki Williams",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA16",
+        "fullName": "Jordan Ayew",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA17",
+        "fullName": "André Ayew",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA18",
+        "fullName": "Joseph Paintsil",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA19",
+        "fullName": "Osman Bukari",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "GHA20",
+        "fullName": "Antoine Semenyo",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Panama",
+    "stickers": [
+      {
+        "stickerNumber": "PAN1",
+        "fullName": "Emblem",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "PAN2",
+        "fullName": "Orlando Mosquera",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN3",
+        "fullName": "Luis Mejia",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN4",
+        "fullName": "Fidel Escobar",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN5",
+        "fullName": "Andres Andrade",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN6",
+        "fullName": "Michael Amir Murillo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN7",
+        "fullName": "Eric Davis",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN8",
+        "fullName": "Jose Cordoba",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN9",
+        "fullName": "Cesar Blackman",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN10",
+        "fullName": "Cristian Martinez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN11",
+        "fullName": "Aníbal Godoy",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN12",
+        "fullName": "Adalberto Carrasquilla",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN13",
+        "fullName": "Team Photo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN14",
+        "fullName": "Édgar Bárcenas",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN15",
+        "fullName": "Carlos Harvey",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN16",
+        "fullName": "Ismael Díaz",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN17",
+        "fullName": "Jose Fajardo",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN18",
+        "fullName": "Cecilio Waterman",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN19",
+        "fullName": "Jose Luiz Rodriguez",
+        "isShiny": false
+      },
+      {
+        "stickerNumber": "PAN20",
+        "fullName": "Alberto Quintero",
+        "isShiny": false
+      }
+    ]
+  },
+  {
+    "sectionName": "FIFA World Cup History",
+    "stickers": [
+      {
+        "stickerNumber": "FWC9",
+        "fullName": "Italy 1934",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC10",
+        "fullName": "Uruguay 1950",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC11",
+        "fullName": "West Germany 1954",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC12",
+        "fullName": "Brazil 1962",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC13",
+        "fullName": "West Germany 1974",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC14",
+        "fullName": "Argentina 1986",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC15",
+        "fullName": "Brazil 1994",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC16",
+        "fullName": "Brazil 2002",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC17",
+        "fullName": "Italy 2006",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC18",
+        "fullName": "Germany 2014",
+        "isShiny": true
+      },
+      {
+        "stickerNumber": "FWC19",
+        "fullName": "Argentina 2022",
+        "isShiny": true
+      }
+    ]
+  }
+]

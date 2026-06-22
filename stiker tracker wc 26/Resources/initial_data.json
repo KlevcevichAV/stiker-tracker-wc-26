@@ -1,0 +1,304 @@
+{
+  "sections": [
+    {
+      "code": "FWC",
+      "nameEN": "FIFA World Cup 2026",
+      "nameRU": "ЧМ ФИФА 2026",
+      "group": "FWC",
+      "orderIndex": 0,
+      "flagEmoji": "🏆",
+      "stickers": [
+        {
+          "id": "FWC 1",
+          "number": 1,
+          "type": "logo",
+          "nameEN": "Official Emblem",
+          "nameRU": "Официальная эмблема"
+        },
+        {
+          "id": "FWC 2",
+          "number": 2,
+          "type": "player",
+          "nameEN": "FIFA World Cup Trophy",
+          "nameRU": "Кубок мира ФИФА"
+        },
+        {
+          "id": "FWC 3",
+          "number": 3,
+          "type": "player",
+          "nameEN": "Official Mascot",
+          "nameRU": "Официальный маскот"
+        },
+        {
+          "id": "FWC 4",
+          "number": 4,
+          "type": "player",
+          "nameEN": "Host Cities — USA",
+          "nameRU": "Города-хозяева — США"
+        },
+        {
+          "id": "FWC 5",
+          "number": 5,
+          "type": "player",
+          "nameEN": "Host Cities — Canada & Mexico",
+          "nameRU": "Города-хозяева — Канада и Мексика"
+        },
+        {
+          "id": "FWC 6",
+          "number": 6,
+          "type": "player",
+          "nameEN": "MetLife Stadium, New York",
+          "nameRU": "Стадион Метлайф, Нью-Йорк"
+        },
+        {
+          "id": "FWC 7",
+          "number": 7,
+          "type": "player",
+          "nameEN": "SoFi Stadium, Los Angeles",
+          "nameRU": "Стадион СоФай, Лос-Анджелес"
+        },
+        {
+          "id": "FWC 8",
+          "number": 8,
+          "type": "player",
+          "nameEN": "AT&T Stadium, Dallas",
+          "nameRU": "Стадион AT&T, Даллас"
+        },
+        {
+          "id": "FWC 9",
+          "number": 9,
+          "type": "player",
+          "nameEN": "Lumen Field, Seattle",
+          "nameRU": "Люмен Филд, Сиэтл"
+        },
+        {
+          "id": "FWC 10",
+          "number": 10,
+          "type": "player",
+          "nameEN": "Gillette Stadium, Boston",
+          "nameRU": "Стадион Жиллетт, Бостон"
+        },
+        {
+          "id": "FWC 11",
+          "number": 11,
+          "type": "player",
+          "nameEN": "Estadio Azteca, Mexico City",
+          "nameRU": "Стадион Ацтека, Мехико"
+        },
+        {
+          "id": "FWC 12",
+          "number": 12,
+          "type": "player",
+          "nameEN": "BC Place, Vancouver",
+          "nameRU": "BC Плейс, Ванкувер"
+        },
+        {
+          "id": "FWC 13",
+          "number": 13,
+          "type": "teamPhoto",
+          "nameEN": "World Cup Legends Poster",
+          "nameRU": "Постер легенд Кубка мира"
+        },
+        {
+          "id": "FWC 14",
+          "number": 14,
+          "type": "player",
+          "nameEN": "Brazil 1970 — Retro",
+          "nameRU": "Бразилия 1970 — Ретро"
+        },
+        {
+          "id": "FWC 15",
+          "number": 15,
+          "type": "player",
+          "nameEN": "Argentina 1986 — Retro",
+          "nameRU": "Аргентина 1986 — Ретро"
+        },
+        {
+          "id": "FWC 16",
+          "number": 16,
+          "type": "player",
+          "nameEN": "France 1998 — Retro",
+          "nameRU": "Франция 1998 — Ретро"
+        },
+        {
+          "id": "FWC 17",
+          "number": 17,
+          "type": "player",
+          "nameEN": "Germany 2014 — Retro",
+          "nameRU": "Германия 2014 — Ретро"
+        },
+        {
+          "id": "FWC 18",
+          "number": 18,
+          "type": "player",
+          "nameEN": "France 2018 — Retro",
+          "nameRU": "Франция 2018 — Ретро"
+        },
+        {
+          "id": "FWC 19",
+          "number": 19,
+          "type": "player",
+          "nameEN": "Argentina 2022 — Retro",
+          "nameRU": "Аргентина 2022 — Ретро"
+        },
+        {
+          "id": "FWC 20",
+          "number": 20,
+          "type": "player",
+          "nameEN": "Road to 2026",
+          "nameRU": "Дорога к 2026"
+        }
+      ]
+    },
+    {
+      "code": "ARG",
+      "nameEN": "Argentina",
+      "nameRU": "Аргентина",
+      "group": "J",
+      "orderIndex": 37,
+      "flagEmoji": "🇦🇷",
+      "stickers": [
+        {
+          "id": "ARG 1",
+          "number": 1,
+          "type": "logo",
+          "nameEN": "Argentina — Badge",
+          "nameRU": "Аргентина — Эмблема"
+        },
+        {
+          "id": "ARG 2",
+          "number": 2,
+          "type": "player",
+          "nameEN": "Gerónimo Rulli",
+          "nameRU": "Херонимо Рулли"
+        },
+        {
+          "id": "ARG 3",
+          "number": 3,
+          "type": "player",
+          "nameEN": "Nahuel Molina",
+          "nameRU": "Науэль Молина"
+        },
+        {
+          "id": "ARG 4",
+          "number": 4,
+          "type": "player",
+          "nameEN": "Cristian Romero",
+          "nameRU": "Кристиан Ромеро"
+        },
+        {
+          "id": "ARG 5",
+          "number": 5,
+          "type": "player",
+          "nameEN": "Lisandro Martínez",
+          "nameRU": "Лисандро Мартинес"
+        },
+        {
+          "id": "ARG 6",
+          "number": 6,
+          "type": "player",
+          "nameEN": "Nicolás Otamendi",
+          "nameRU": "Николас Отаменди"
+        },
+        {
+          "id": "ARG 7",
+          "number": 7,
+          "type": "player",
+          "nameEN": "Rodrigo De Paul",
+          "nameRU": "Родриго Де Поль"
+        },
+        {
+          "id": "ARG 8",
+          "number": 8,
+          "type": "player",
+          "nameEN": "Enzo Fernández",
+          "nameRU": "Энцо Фернандес"
+        },
+        {
+          "id": "ARG 9",
+          "number": 9,
+          "type": "player",
+          "nameEN": "Julián Álvarez",
+          "nameRU": "Хулиан Альварес"
+        },
+        {
+          "id": "ARG 10",
+          "number": 10,
+          "type": "player",
+          "nameEN": "Lionel Messi",
+          "nameRU": "Лионель Месси"
+        },
+        {
+          "id": "ARG 11",
+          "number": 11,
+          "type": "player",
+          "nameEN": "Ángel Di María",
+          "nameRU": "Анхель Ди Мария"
+        },
+        {
+          "id": "ARG 12",
+          "number": 12,
+          "type": "player",
+          "nameEN": "Leandro Paredes",
+          "nameRU": "Леандро Паредес"
+        },
+        {
+          "id": "ARG 13",
+          "number": 13,
+          "type": "teamPhoto",
+          "nameEN": "Argentina — Team Photo",
+          "nameRU": "Аргентина — Командное фото"
+        },
+        {
+          "id": "ARG 14",
+          "number": 14,
+          "type": "player",
+          "nameEN": "Alexis Mac Allister",
+          "nameRU": "Алексис Мак Аллистер"
+        },
+        {
+          "id": "ARG 15",
+          "number": 15,
+          "type": "player",
+          "nameEN": "Nicolás González",
+          "nameRU": "Николас Гонсалес"
+        },
+        {
+          "id": "ARG 16",
+          "number": 16,
+          "type": "player",
+          "nameEN": "Lautaro Martínez",
+          "nameRU": "Лаутаро Мартинес"
+        },
+        {
+          "id": "ARG 17",
+          "number": 17,
+          "type": "player",
+          "nameEN": "Paulo Dybala",
+          "nameRU": "Пауло Дибала"
+        },
+        {
+          "id": "ARG 18",
+          "number": 18,
+          "type": "player",
+          "nameEN": "Giovani Lo Celso",
+          "nameRU": "Джовани Ло Чельсо"
+        },
+        {
+          "id": "ARG 19",
+          "number": 19,
+          "type": "player",
+          "nameEN": "Nicolás Tagliafico",
+          "nameRU": "Николас Тальяфико"
+        },
+        {
+          "id": "ARG 20",
+          "number": 20,
+          "type": "player",
+          "nameEN": "Franco Armani",
+          "nameRU": "Франко Армани"
+        }
+      ]
+    }
+  ]
+}
