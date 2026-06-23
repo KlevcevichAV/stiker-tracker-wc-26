@@ -13,13 +13,15 @@ final class ExchangeModel {
     var givingRaw: String    // JSON [{"teamCode":"ARG","number":1,"count":1}]
     var wantingRaw: String   // JSON [{"teamCode":"BRA","number":3,"count":1}]
     var statusRaw: String    // ExchangeStatus.rawValue
+    var partner: String      // никнейм/телефон, необязательно
 
-    init(giving: [StickerEntry], wanting: [StickerEntry]) {
+    init(giving: [StickerEntry], wanting: [StickerEntry], partner: String = "") {
         self.id = UUID().uuidString
         self.createdAt = Date()
         self.givingRaw = ExchangeModel.encode(giving)
         self.wantingRaw = ExchangeModel.encode(wanting)
         self.statusRaw = ExchangeStatus.active.rawValue
+        self.partner = partner
     }
 
     var status: ExchangeStatus {

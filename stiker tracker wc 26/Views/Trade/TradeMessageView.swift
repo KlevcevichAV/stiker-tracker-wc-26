@@ -7,7 +7,11 @@ struct TradeMessageView: View {
     @Environment(\.appLanguage) private var language
 
     @State private var message: String = ""
+    @State private var missingText: String = ""
+    @State private var dupText: String = ""
     @State private var copied = false
+    @State private var copiedMissing = false
+    @State private var copiedDup = false
     @State private var isLoading = true
 
     @AppStorage("tradeMessagePrefix") private var prefix: String = ""
@@ -29,7 +33,7 @@ struct TradeMessageView: View {
                 if isLoading {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if message.isEmpty {
+                } else if missingText.isEmpty && dupText.isEmpty {
                     emptyState
                 } else {
                     messageContent
@@ -55,14 +59,23 @@ struct TradeMessageView: View {
                         text: $prefix
                     )
 
-                    // Сообщение
-                    Text(message)
-                        .font(.system(size: 14, design: .monospaced))
-                        .textSelection(.enabled)
-                        .padding(12)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(.secondarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    // Блок "Ищу"
+                    if !missingText.isEmpty {
+                        messageBlock(
+                            text: missingText,
+                            copyLabel: isRu ? "Скопировать «Ищу»" : "Copy «Looking for»",
+                            isCopied: $copiedMissing
+                        )
+                    }
+
+                    // Блок "Повторки"
+                    if !dupText.isEmpty {
+                        messageBlock(
+                            text: dupText,
+                            copyLabel: isRu ? "Скопировать «Повторки»" : "Copy «Duplicates»",
+                            isCopied: $copiedDup
+                        )
+                    }
 
                     // Суффикс
                     prefixSuffixField(
@@ -95,6 +108,38 @@ struct TradeMessageView: View {
                 .padding(.bottom, 16)
             }
             .animation(.easeInOut(duration: 0.2), value: copied)
+        }
+    }
+
+    private func messageBlock(text: String, copyLabel: String, isCopied: Binding<Bool>) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(text)
+                .font(.system(size: 14, design: .monospaced))
+                .textSelection(.enabled)
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+            Button {
+                UIPasteboard.general.string = text
+                isCopied.wrappedValue = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { isCopied.wrappedValue = false }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: isCopied.wrappedValue ? "checkmark" : "doc.on.doc")
+                        .font(.system(size: 12, weight: .semibold))
+                    Text(isCopied.wrappedValue ? (isRu ? "Скопировано" : "Copied") : copyLabel)
+                        .font(.system(size: 13, weight: .semibold))
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .background(isCopied.wrappedValue ? Color.green.opacity(0.15) : Color(.secondarySystemBackground))
+                .foregroundStyle(isCopied.wrappedValue ? .green : .secondary)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+            .buttonStyle(.plain)
+            .animation(.easeInOut(duration: 0.2), value: isCopied.wrappedValue)
         }
     }
 
@@ -211,10 +256,18 @@ struct TradeMessageView: View {
 
         var parts: [String] = []
         if !missingLines.isEmpty {
-            parts.append((isRu ? "Ищу:" : "Looking for:") + "\n" + missingLines.joined(separator: "\n"))
+            let block = (isRu ? "Ищу:" : "Looking for:") + "\n" + missingLines.joined(separator: "\n")
+            missingText = block
+            parts.append(block)
+        } else {
+            missingText = ""
         }
         if !dupLines.isEmpty {
-            parts.append((isRu ? "Повторки:" : "Duplicates:") + "\n" + dupLines.joined(separator: "\n"))
+            let block = (isRu ? "Повторки:" : "Duplicates:") + "\n" + dupLines.joined(separator: "\n")
+            dupText = block
+            parts.append(block)
+        } else {
+            dupText = ""
         }
 
         message = parts.joined(separator: "\n\n")

@@ -10,8 +10,10 @@ struct ExchangeView: View {
     @Query(sort: \ExchangeModel.createdAt, order: .reverse)
     private var exchanges: [ExchangeModel]
 
-    @State private var showNewExchange = false
-    @State private var showHistory     = false
+    @State private var showNewExchange  = false
+    @State private var showHistory      = false
+    @State private var editingExchange: ExchangeModel? = nil
+    @State private var expandedPastIDs: Set<String> = []
 
     private var isRu: Bool { language.isRussian }
 
@@ -46,6 +48,10 @@ struct ExchangeView: View {
             }
             .sheet(isPresented: $showNewExchange) {
                 NewExchangeView()
+                    .environment(\.appLanguage, language)
+            }
+            .sheet(item: $editingExchange) { exchange in
+                EditExchangeView(exchange: exchange)
                     .environment(\.appLanguage, language)
             }
         }
@@ -97,7 +103,7 @@ struct ExchangeView: View {
 
     private func activeExchangeRow(_ exchange: ExchangeModel) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            // Заголовок с датой
+            // Заголовок с датой и партнёром
             HStack {
                 Image(systemName: "arrow.2.squarepath")
                     .foregroundStyle(.teal)
@@ -105,7 +111,21 @@ struct ExchangeView: View {
                 Text(exchange.createdAt, style: .date)
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
+                if !exchange.partner.isEmpty {
+                    Text("·")
+                        .foregroundStyle(.secondary)
+                    Label(exchange.partner, systemImage: "person.circle")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
                 Spacer()
+                Button { editingExchange = exchange } label: {
+                    Image(systemName: "pencil")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
             }
 
             // Карточки
@@ -163,18 +183,80 @@ struct ExchangeView: View {
     // MARK: - Past row
 
     private func pastExchangeRow(_ exchange: ExchangeModel) -> some View {
-        HStack(spacing: 10) {
-            Image(systemName: exchange.status == .completed ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .foregroundStyle(exchange.status == .completed ? .green : .red)
-                .font(.system(size: 16))
+        let isExpanded = expandedPastIDs.contains(exchange.id)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(exchange.createdAt, style: .date)
-                    .font(.system(size: 12))
-                    .foregroundStyle(.secondary)
-                Text(summaryText(exchange))
-                    .font(.system(size: 13, weight: .medium))
-                    .lineLimit(1)
+        return VStack(alignment: .leading, spacing: 6) {
+            // Заголовок — всегда виден
+            HStack(spacing: 10) {
+                Image(systemName: exchange.status == .completed ? "checkmark.circle.fill" : "xmark.circle.fill")
+                    .foregroundStyle(exchange.status == .completed ? .green : .red)
+                    .font(.system(size: 16))
+
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 4) {
+                        Text(exchange.createdAt, style: .date)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                        if !exchange.partner.isEmpty {
+                            Text("·")
+                                .foregroundStyle(.secondary)
+                                .font(.system(size: 12))
+                            Text(exchange.partner)
+                                .font(.system(size: 12))
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                        }
+                    }
+                    if !isExpanded {
+                        Text(summaryText(exchange))
+                            .font(.system(size: 13, weight: .medium))
+                            .lineLimit(1)
+                            .foregroundStyle(.primary)
+                    }
+                }
+
+                Spacer()
+
+                Button {
+                    if isExpanded {
+                        expandedPastIDs.remove(exchange.id)
+                    } else {
+                        expandedPastIDs.insert(exchange.id)
+                    }
+                } label: {
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+
+                Button { editingExchange = exchange } label: {
+                    Image(systemName: "pencil")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+            }
+
+            // Раскрытые колонки
+            if isExpanded {
+                HStack(alignment: .top, spacing: 12) {
+                    stickerColumn(
+                        title: isRu ? "Отдал" : "Gave",
+                        entries: exchange.giving,
+                        color: .teal
+                    )
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 18)
+                    stickerColumn(
+                        title: isRu ? "Получил" : "Received",
+                        entries: exchange.wanting,
+                        color: .green
+                    )
+                }
+                .padding(.leading, 26)
             }
         }
         .padding(.vertical, 2)

@@ -12,10 +12,17 @@ struct ProgressStat {
     /// "10 / 20"
     var absoluteString: String { "\(pasted) / \(total)" }
 
-    /// "50%"
+    /// "50%", "25.3%", "25.33%"
     var percentString: String {
-        let value = Int((percent * 100).rounded())
-        return "\(value)%"
+        let value = percent * 100
+        let rounded = (value * 100).rounded() / 100
+        if rounded == rounded.rounded() {
+            return "\(Int(rounded))%"
+        } else if rounded * 10 == (rounded * 10).rounded() {
+            return String(format: "%.1f%%", rounded)
+        } else {
+            return String(format: "%.2f%%", rounded)
+        }
     }
 
     var isComplete: Bool { pasted == total && total > 0 }

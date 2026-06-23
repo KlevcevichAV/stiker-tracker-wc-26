@@ -32,8 +32,29 @@ struct NewExchangeView: View {
     @Query(filter: #Predicate<ExchangeModel> { $0.statusRaw == "active" })
     private var activeExchanges: [ExchangeModel]
 
-    @State private var givingSelections:  [StickerSelection] = []
-    @State private var wantingSelections: [StickerSelection] = []
+    @State private var givingSelections:  [StickerSelection]
+    @State private var wantingSelections: [StickerSelection]
+    @State private var partnerText: String = ""
+
+    /// Пустая форма
+    init() {
+        _givingSelections  = State(initialValue: [])
+        _wantingSelections = State(initialValue: [])
+    }
+
+    /// Предзаполненная форма из анализа обмена
+    init(prefillGiving: [StickerEntry], prefillWanting: [StickerEntry]) {
+        _givingSelections  = State(initialValue: NewExchangeView.toSelections(prefillGiving))
+        _wantingSelections = State(initialValue: NewExchangeView.toSelections(prefillWanting))
+    }
+
+    private static func toSelections(_ entries: [StickerEntry]) -> [StickerSelection] {
+        let grouped = Dictionary(grouping: entries, by: \.teamCode)
+        return grouped.keys.sorted().map { code in
+            let nums = Set(grouped[code]!.map { $0.number })
+            return StickerSelection(teamCode: code, teamName: code, teamFlag: "", numbers: nums)
+        }
+    }
 
     private var isRu: Bool { language.isRussian }
 
@@ -85,6 +106,33 @@ struct NewExchangeView: View {
                         reservedFn: alreadyReserved,
                         isRu: isRu
                     )
+
+                    Divider()
+
+                    // Необязательное поле — с кем обмен
+                    VStack(alignment: .leading, spacing: 6) {
+                        Label(isRu ? "С кем обмен" : "Exchange partner",
+                              systemImage: "person.circle")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(.secondary)
+
+                        HStack(spacing: 8) {
+                            Image(systemName: "at")
+                                .foregroundStyle(.secondary)
+                                .font(.system(size: 14))
+                            TextField(
+                                isRu ? "Никнейм или телефон (необязательно)" : "Nickname or phone (optional)",
+                                text: $partnerText
+                            )
+                            .font(.system(size: 14))
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 8)
+                        .background(Color(.secondarySystemBackground),
+                                    in: RoundedRectangle(cornerRadius: 10))
+                    }
                 }
                 .padding(16)
             }
@@ -99,6 +147,7 @@ struct NewExchangeView: View {
                         ExchangeService.create(
                             giving: givingSelections.flatMap { $0.toEntries() },
                             wanting: wantingSelections.flatMap { $0.toEntries() },
+                            partner: partnerText.trimmingCharacters(in: .whitespaces),
                             context: context
                         )
                         dismiss()
@@ -108,16 +157,37 @@ struct NewExchangeView: View {
                 }
             }
         }
+        .onAppear { enrichSelectionsWithTeamData() }
+    }
+
+    /// Заполняет teamName и teamFlag в предзаполненных StickerSelection (они пустые до загрузки teams)
+    private func enrichSelectionsWithTeamData() {
+        guard !teams.isEmpty else { return }
+        let teamMap = Dictionary(uniqueKeysWithValues: teams.map { ($0.code, $0) })
+        givingSelections = givingSelections.map { sel in
+            guard sel.teamFlag.isEmpty, let t = teamMap[sel.teamCode] else { return sel }
+            return StickerSelection(teamCode: sel.teamCode,
+                                    teamName: isRu ? t.nameRU : t.nameEN,
+                                    teamFlag: t.flagEmoji,
+                                    numbers: sel.numbers)
+        }
+        wantingSelections = wantingSelections.map { sel in
+            guard sel.teamFlag.isEmpty, let t = teamMap[sel.teamCode] else { return sel }
+            return StickerSelection(teamCode: sel.teamCode,
+                                    teamName: isRu ? t.nameRU : t.nameEN,
+                                    teamFlag: t.flagEmoji,
+                                    numbers: sel.numbers)
+        }
     }
 }
 
 // MARK: - Section mode
 
-private enum PickerMode { case giving, wanting }
+enum PickerMode { case giving, wanting }
 
 // MARK: - Picker section
 
-private struct StickerPickerSection: View {
+struct StickerPickerSection: View {
 
     let title: String
     let icon: String

@@ -85,7 +85,7 @@ enum TradeMessageParser {
     private static func parseTeamLine(_ line: String) -> [StickerEntry] {
         // Сначала пробуем формат 2: токены вида КОДЧИСЛО[(N)] через запятую
         // Паттерн: 3-4 заглавные буквы сразу за которыми число (без пробела)
-        let compactPattern = #"([A-Z]{3,4})(\d+)\s*(?:\([x×]?(\d+)\)|\*(\d+))?"#
+        let compactPattern = #"([A-Z]{3,4})(\d+)\s*(?:\([xхх×]?(\d+)\)|\*(\d+))?"#
         let compactRegex = try? NSRegularExpression(pattern: compactPattern)
         let nsLine = line as NSString
         let compactMatches = compactRegex?.matches(in: line, range: NSRange(line.startIndex..., in: line)) ?? []
@@ -161,8 +161,8 @@ enum TradeMessageParser {
 
     /// Парсит строку типа "1(x2), 5, 8(x3), 14 (2)" в массив StickerEntry
     private static func parseNumbers(_ s: String, teamCode: String) -> [StickerEntry] {
-        // Токенизируем по запятой
-        let tokens = s.components(separatedBy: ",")
+        // Токенизируем по запятой или слэшу
+        let tokens = s.components(separatedBy: CharacterSet(charactersIn: ",/"))
 
         // Считаем повторы одинаковых номеров (формат PAR1,1,1)
         var countByNumber: [Int: Int] = [:]
@@ -176,7 +176,7 @@ enum TradeMessageParser {
             // Нотацию торга (xнаy) уже отфильтровали раньше
 
             // Ищем все числа в токене
-            let numPattern = #"(\d+)\s*(?:\([x×]?(\d+)\)|\*(\d+))?"#
+            let numPattern = #"(\d+)\s*(?:\([xхх×]?(\d+)\)|\*(\d+))?"#
             guard let match = t.range(of: numPattern, options: .regularExpression) else { continue }
 
             // Вытаскиваем через NSRegularExpression для групп

@@ -1,6 +1,14 @@
 import SwiftUI
 import SwiftData
 
+// MARK: - Exchange prefill wrapper
+
+private struct ExchangePrefill: Identifiable {
+    let id = UUID()
+    let giving: [StickerEntry]
+    let wanting: [StickerEntry]
+}
+
 // MARK: - Analysis mode
 
 private enum AnalysisMode: Int, CaseIterable {
@@ -28,6 +36,7 @@ struct TradeAnalysisView: View {
     @State private var mode: AnalysisMode = .mutual
     @State private var result: TradeAnalysisResult? = nil
     @State private var isAnalyzing = false
+    @State private var exchangePrefill: ExchangePrefill? = nil
 
     private var isRu: Bool { language.isRussian }
 
@@ -46,6 +55,10 @@ struct TradeAnalysisView: View {
         .background(Color(.systemGroupedBackground))
         .navigationTitle(isRu ? "Анализ обменов" : "Trade Analysis")
         .navigationBarTitleDisplayMode(.large)
+        .sheet(item: $exchangePrefill) { prefill in
+            NewExchangeView(prefillGiving: prefill.giving, prefillWanting: prefill.wanting)
+                .environment(\.appLanguage, language)
+        }
     }
 
     // MARK: - Input
@@ -122,14 +135,16 @@ struct TradeAnalysisView: View {
                 items: r.theirDupesWeNeed,
                 title: isRu ? "Из их повторок нам нужны" : "From their dupes, we need",
                 emptyText: isRu ? "Из их повторок ничего не нужно" : "Nothing needed from their dupes",
-                accentColor: .green
+                accentColor: .green,
+                wantingItems: r.theirDupesWeNeed
             )
         case .theirSearch:
             simpleResultView(
                 items: r.theirSearchWeHave,
                 title: isRu ? "Из их поиска у нас в дублях" : "From their search, we have in dupes",
                 emptyText: isRu ? "Ничего подходящего в наших дублях" : "Nothing matching in our dupes",
-                accentColor: .orange
+                accentColor: .orange,
+                givingItems: r.theirSearchWeHave
             )
         }
     }
@@ -172,6 +187,7 @@ struct TradeAnalysisView: View {
                     color: .blue
                 )
             }
+            createExchangeButton(giving: canGive, wanting: canGet)
         }
 
         // Дополнительно
@@ -194,11 +210,14 @@ struct TradeAnalysisView: View {
     // MARK: - Simple result view
 
     @ViewBuilder
-    private func simpleResultView(items: [StickerEntry], title: String, emptyText: String, accentColor: Color) -> some View {
+    private func simpleResultView(items: [StickerEntry], title: String, emptyText: String, accentColor: Color, givingItems: [StickerEntry] = [], wantingItems: [StickerEntry] = []) -> some View {
         if items.isEmpty {
             emptyCard(text: emptyText)
         } else {
             stickerCard(title: "\(title) (\(items.count))", items: items, color: accentColor)
+            if !givingItems.isEmpty || !wantingItems.isEmpty {
+                createExchangeButton(giving: givingItems, wanting: wantingItems)
+            }
         }
     }
 
@@ -254,6 +273,21 @@ struct TradeAnalysisView: View {
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .background(chipColor, in: RoundedRectangle(cornerRadius: 7))
+    }
+
+    private func createExchangeButton(giving: [StickerEntry], wanting: [StickerEntry]) -> some View {
+        Button {
+            exchangePrefill = ExchangePrefill(giving: giving, wanting: wanting)
+        } label: {
+            Label(isRu ? "Создать обмен" : "Create exchange",
+                  systemImage: "arrow.2.squarepath")
+                .font(.system(size: 15, weight: .semibold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(Color.teal.opacity(0.15), in: RoundedRectangle(cornerRadius: 12))
+                .foregroundStyle(.teal)
+        }
+        .buttonStyle(.plain)
     }
 
     private func emptyCard(text: String) -> some View {

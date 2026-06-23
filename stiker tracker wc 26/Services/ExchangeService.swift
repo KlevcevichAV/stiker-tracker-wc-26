@@ -7,8 +7,9 @@ enum ExchangeService {
 
     static func create(giving: [StickerEntry],
                        wanting: [StickerEntry],
+                       partner: String = "",
                        context: ModelContext) {
-        let exchange = ExchangeModel(giving: giving, wanting: wanting)
+        let exchange = ExchangeModel(giving: giving, wanting: wanting, partner: partner)
         context.insert(exchange)
         try? context.save()
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()

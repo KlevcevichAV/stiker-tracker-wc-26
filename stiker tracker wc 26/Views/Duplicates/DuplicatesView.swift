@@ -44,6 +44,19 @@ struct DuplicatesView: View {
         return codes.map { (teamCode: $0, stickers: byCode[$0]!) }
     }
 
+    /// Группы по groupLetter: [(letter, [(teamCode, stickers)])]
+    private var groupedBySection: [(letter: String, teams: [(teamCode: String, stickers: [StickerModel])])] {
+        let teamMap = Dictionary(uniqueKeysWithValues: teams.map { ($0.code, $0) })
+        var byLetter: [String: [(teamCode: String, stickers: [StickerModel])]] = [:]
+        for item in grouped {
+            let letter = teamMap[item.teamCode]?.groupLetter ?? "?"
+            byLetter[letter, default: []].append(item)
+        }
+        // Сортируем секции по порядку букв
+        let sortedLetters = byLetter.keys.sorted()
+        return sortedLetters.map { (letter: $0, teams: byLetter[$0]!) }
+    }
+
     var body: some View {
         NavigationStack {
             Group {
@@ -86,11 +99,23 @@ struct DuplicatesView: View {
                 .padding(.vertical, 4)
             }
 
-            ForEach(grouped, id: \.teamCode) { group in
-                Section(header: teamHeader(group.teamCode, stickers: group.stickers)) {
-                    ForEach(group.stickers, id: \.id) { sticker in
-                        duplicateRow(sticker)
+            ForEach(groupedBySection, id: \.letter) { section in
+                Section {
+                    ForEach(section.teams, id: \.teamCode) { group in
+                        // Строка команды — заголовок + стикеры внутри
+                        DisclosureGroup {
+                            ForEach(group.stickers, id: \.id) { sticker in
+                                duplicateRow(sticker)
+                            }
+                        } label: {
+                            teamHeader(group.teamCode, stickers: group.stickers)
+                        }
                     }
+                } header: {
+                    Text(isRu ? "Группа \(section.letter)" : "Group \(section.letter)")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(.orange)
+                        .textCase(nil)
                 }
             }
         }
@@ -100,29 +125,19 @@ struct DuplicatesView: View {
     // MARK: - Team header
 
     private func teamHeader(_ code: String, stickers: [StickerModel]) -> some View {
-        let flag = stickers.first.flatMap { s in
-            let desc = FetchDescriptor<TeamModel>(
-                predicate: #Predicate { $0.code == code }
-            )
-            return (try? context.fetch(desc))?.first?.flagEmoji
-        } ?? ""
-        let name = stickers.first.flatMap { s in
-            let desc = FetchDescriptor<TeamModel>(
-                predicate: #Predicate { $0.code == code }
-            )
-            let team = (try? context.fetch(desc))?.first
-            return isRu ? team?.nameRU : team?.nameEN
-        } ?? code
+        let team = teams.first { $0.code == code }
+        let flag = team?.flagEmoji ?? ""
+        let name = (isRu ? team?.nameRU : team?.nameEN) ?? code
+        let total = stickers.reduce(0) { $0 + availableCount($1) }
 
         return HStack {
             Text("\(flag) \(name)")
-                .font(.system(size: 12, weight: .bold))
+                .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(.primary)
                 .textCase(nil)
             Spacer()
-            let total = stickers.reduce(0) { $0 + availableCount($1) }
             Text("×\(total)")
-                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                .font(.system(size: 12, weight: .bold, design: .rounded))
                 .foregroundStyle(.orange)
                 .textCase(nil)
         }
