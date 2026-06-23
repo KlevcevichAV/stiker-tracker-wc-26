@@ -39,6 +39,25 @@ final class ExchangeModel {
         set { wantingRaw = ExchangeModel.encode(newValue) }
     }
 
+    // MARK: - Restore from backup
+
+    static func __restore(
+        id: String,
+        createdAt: Date,
+        givingRaw: String,
+        wantingRaw: String,
+        statusRaw: String,
+        partner: String
+    ) -> ExchangeModel {
+        let ex = ExchangeModel(giving: [], wanting: [], partner: partner)
+        ex.id = id
+        ex.createdAt = createdAt
+        ex.givingRaw = givingRaw
+        ex.wantingRaw = wantingRaw
+        ex.statusRaw = statusRaw
+        return ex
+    }
+
     // MARK: - Helpers
 
     private static func encode(_ entries: [StickerEntry]) -> String {

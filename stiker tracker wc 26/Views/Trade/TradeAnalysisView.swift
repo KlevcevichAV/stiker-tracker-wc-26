@@ -37,6 +37,7 @@ struct TradeAnalysisView: View {
     @State private var result: TradeAnalysisResult? = nil
     @State private var isAnalyzing = false
     @State private var exchangePrefill: ExchangePrefill? = nil
+    @FocusState private var inputFocused: Bool
 
     private var isRu: Bool { language.isRussian }
 
@@ -83,6 +84,7 @@ struct TradeAnalysisView: View {
                 .background(.clear)
                 .frame(minHeight: 130, maxHeight: 220)
                 .padding(8)
+                .focused($inputFocused)
         }
         .frame(minHeight: 130, maxHeight: 220)
     }
@@ -307,6 +309,7 @@ struct TradeAnalysisView: View {
     // MARK: - Analyze logic
 
     private func analyze() {
+        inputFocused = false
         isAnalyzing = true
         let text = inputText
 

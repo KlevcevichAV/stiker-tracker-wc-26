@@ -245,7 +245,7 @@ struct StickerPickerSection: View {
                         .foregroundStyle(color)
                     Text(":")
                         .foregroundStyle(.secondary)
-                    Text(sel.numbers.sorted().map { "\($0)" }.joined(separator: ", "))
+                    Text(sel.numbers.sorted().map { $0 == 0 ? "00" : "\($0)" }.joined(separator: ", "))
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
                         .foregroundStyle(color)
                         .lineLimit(2)
@@ -368,9 +368,19 @@ struct StickerPickerSection: View {
     private func numberGrid(for team: TeamModel) -> some View {
         let teamStickers = stickerIndex[team.code] ?? [:]
         let cols = Array(repeating: GridItem(.flexible(), spacing: 6), count: 5)
-        return LazyVGrid(columns: cols, spacing: 6) {
-            ForEach(1...20, id: \.self) { n in
-                numberCell(n: n, team: team, teamStickers: teamStickers)
+        return VStack(alignment: .leading, spacing: 6) {
+            // Карточка 00 — отдельной строкой шириной одной ячейки
+            GeometryReader { geo in
+                let cellWidth = (geo.size.width - 6 * 4) / 5
+                numberCell(n: 0, team: team, teamStickers: teamStickers)
+                    .frame(width: cellWidth)
+            }
+            .frame(height: 36)
+            // Карточки 1–20
+            LazyVGrid(columns: cols, spacing: 6) {
+                ForEach(1...20, id: \.self) { n in
+                    numberCell(n: n, team: team, teamStickers: teamStickers)
+                }
             }
         }
     }
@@ -393,7 +403,7 @@ struct StickerPickerSection: View {
                 }
             } label: {
                 ZStack(alignment: .topTrailing) {
-                    Text("\(n)")
+                    Text(n == 0 ? "00" : "\(n)")
                         .font(.system(size: 13, weight: isOn ? .bold : .regular, design: .rounded))
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 7)
@@ -440,7 +450,7 @@ struct StickerPickerSection: View {
                 else     { selectedNums.insert(n) }
             } label: {
                 ZStack(alignment: .topTrailing) {
-                    Text("\(n)")
+                    Text(n == 0 ? "00" : "\(n)")
                         .font(.system(size: 13, weight: isOn ? .bold : .regular, design: .rounded))
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 7)

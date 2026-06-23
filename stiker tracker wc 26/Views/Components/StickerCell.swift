@@ -59,8 +59,7 @@ struct StickerCell: View {
             .animation(.interpolatingSpring(stiffness: 280, damping: 18), value: snapOffset)
             // Foil: переливающийся градиент поверх карточки
             .overlay(foilOverlay)
-            // Двойной тап — основной жест
-            .onTapGesture(count: 2, perform: handleDoubleTap)
+            .onTapGesture(perform: handleDoubleTap)
             .onAppear {
                 guard sticker.isFoil else { return }
                 withAnimation(.linear(duration: 2.4).repeatForever(autoreverses: true)) {

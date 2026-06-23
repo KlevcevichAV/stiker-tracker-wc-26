@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 @main
 struct stiker_tracker_wc_26App: App {
@@ -25,14 +26,7 @@ struct stiker_tracker_wc_26App: App {
         do {
             container = try ModelContainer(for: schema, configurations: config)
         } catch {
-            // Миграция не удалась — стираем старый стор и стартуем с чистого листа.
-            // Данные пересидируются из CSV при следующем запуске.
-            Self.deleteStore(config: config)
-            do {
-                container = try ModelContainer(for: schema, configurations: config)
-            } catch {
-                fatalError("SwiftData init failed after store reset: \(error)")
-            }
+            fatalError("SwiftData init failed: \(error)")
         }
 
         // Сброс флага при смене источника данных (stickers_db.json)
@@ -50,7 +44,17 @@ struct stiker_tracker_wc_26App: App {
         WindowGroup {
             ContentView()
                 .modelContainer(container)
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                    autoBackup()
+                }
         }
+    }
+
+    private func autoBackup() {
+        guard let data = try? BackupService.exportData(context: container.mainContext) else { return }
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("sticker_backup_auto.json")
+        try? data.write(to: url, options: .atomic)
     }
 
     // MARK: - Helpers
@@ -73,15 +77,5 @@ struct stiker_tracker_wc_26App: App {
         let albums = (try? context.fetch(FetchDescriptor<AlbumModel>())) ?? []
         albums.forEach { $0.isSeeded = false }
         try? context.save()
-    }
-
-    private static func deleteStore(config: ModelConfiguration) {
-        let url = config.url
-        let fm = FileManager.default
-        let base = url.deletingPathExtension()
-        for ext in ["store", "store-shm", "store-wal"] {
-            try? fm.removeItem(at: base.appendingPathExtension(ext))
-        }
-        try? fm.removeItem(at: url)
     }
 }
