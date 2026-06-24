@@ -5,7 +5,8 @@ import UIKit
 @main
 struct stiker_tracker_wc_26App: App {
 
-    let container: ModelContainer
+    let container: ModelContainer?
+    let migrationError: String?
 
     init() {
         let schema = Schema([
@@ -17,7 +18,6 @@ struct stiker_tracker_wc_26App: App {
             PurchaseModel.self,
         ])
 
-        // Конфигурация с разрешённой лёгкой миграцией
         let config = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false,
@@ -25,34 +25,39 @@ struct stiker_tracker_wc_26App: App {
         )
 
         do {
-            container = try ModelContainer(for: schema, configurations: config)
-        } catch {
-            fatalError("SwiftData init failed: \(error)")
-        }
+            let c = try ModelContainer(for: schema, configurations: config)
+            container = c
+            migrationError = nil
 
-        // Сброс флага при смене источника данных (stickers_db.json)
-        Self.resetSeedFlagIfNeeded(context: container.mainContext)
-
-        // Seed при первом запуске
-        do {
-            try SeedDataService.seedIfNeeded(context: container.mainContext)
+            Self.resetSeedFlagIfNeeded(context: c.mainContext)
+            do {
+                try SeedDataService.seedIfNeeded(context: c.mainContext)
+            } catch {
+                print("SeedDataService error: \(error)")
+            }
         } catch {
-            print("SeedDataService error: \(error)")
+            container = nil
+            migrationError = error.localizedDescription + "\n\n" + String(describing: error)
         }
     }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .modelContainer(container)
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                    autoBackup()
-                }
+            if let error = migrationError {
+                MigrationErrorView(errorText: error)
+            } else if let container {
+                ContentView()
+                    .modelContainer(container)
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                        autoBackup()
+                    }
+            }
         }
     }
 
     private func autoBackup() {
-        guard let data = try? BackupService.exportData(context: container.mainContext) else { return }
+        guard let container,
+              let data = try? BackupService.exportData(context: container.mainContext) else { return }
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("sticker_backup_auto.json")
         try? data.write(to: url, options: .atomic)
