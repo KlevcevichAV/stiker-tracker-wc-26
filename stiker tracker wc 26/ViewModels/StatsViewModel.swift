@@ -13,6 +13,13 @@ final class StatsViewModel {
     private(set) var groups: [GroupStat] = []
     private(set) var totalDuplicates: Int = 0
 
+    /// Сколько новых стикеров будет вклеено после завершения активных обменов
+    /// (только те wanting, которые сейчас missing)
+    private(set) var pendingIncoming: Int = 0
+
+    /// Сколько дублей будет отдано при завершении всех активных обменов
+    private(set) var pendingReserved: Int = 0
+
     // Все команды в алфавитном порядке (для слайдера стран)
     var teamsSortedAlpha: [TeamStat] {
         groups.flatMap(\.teams).sorted { $0.nameEN < $1.nameEN }
@@ -71,6 +78,27 @@ final class StatsViewModel {
         album = ProgressStat(pasted: totalPasted, total: AlbumModel.totalStickers)
         totalDuplicates = allStickers.filter { $0.status == .duplicate }
                                      .reduce(0) { $0 + $1.duplicateCount }
+
+        // Активные обмены: pending-дельта
+        let activeExchanges = fetchActiveExchanges(context: context)
+
+        // Индекс статусов стикеров по id
+        var statusById: [String: StickerStatus] = [:]
+        for s in allStickers { statusById[s.id] = s.status }
+
+        // pending incoming — только те wanting стикеры, которые сейчас missing (будут вклеены)
+        pendingIncoming = activeExchanges
+            .flatMap { $0.wanting }
+            .filter { entry in
+                let sid = "\(entry.teamCode)\(entry.number)"
+                return statusById[sid] == .missing
+            }
+            .reduce(0) { $0 + $1.count }
+
+        // pending reserved — суммарное количество дублей, зарезервированных в giving
+        pendingReserved = activeExchanges
+            .flatMap { $0.giving }
+            .reduce(0) { $0 + $1.count }
     }
 
     // MARK: - Convenience: прогресс одной команды по коду
@@ -90,6 +118,14 @@ final class StatsViewModel {
 
     private func fetchAllTeams(context: ModelContext) -> [TeamModel] {
         let descriptor = FetchDescriptor<TeamModel>(sortBy: [SortDescriptor(\.orderIndex)])
+        return (try? context.fetch(descriptor)) ?? []
+    }
+
+    private func fetchActiveExchanges(context: ModelContext) -> [ExchangeModel] {
+        let active = ExchangeStatus.active.rawValue
+        let descriptor = FetchDescriptor<ExchangeModel>(
+            predicate: #Predicate { $0.statusRaw == active }
+        )
         return (try? context.fetch(descriptor)) ?? []
     }
 

@@ -8,8 +8,11 @@ enum ExchangeService {
     static func create(giving: [StickerEntry],
                        wanting: [StickerEntry],
                        partner: String = "",
+                       meetingDate: Date = Date(),
+                       archived: Bool = false,
                        context: ModelContext) {
-        let exchange = ExchangeModel(giving: giving, wanting: wanting, partner: partner)
+        let exchange = ExchangeModel(giving: giving, wanting: wanting, partner: partner, meetingDate: meetingDate)
+        if archived { exchange.status = .completed }
         context.insert(exchange)
         try? context.save()
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()

@@ -14,6 +14,7 @@ struct stiker_tracker_wc_26App: App {
             StickerModel.self,
             AchievementRecord.self,
             ExchangeModel.self,
+            PurchaseModel.self,
         ])
 
         // Конфигурация с разрешённой лёгкой миграцией

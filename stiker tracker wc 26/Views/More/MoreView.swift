@@ -62,6 +62,15 @@ struct MoreView: View {
                 }
 
                 NavigationLink {
+                    FinanceView()
+                        .environment(\.appLanguage, language)
+                } label: {
+                    moreRow(icon: "banknote.fill", color: .green,
+                            title: isRu ? "Финансы" : "Finances",
+                            subtitle: isRu ? "Учёт расходов на коллекцию" : "Track collection expenses")
+                }
+
+                NavigationLink {
                     SettingsView()
                 } label: {
                     moreRow(icon: "gearshape.fill", color: .gray,

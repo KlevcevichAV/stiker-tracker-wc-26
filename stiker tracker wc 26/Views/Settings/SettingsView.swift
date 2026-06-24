@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+internal import UniformTypeIdentifiers
 
 struct SettingsView: View {
 

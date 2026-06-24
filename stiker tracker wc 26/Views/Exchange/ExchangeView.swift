@@ -10,10 +10,15 @@ struct ExchangeView: View {
     @Query(sort: \ExchangeModel.createdAt, order: .reverse)
     private var exchanges: [ExchangeModel]
 
+    @Query
+    private var allStickers: [StickerModel]
+
     @State private var showNewExchange  = false
     @State private var showHistory      = false
     @State private var editingExchange: ExchangeModel? = nil
     @State private var expandedPastIDs: Set<String> = []
+    @State private var showPartnerStats = false
+    @State private var restoringExchange: ExchangeModel? = nil
 
     private var isRu: Bool { language.isRussian }
 
@@ -23,6 +28,10 @@ struct ExchangeView: View {
 
     private var pastExchanges: [ExchangeModel] {
         exchanges.filter { $0.status != .active }
+    }
+
+    private var stickerIndex: [String: StickerModel] {
+        Dictionary(uniqueKeysWithValues: allStickers.map { ($0.id, $0) })
     }
 
     var body: some View {
@@ -38,13 +47,27 @@ struct ExchangeView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showNewExchange = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .fontWeight(.semibold)
+                    HStack(spacing: 4) {
+                        if exchanges.contains(where: { !$0.partner.isEmpty }) {
+                            Button {
+                                showPartnerStats = true
+                            } label: {
+                                Image(systemName: "person.2.fill")
+                                    .font(.system(size: 14))
+                            }
+                        }
+                        Button {
+                            showNewExchange = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .fontWeight(.semibold)
+                        }
                     }
                 }
+            }
+            .sheet(isPresented: $showPartnerStats) {
+                PartnerStatsView(exchanges: exchanges)
+                    .environment(\.appLanguage, language)
             }
             .sheet(isPresented: $showNewExchange) {
                 NewExchangeView()
@@ -53,6 +76,11 @@ struct ExchangeView: View {
             .sheet(item: $editingExchange) { exchange in
                 EditExchangeView(exchange: exchange)
                     .environment(\.appLanguage, language)
+            }
+            .sheet(item: $restoringExchange) { exchange in
+                RestoreExchangeView(exchange: exchange)
+                    .environment(\.appLanguage, language)
+                    .environment(\.achievementsManager, achievements)
             }
         }
         .environment(\.appLanguage, language)
@@ -108,7 +136,7 @@ struct ExchangeView: View {
                 Image(systemName: "arrow.2.squarepath")
                     .foregroundStyle(.teal)
                     .font(.system(size: 14, weight: .semibold))
-                Text(exchange.createdAt, style: .date)
+                Text(exchange.effectiveMeetingDate, style: .date)
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
                 if !exchange.partner.isEmpty {
@@ -118,6 +146,11 @@ struct ExchangeView: View {
                         .font(.system(size: 12))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
+                    if let trust = TrustLevel.compute(for: exchange.partner, in: exchanges) {
+                        Image(systemName: trust.icon)
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(trust.color)
+                    }
                 }
                 Spacer()
                 Button { editingExchange = exchange } label: {
@@ -144,7 +177,12 @@ struct ExchangeView: View {
                 stickerColumn(
                     title: isRu ? "Получаю" : "I receive",
                     entries: exchange.wanting,
-                    color: .green
+                    color: .green,
+                    ownedIDs: Set(exchange.wanting.map { "\($0.teamCode)\($0.number)" }
+                        .filter { sid in
+                            let s = stickerIndex[sid]
+                            return s?.status == .pasted || s?.status == .duplicate
+                        })
                 )
             }
 
@@ -194,7 +232,7 @@ struct ExchangeView: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 4) {
-                        Text(exchange.createdAt, style: .date)
+                        Text(exchange.effectiveMeetingDate, style: .date)
                             .font(.system(size: 12))
                             .foregroundStyle(.secondary)
                         if !exchange.partner.isEmpty {
@@ -257,6 +295,32 @@ struct ExchangeView: View {
                     )
                 }
                 .padding(.leading, 26)
+
+                if exchange.status == .cancelled {
+                    if let reason = exchange.cancellationReason {
+                        Label(isRu ? reason.nameRU : reason.nameEN, systemImage: reason.icon)
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(reason.color)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(reason.color.opacity(0.1), in: Capsule())
+                            .padding(.leading, 26)
+                    }
+
+                    Button {
+                        restoringExchange = exchange
+                    } label: {
+                        Label(isRu ? "Восстановить" : "Restore", systemImage: "arrow.uturn.backward.circle.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(Color.blue.opacity(0.12))
+                            .foregroundStyle(.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.leading, 26)
+                }
             }
         }
         .padding(.vertical, 2)
@@ -264,7 +328,8 @@ struct ExchangeView: View {
 
     // MARK: - Sticker column
 
-    private func stickerColumn(title: String, entries: [StickerEntry], color: Color) -> some View {
+    private func stickerColumn(title: String, entries: [StickerEntry],
+                                color: Color, ownedIDs: Set<String> = []) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.system(size: 11, weight: .semibold))
@@ -279,12 +344,34 @@ struct ExchangeView: View {
                         .font(.system(size: 11, weight: .bold, design: .monospaced))
                         .foregroundStyle(color)
                     ForEach(items) { entry in
-                        Text(entry.count > 1 ? "\(entry.number)×\(entry.count)" : "\(entry.number)")
-                            .font(.system(size: 11, design: .monospaced))
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 2)
-                            .background(color.opacity(0.12), in: RoundedRectangle(cornerRadius: 4))
-                            .foregroundStyle(color)
+                        let sid   = "\(entry.teamCode)\(entry.number)"
+                        let owned = ownedIDs.contains(sid)
+                        let label = entry.count > 1
+                            ? "\(entry.number)×\(entry.count)"
+                            : "\(entry.number)"
+                        VStack(spacing: 1) {
+                            Text(label)
+                                .font(.system(size: 11, design: .monospaced))
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 2)
+                                .background(
+                                    (owned ? Color.orange : color).opacity(0.15),
+                                    in: RoundedRectangle(cornerRadius: 4)
+                                )
+                                .foregroundStyle(owned ? Color.orange : color)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .strokeBorder(
+                                            owned ? Color.orange.opacity(0.5) : Color.clear,
+                                            lineWidth: 1
+                                        )
+                                )
+                            if owned {
+                                Text(isRu ? "есть" : "owned")
+                                    .font(.system(size: 8, weight: .medium))
+                                    .foregroundStyle(Color.orange)
+                            }
+                        }
                     }
                 }
             }

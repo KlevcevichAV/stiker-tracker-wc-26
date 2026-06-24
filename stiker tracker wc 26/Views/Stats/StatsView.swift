@@ -60,13 +60,25 @@ struct StatsView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     statRow(icon: "checkmark.circle.fill", color: .green,
                             label: isRu ? "Вклеено" : "Pasted",
-                            value: "\(stats.album.pasted)")
+                            value: "\(stats.album.pasted)",
+                            pending: stats.pendingIncoming > 0
+                                ? "+\(stats.pendingIncoming)"
+                                : nil,
+                            pendingColor: .green)
                     statRow(icon: "circle.dashed", color: .secondary,
                             label: isRu ? "Осталось" : "Missing",
-                            value: "\(stats.album.total - stats.album.pasted)")
+                            value: "\(stats.album.total - stats.album.pasted)",
+                            pending: stats.pendingIncoming > 0
+                                ? "-\(stats.pendingIncoming)"
+                                : nil,
+                            pendingColor: .green)
                     statRow(icon: "square.on.square.fill", color: .orange,
                             label: isRu ? "Дубликатов" : "Duplicates",
-                            value: "\(stats.totalDuplicates)")
+                            value: "\(stats.totalDuplicates)",
+                            pending: stats.pendingReserved > 0
+                                ? "-\(stats.pendingReserved)"
+                                : nil,
+                            pendingColor: .orange)
                 }
 
                 Spacer()
@@ -225,7 +237,8 @@ struct StatsView: View {
 
     // MARK: - Helpers
 
-    private func statRow(icon: String, color: Color, label: String, value: String) -> some View {
+    private func statRow(icon: String, color: Color, label: String, value: String,
+                         pending: String? = nil, pendingColor: Color = .secondary) -> some View {
         HStack(spacing: 8) {
             Image(systemName: icon)
                 .foregroundStyle(color)
@@ -234,8 +247,15 @@ struct StatsView: View {
                 .font(.system(size: 13))
                 .foregroundStyle(.secondary)
             Spacer()
-            Text(value)
-                .font(.system(size: 14, weight: .bold, design: .rounded))
+            HStack(spacing: 4) {
+                Text(value)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                if let pending {
+                    Text("(\(pending))")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundStyle(pendingColor.opacity(0.8))
+                }
+            }
         }
     }
 

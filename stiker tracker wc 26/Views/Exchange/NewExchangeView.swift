@@ -32,9 +32,14 @@ struct NewExchangeView: View {
     @Query(filter: #Predicate<ExchangeModel> { $0.statusRaw == "active" })
     private var activeExchanges: [ExchangeModel]
 
+    @Query
+    private var allExchanges: [ExchangeModel]
+
     @State private var givingSelections:  [StickerSelection]
     @State private var wantingSelections: [StickerSelection]
     @State private var partnerText: String = ""
+    @State private var meetingDate: Date = Date()
+    @State private var isArchive: Bool = false
 
     /// Пустая форма
     init() {
@@ -132,6 +137,48 @@ struct NewExchangeView: View {
                         .padding(.vertical, 8)
                         .background(Color(.secondarySystemBackground),
                                     in: RoundedRectangle(cornerRadius: 10))
+
+                        if let trust = TrustLevel.compute(
+                            for: partnerText.trimmingCharacters(in: .whitespaces),
+                            in: allExchanges
+                        ) {
+                            trustBadge(trust)
+                        }
+                    }
+
+                    // Дата встречи
+                    VStack(alignment: .leading, spacing: 6) {
+                        Label(isRu ? "Дата встречи" : "Meeting date",
+                              systemImage: "calendar")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(.secondary)
+
+                        DatePicker("", selection: $meetingDate, displayedComponents: .date)
+                            .labelsHidden()
+                            .datePickerStyle(.compact)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(Color(.secondarySystemBackground),
+                                        in: RoundedRectangle(cornerRadius: 10))
+                    }
+
+                    // Архивный обмен
+                    VStack(alignment: .leading, spacing: 6) {
+                        Toggle(isOn: $isArchive) {
+                            Label(isRu ? "Архивный обмен" : "Archive entry",
+                                  systemImage: "archivebox.fill")
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                        }
+                        .tint(.orange)
+
+                        if isArchive {
+                            Text(isRu
+                                 ? "Обмен будет сохранён как завершённый без изменения наклеек в альбоме"
+                                 : "Exchange will be saved as completed without changing stickers in the album")
+                                .font(.system(size: 12))
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
                 .padding(16)
@@ -148,6 +195,8 @@ struct NewExchangeView: View {
                             giving: givingSelections.flatMap { $0.toEntries() },
                             wanting: wantingSelections.flatMap { $0.toEntries() },
                             partner: partnerText.trimmingCharacters(in: .whitespaces),
+                            meetingDate: meetingDate,
+                            archived: isArchive,
                             context: context
                         )
                         dismiss()
@@ -158,6 +207,15 @@ struct NewExchangeView: View {
             }
         }
         .onAppear { enrichSelectionsWithTeamData() }
+    }
+
+    private func trustBadge(_ trust: TrustLevel) -> some View {
+        Label(isRu ? trust.nameRU : trust.nameEN, systemImage: trust.icon)
+            .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(trust.color)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(trust.color.opacity(0.1), in: Capsule())
     }
 
     /// Заполняет teamName и teamFlag в предзаполненных StickerSelection (они пустые до загрузки teams)
