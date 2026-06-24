@@ -113,6 +113,7 @@ final class ExchangeModel {
     var statusRaw: String    // ExchangeStatus.rawValue
     var partner: String      // никнейм/телефон, необязательно
     var cancellationReasonRaw: String?  // CancellationReason.rawValue, только для cancelled
+    var isArchived: Bool     // true — создан как архивный, альбом не менялся
 
     init(giving: [StickerEntry], wanting: [StickerEntry], partner: String = "", meetingDate: Date = Date()) {
         self.id = UUID().uuidString
@@ -122,6 +123,7 @@ final class ExchangeModel {
         self.wantingRaw = ExchangeModel.encode(wanting)
         self.statusRaw = ExchangeStatus.active.rawValue
         self.partner = partner
+        self.isArchived = false
     }
 
     /// Дата встречи с фолбэком на дату создания (для старых записей без meetingDate)

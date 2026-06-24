@@ -9,9 +9,7 @@ struct EditExchangeView: View {
 
     let exchange: ExchangeModel
 
-    // true  — активный обмен (меняем всё)
-    // false — завершённый/отменённый (только партнёр)
-    private var isFullEdit: Bool { exchange.status == .active }
+    private var isActive: Bool { exchange.status == .active }
 
     @Query(sort: \TeamModel.orderIndex)
     private var teams: [TeamModel]
@@ -34,7 +32,7 @@ struct EditExchangeView: View {
     private var isRu: Bool { language.isRussian }
 
     private var canSave: Bool {
-        !isFullEdit || (!givingSelections.isEmpty && !wantingSelections.isEmpty)
+        !givingSelections.isEmpty && !wantingSelections.isEmpty
     }
 
     private var stickerIndex: [String: [Int: StickerModel]] {
@@ -55,35 +53,35 @@ struct EditExchangeView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    if isFullEdit {
-                        StickerPickerSection(
-                            title: isRu ? "Что отдаю" : "I give",
-                            icon: "arrow.up.circle.fill",
-                            color: Color.teal,
-                            mode: .giving,
-                            selections: $givingSelections,
-                            teams: teams,
-                            stickerIndex: stickerIndex,
-                            reservedFn: alreadyReserved,
-                            isRu: isRu
-                        )
+                    StickerPickerSection(
+                        title: isRu ? "Что отдаю" : "I give",
+                        icon: "arrow.up.circle.fill",
+                        color: Color.teal,
+                        mode: .giving,
+                        selections: $givingSelections,
+                        teams: teams,
+                        stickerIndex: stickerIndex,
+                        reservedFn: alreadyReserved,
+                        isRu: isRu,
+                        isArchive: !isActive
+                    )
 
-                        Divider()
+                    Divider()
 
-                        StickerPickerSection(
-                            title: isRu ? "Что получаю" : "I receive",
-                            icon: "arrow.down.circle.fill",
-                            color: Color.green,
-                            mode: .wanting,
-                            selections: $wantingSelections,
-                            teams: teams,
-                            stickerIndex: stickerIndex,
-                            reservedFn: alreadyReserved,
-                            isRu: isRu
-                        )
+                    StickerPickerSection(
+                        title: isRu ? "Что получаю" : "I receive",
+                        icon: "arrow.down.circle.fill",
+                        color: Color.green,
+                        mode: .wanting,
+                        selections: $wantingSelections,
+                        teams: teams,
+                        stickerIndex: stickerIndex,
+                        reservedFn: alreadyReserved,
+                        isRu: isRu,
+                        isArchive: !isActive
+                    )
 
-                        Divider()
-                    }
+                    Divider()
 
                     partnerField
                 }
@@ -221,11 +219,8 @@ struct EditExchangeView: View {
         partnerText        = exchange.partner
         meetingDate        = exchange.effectiveMeetingDate
         cancellationReason = exchange.cancellationReason
-
-        guard isFullEdit else { return }
-
-        givingSelections  = entriesToSelections(exchange.giving)
-        wantingSelections = entriesToSelections(exchange.wanting)
+        givingSelections   = entriesToSelections(exchange.giving)
+        wantingSelections  = entriesToSelections(exchange.wanting)
     }
 
     private func entriesToSelections(_ entries: [StickerEntry]) -> [StickerSelection] {
@@ -248,14 +243,11 @@ struct EditExchangeView: View {
     // MARK: - Save
 
     private func save() {
-        exchange.partner             = partnerText.trimmingCharacters(in: .whitespaces)
-        exchange.meetingDate         = meetingDate
-        exchange.cancellationReason  = cancellationReason
-
-        if isFullEdit {
-            exchange.giving  = givingSelections.flatMap { $0.toEntries() }
-            exchange.wanting = wantingSelections.flatMap { $0.toEntries() }
-        }
+        exchange.partner            = partnerText.trimmingCharacters(in: .whitespaces)
+        exchange.meetingDate        = meetingDate
+        exchange.cancellationReason = cancellationReason
+        exchange.giving             = givingSelections.flatMap { $0.toEntries() }
+        exchange.wanting            = wantingSelections.flatMap { $0.toEntries() }
 
         try? context.save()
         dismiss()

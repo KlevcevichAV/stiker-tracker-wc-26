@@ -12,7 +12,7 @@ struct FinanceView: View {
     @Query
     private var allStickers: [StickerModel]
 
-    @Query(filter: #Predicate<ExchangeModel> { $0.statusRaw == "completed" })
+    @Query(filter: #Predicate<ExchangeModel> { $0.statusRaw == "completed" && !$0.isArchived })
     private var completedExchanges: [ExchangeModel]
 
     @State private var showAdd = false

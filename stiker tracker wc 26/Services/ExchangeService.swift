@@ -12,7 +12,10 @@ enum ExchangeService {
                        archived: Bool = false,
                        context: ModelContext) {
         let exchange = ExchangeModel(giving: giving, wanting: wanting, partner: partner, meetingDate: meetingDate)
-        if archived { exchange.status = .completed }
+        if archived {
+            exchange.status = .completed
+            exchange.isArchived = true
+        }
         context.insert(exchange)
         try? context.save()
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()

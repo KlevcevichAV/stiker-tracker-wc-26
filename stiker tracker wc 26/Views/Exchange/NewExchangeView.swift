@@ -95,7 +95,8 @@ struct NewExchangeView: View {
                         teams: teams,
                         stickerIndex: stickerIndex,
                         reservedFn: alreadyReserved,
-                        isRu: isRu
+                        isRu: isRu,
+                        isArchive: isArchive
                     )
 
                     Divider()
@@ -261,6 +262,7 @@ struct StickerPickerSection: View {
     let stickerIndex: [String: [Int: StickerModel]]
     let reservedFn: (String, Int) -> Int
     let isRu: Bool
+    var isArchive: Bool = false
 
     @State private var searchText      = ""
     @State private var selectedTeam: TeamModel? = nil
@@ -456,8 +458,12 @@ struct StickerPickerSection: View {
         switch mode {
         case .giving:
             let reserved  = reservedFn(team.code, n)
-            let available = max(0, (sticker?.duplicateCount ?? 0) - reserved)
-            let disabled  = available == 0
+            let hasDuplicates = (sticker?.duplicateCount ?? 0) - reserved > 0
+            let hasSticker    = sticker?.status == .pasted || (sticker?.duplicateCount ?? 0) > 0
+            let disabled      = isArchive ? !hasSticker : !hasDuplicates
+            let available: Int = isArchive
+                ? (sticker == nil ? 0 : ((sticker!.status == .pasted ? 1 : 0) + sticker!.duplicateCount))
+                : max(0, (sticker?.duplicateCount ?? 0) - reserved)
 
             Button {
                 if !disabled {
@@ -500,17 +506,21 @@ struct StickerPickerSection: View {
         case .wanting:
             let dupCount = sticker?.duplicateCount ?? 0
             let isPasted = sticker?.status == .pasted || dupCount > 0
-            // Уже есть в альбоме — подсвечиваем темнее
-            let bgColor: Color = isOn      ? color :
-                                 isPasted  ? color.opacity(0.25) :
-                                             Color(.secondarySystemBackground)
-            let fgColor: Color = isOn      ? .white :
-                                 isPasted  ? color :
-                                             .primary
+            let disabledWanting = isArchive && !isPasted
+            let bgColor: Color = isOn             ? color :
+                                 disabledWanting  ? Color(.systemGray5) :
+                                 isPasted         ? color.opacity(0.25) :
+                                                    Color(.secondarySystemBackground)
+            let fgColor: Color = isOn             ? .white :
+                                 disabledWanting  ? Color(.systemGray3) :
+                                 isPasted         ? color :
+                                                    .primary
 
             Button {
-                if isOn { selectedNums.remove(n) }
-                else     { selectedNums.insert(n) }
+                if !disabledWanting {
+                    if isOn { selectedNums.remove(n) }
+                    else     { selectedNums.insert(n) }
+                }
             } label: {
                 ZStack(alignment: .topTrailing) {
                     Text(n == 0 ? "00" : "\(n)")
@@ -521,7 +531,7 @@ struct StickerPickerSection: View {
                         .foregroundStyle(fgColor)
 
                     // Бейдж "уже есть"
-                    if isPasted && !isOn {
+                    if isPasted && !isOn && !disabledWanting {
                         Image(systemName: dupCount > 0 ? "square.on.square.fill" : "checkmark")
                             .font(.system(size: 6, weight: .bold))
                             .foregroundStyle(.white)
@@ -533,6 +543,7 @@ struct StickerPickerSection: View {
                 }
             }
             .buttonStyle(.plain)
+            .disabled(disabledWanting)
         }
     }
 

@@ -19,6 +19,7 @@ struct ExchangeView: View {
     @State private var expandedPastIDs: Set<String> = []
     @State private var showPartnerStats = false
     @State private var restoringExchange: ExchangeModel? = nil
+    @State private var copiedExchangeID: String? = nil
 
     private var isRu: Bool { language.isRussian }
 
@@ -153,6 +154,19 @@ struct ExchangeView: View {
                     }
                 }
                 Spacer()
+                let isCopied = copiedExchangeID == exchange.id
+                Button {
+                    UIPasteboard.general.string = exchangeMessage(exchange)
+                    copiedExchangeID = exchange.id
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        if copiedExchangeID == exchange.id { copiedExchangeID = nil }
+                    }
+                } label: {
+                    Image(systemName: isCopied ? "checkmark" : "doc.on.doc")
+                        .font(.system(size: 13))
+                        .foregroundStyle(isCopied ? Color.green : Color.secondary)
+                }
+                .buttonStyle(.plain)
                 Button { editingExchange = exchange } label: {
                     Image(systemName: "pencil")
                         .font(.system(size: 13))
@@ -331,10 +345,15 @@ struct ExchangeView: View {
     private func stickerColumn(title: String, entries: [StickerEntry],
                                 color: Color, ownedIDs: Set<String> = []) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(.secondary)
-                .textCase(.uppercase)
+            HStack(spacing: 4) {
+                Text(title)
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                Text("(\(entries.count))")
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundStyle(color.opacity(0.8))
+            }
 
             let grouped = Dictionary(grouping: entries, by: \.teamCode)
             ForEach(grouped.keys.sorted(), id: \.self) { code in
@@ -385,6 +404,24 @@ struct ExchangeView: View {
         let giveIDs = exchange.giving.map { "\($0.teamCode)\($0.number)" }.joined(separator: ",")
         let wantIDs = exchange.wanting.map { "\($0.teamCode)\($0.number)" }.joined(separator: ",")
         return "\(giveIDs) → \(wantIDs)"
+    }
+
+    private func exchangeMessage(_ exchange: ExchangeModel) -> String {
+        let myLabel   = isRu ? "Мои карточки:"   : "My stickers:"
+        let yourLabel = isRu ? "Ваши карточки:"  : "Your stickers:"
+        let question  = isRu ? "Подскажите, устраивает ли Вас такой обмен?" : "Does this exchange work for you?"
+
+        func formatEntries(_ entries: [StickerEntry]) -> String {
+            let grouped = Dictionary(grouping: entries, by: \.teamCode)
+            return grouped.keys.sorted().map { code in
+                let nums = (grouped[code] ?? []).sorted { $0.number < $1.number }
+                    .map { $0.number == 0 ? "00" : "\($0.number)" }
+                    .joined(separator: ", ")
+                return "\(code): \(nums)"
+            }.joined(separator: "\n")
+        }
+
+        return "\(myLabel)(\(exchange.giving.count)):\n\(formatEntries(exchange.giving))\n\n\(yourLabel)(\(exchange.wanting.count)):\n\(formatEntries(exchange.wanting))\n\n\(question)"
     }
 
     // MARK: - Empty state
