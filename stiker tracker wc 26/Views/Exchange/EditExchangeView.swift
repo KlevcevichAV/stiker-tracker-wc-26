@@ -22,6 +22,9 @@ struct EditExchangeView: View {
     @Query(filter: #Predicate<ExchangeModel> { $0.statusRaw == "active" })
     private var activeExchanges: [ExchangeModel]
 
+    @Query
+    private var allExchanges: [ExchangeModel]
+
     @State private var givingSelections:  [StickerSelection] = []
     @State private var wantingSelections: [StickerSelection] = []
     @State private var partnerText: String = ""
@@ -123,6 +126,11 @@ struct EditExchangeView: View {
                     .font(.system(size: 14))
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
+                    .onChange(of: partnerText) { _, new in
+                        if !new.isEmpty && !new.hasPrefix("@") && !looksLikePhone(new) {
+                            partnerText = "@" + new
+                        }
+                    }
                     if !partnerText.isEmpty {
                         Button { partnerText = "" } label: {
                             Image(systemName: "xmark.circle.fill")
@@ -135,6 +143,17 @@ struct EditExchangeView: View {
                 .padding(.vertical, 8)
                 .background(Color(.secondarySystemBackground),
                             in: RoundedRectangle(cornerRadius: 10))
+
+                let trimmed = partnerText.trimmingCharacters(in: .whitespaces)
+                let otherExchanges = allExchanges.filter { $0.id != exchange.id }
+                if let trust = TrustLevel.compute(for: trimmed, in: otherExchanges) {
+                    Label(isRu ? trust.nameRU : trust.nameEN, systemImage: trust.icon)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(trust.color)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(trust.color.opacity(0.1), in: Capsule())
+                }
             }
 
             VStack(alignment: .leading, spacing: 6) {

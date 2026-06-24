@@ -132,6 +132,11 @@ struct NewExchangeView: View {
                             .font(.system(size: 14))
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
+                            .onChange(of: partnerText) { _, new in
+                                if !new.isEmpty && !new.hasPrefix("@") && !looksLikePhone(new) {
+                                    partnerText = "@" + new
+                                }
+                            }
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 8)
@@ -564,4 +569,10 @@ struct StickerPickerSection: View {
         .buttonStyle(.plain)
         .disabled(selectedNums.isEmpty)
     }
+}
+
+// Начинается с +, цифры или скобки — скорее всего телефон
+func looksLikePhone(_ text: String) -> Bool {
+    guard let first = text.first else { return false }
+    return first == "+" || first == "(" || first.isNumber
 }
