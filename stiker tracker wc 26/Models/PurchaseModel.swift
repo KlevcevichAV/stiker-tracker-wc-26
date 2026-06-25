@@ -41,6 +41,16 @@ enum PurchaseKind: String, CaseIterable {
         }
     }
 
+    /// Паков в одной единице товара
+    var packsPerUnit: Int {
+        switch self {
+        case .album:    return 0
+        case .pack:     return 1
+        case .blister3: return 3
+        case .blister8: return 8
+        }
+    }
+
     var icon: String {
         switch self {
         case .album:    return "book.closed.fill"

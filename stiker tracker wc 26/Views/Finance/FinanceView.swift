@@ -22,6 +22,7 @@ struct FinanceView: View {
 
     private var totalSpent: Double  { purchases.reduce(0) { $0 + $1.totalCost } }
     private var totalStickers: Int  { purchases.reduce(0) { $0 + $1.stickerCount } }
+    private var totalPacks: Int     { purchases.reduce(0) { $0 + $1.kind.packsPerUnit * $1.quantity } }
 
     /// Реальное кол-во наклеек: вклеенные + все дубли
     private var actualStickers: Int {
@@ -211,6 +212,17 @@ struct FinanceView: View {
                 title: isRu ? "Куплено наклеек" : "Stickers bought",
                 value: "\(totalStickers)"
             )
+
+            if totalPacks > 0 {
+                Divider().frame(height: 40)
+
+                summaryCell(
+                    icon: "envelope.fill",
+                    color: .teal,
+                    title: isRu ? "Паков" : "Packs",
+                    value: "\(totalPacks)"
+                )
+            }
 
             if totalStickers > 0 {
                 Divider().frame(height: 40)
