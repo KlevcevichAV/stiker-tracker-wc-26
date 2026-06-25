@@ -11,6 +11,7 @@ struct SettingsView: View {
     @State private var isExporting = false
     @State private var isImporting = false
     @State private var alertMessage: String?
+    @State private var showAPIKeySheet = false
 
     private var language: Binding<AppLanguage> {
         Binding(
@@ -27,6 +28,7 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 languageSection
+                apiKeySection
                 backupSection
             }
             .listStyle(.insetGrouped)
@@ -47,6 +49,9 @@ struct SettingsView: View {
             Button("OK") { alertMessage = nil }
         } message: {
             Text(alertMessage ?? "")
+        }
+        .sheet(isPresented: $showAPIKeySheet) {
+            APIKeyEntryView()
         }
     }
 
@@ -77,6 +82,35 @@ struct SettingsView: View {
             Text(isRu
                  ? "Изменение применяется мгновенно."
                  : "Change applies instantly.")
+                .font(.footnote)
+        }
+    }
+
+    // MARK: - API Key section
+
+    private var apiKeySection: some View {
+        Section {
+            Button {
+                showAPIKeySheet = true
+            } label: {
+                HStack {
+                    Label(isRu ? "Добавить API ключ" : "Add API Key",
+                          systemImage: "key.fill")
+                    Spacer()
+                    if UserDefaults.standard.string(forKey: "openModelAPIKey")?.isEmpty == false {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                            .font(.system(size: 16))
+                    }
+                }
+            }
+        } header: {
+            Text(isRu ? "ИИ-анализ обменов" : "AI Trade Analysis")
+        } footer: {
+            let hasKey = UserDefaults.standard.string(forKey: "openModelAPIKey")?.isEmpty == false
+            Text(hasKey
+                 ? (isRu ? "API ключ сохранён. Кнопка «Анализ ИИ» доступна." : "API key saved. \"AI Analyze\" button is enabled.")
+                 : (isRu ? "Введите API ключ openmodel.ai, чтобы использовать ИИ-анализ обменов." : "Enter your openmodel.ai API key to enable AI trade analysis."))
                 .font(.footnote)
         }
     }
@@ -159,6 +193,83 @@ struct SettingsView: View {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
         return f.string(from: Date())
+    }
+}
+
+// MARK: - API Key Entry Sheet
+
+private struct APIKeyEntryView: View {
+
+    @AppStorage("openModelAPIKey") private var savedKey: String = ""
+    @AppStorage("appLanguage") private var languageRaw: String = AppLanguage.system.rawValue
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var draftKey: String = ""
+    @State private var isRevealed = false
+
+    private var isRu: Bool { (AppLanguage(rawValue: languageRaw) ?? .system).isRussian }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    HStack {
+                        Group {
+                            if isRevealed {
+                                TextField(isRu ? "Вставьте API ключ..." : "Paste API key...", text: $draftKey)
+                            } else {
+                                SecureField(isRu ? "Вставьте API ключ..." : "Paste API key...", text: $draftKey)
+                            }
+                        }
+                        .font(.system(size: 14, design: .monospaced))
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+
+                        Button {
+                            isRevealed.toggle()
+                        } label: {
+                            Image(systemName: isRevealed ? "eye.slash" : "eye")
+                                .foregroundStyle(.secondary)
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    if !savedKey.isEmpty {
+                        Button(role: .destructive) {
+                            savedKey = ""
+                            draftKey = ""
+                        } label: {
+                            Label(isRu ? "Удалить ключ" : "Remove Key",
+                                  systemImage: "trash")
+                        }
+                    }
+                } header: {
+                    Text("openmodel.ai API Key")
+                } footer: {
+                    Text(isRu
+                         ? "Ключ хранится локально на устройстве и используется только для ИИ-анализа обменов."
+                         : "The key is stored locally on your device and used only for AI trade analysis.")
+                        .font(.footnote)
+                }
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle(isRu ? "API Ключ" : "API Key")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(isRu ? "Отмена" : "Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(isRu ? "Сохранить" : "Save") {
+                        savedKey = draftKey.trimmingCharacters(in: .whitespacesAndNewlines)
+                        dismiss()
+                    }
+                    .disabled(draftKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .fontWeight(.semibold)
+                }
+            }
+        }
+        .onAppear { draftKey = savedKey }
     }
 }
 

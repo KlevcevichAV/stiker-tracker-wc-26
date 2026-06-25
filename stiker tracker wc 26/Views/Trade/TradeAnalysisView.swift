@@ -32,6 +32,8 @@ struct TradeAnalysisView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.appLanguage)  private var language
 
+    @AppStorage("openModelAPIKey") private var openModelAPIKey: String = ""
+
     @State private var inputText  = ""
     @State private var mode: AnalysisMode = .mutual
     @State private var result: TradeAnalysisResult? = nil
@@ -104,48 +106,65 @@ struct TradeAnalysisView: View {
     private var analyzeButtons: some View {
         let isEmpty = inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         let busy = isAnalyzing || isAIAnalyzing
-        return HStack(spacing: 10) {
-            Button {
-                analyze()
-            } label: {
-                HStack(spacing: 6) {
-                    if isAnalyzing {
-                        ProgressView().scaleEffect(0.8).tint(.white)
-                    } else {
-                        Image(systemName: "doc.text.magnifyingglass")
-                            .font(.system(size: 14))
+        let hasKey = !openModelAPIKey.isEmpty
+        return VStack(spacing: 8) {
+            HStack(spacing: 10) {
+                Button {
+                    analyze()
+                } label: {
+                    HStack(spacing: 6) {
+                        if isAnalyzing {
+                            ProgressView().scaleEffect(0.8).tint(.white)
+                        } else {
+                            Image(systemName: "doc.text.magnifyingglass")
+                                .font(.system(size: 14))
+                        }
+                        Text(isRu ? "Анализировать" : "Analyze")
+                            .font(.system(size: 14, weight: .semibold))
                     }
-                    Text(isRu ? "Анализировать" : "Analyze")
-                        .font(.system(size: 14, weight: .semibold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(isEmpty || busy ? Color(.systemGray4) : Color.blue,
+                                in: RoundedRectangle(cornerRadius: 12))
+                    .foregroundStyle(.white)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
-                .background(isEmpty || busy ? Color(.systemGray4) : Color.blue,
-                            in: RoundedRectangle(cornerRadius: 12))
-                .foregroundStyle(.white)
-            }
-            .disabled(isEmpty || busy)
+                .disabled(isEmpty || busy)
 
-            Button {
-                analyzeWithAI()
-            } label: {
-                HStack(spacing: 6) {
-                    if isAIAnalyzing {
-                        ProgressView().scaleEffect(0.8).tint(.white)
-                    } else {
-                        Image(systemName: "sparkles")
-                            .font(.system(size: 14))
+                Button {
+                    analyzeWithAI()
+                } label: {
+                    HStack(spacing: 6) {
+                        if isAIAnalyzing {
+                            ProgressView().scaleEffect(0.8).tint(.white)
+                        } else {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 14))
+                        }
+                        Text(isRu ? "Анализ ИИ" : "AI Analyze")
+                            .font(.system(size: 14, weight: .semibold))
                     }
-                    Text(isRu ? "Анализ ИИ" : "AI Analyze")
-                        .font(.system(size: 14, weight: .semibold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(isEmpty || busy || !hasKey ? Color(.systemGray4) : Color.purple,
+                                in: RoundedRectangle(cornerRadius: 12))
+                    .foregroundStyle(.white)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
-                .background(isEmpty || busy ? Color(.systemGray4) : Color.purple,
-                            in: RoundedRectangle(cornerRadius: 12))
-                .foregroundStyle(.white)
+                .disabled(isEmpty || busy || !hasKey)
             }
-            .disabled(isEmpty || busy)
+
+            if !hasKey {
+                HStack(spacing: 6) {
+                    Image(systemName: "key.fill")
+                        .font(.system(size: 12))
+                    Text(isRu
+                         ? "Добавьте API ключ в Настройках, чтобы использовать ИИ-анализ"
+                         : "Add an API key in Settings to enable AI analysis")
+                        .font(.system(size: 12))
+                }
+                .foregroundStyle(.orange)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 4)
+            }
         }
     }
 
