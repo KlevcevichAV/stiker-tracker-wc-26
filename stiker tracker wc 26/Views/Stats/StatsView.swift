@@ -5,8 +5,14 @@ struct StatsView: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.appLanguage)  private var language
+    @Environment(\.dismiss)      private var dismiss
+
+    @Binding var selectedTab: Int
+    @Binding var albumPageIndex: Int
+    @Binding var expandToGroup: String?
 
     @State private var stats = StatsViewModel()
+    @Query(sort: \TeamModel.orderIndex) private var teams: [TeamModel]
 
     private var isRu: Bool { language.isRussian }
 
@@ -126,7 +132,10 @@ struct StatsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(stats.groups, id: \.letter) { group in
-                        groupCard(group)
+                        Button { navigateToGroup(letter: group.letter) } label: {
+                            groupCard(group)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, 2)
@@ -140,9 +149,15 @@ struct StatsView: View {
         let missing = group.progress.total - group.progress.pasted
 
         return VStack(alignment: .leading, spacing: 10) {
-            Text(title)
-                .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(.primary)
+            HStack {
+                Text(title)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(.primary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(.tertiary)
+            }
 
             // Мини-круг
             ZStack {
@@ -183,7 +198,10 @@ struct StatsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(stats.teamsSortedAlpha, id: \.code) { team in
-                        countryCard(team)
+                        Button { navigateToTeam(code: team.code) } label: {
+                            countryCard(team)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, 2)
@@ -203,6 +221,10 @@ struct StatsView: View {
                     .font(.system(size: 12, weight: .bold))
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             }
 
             ZStack(alignment: .leading) {
@@ -271,6 +293,20 @@ struct StatsView: View {
             Text("\(value)")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
         }
+    }
+
+    private func navigateToTeam(code: String) {
+        if let idx = teams.firstIndex(where: { $0.code == code }) {
+            albumPageIndex = idx
+            selectedTab = 1
+            dismiss()
+        }
+    }
+
+    private func navigateToGroup(letter: String) {
+        expandToGroup = letter
+        selectedTab = 0
+        dismiss()
     }
 
     private func progressColor(_ percent: Double) -> Color {

@@ -4,6 +4,9 @@ struct MoreView: View {
 
     @Environment(\.appLanguage) private var language
     var achievements: AchievementsManager
+    @Binding var selectedTab: Int
+    @Binding var albumPageIndex: Int
+    @Binding var expandToGroup: String?
 
     private var isRu: Bool { language.isRussian }
 
@@ -11,7 +14,9 @@ struct MoreView: View {
         NavigationStack {
             List {
                 NavigationLink {
-                    StatsView()
+                    StatsView(selectedTab: $selectedTab,
+                              albumPageIndex: $albumPageIndex,
+                              expandToGroup: $expandToGroup)
                 } label: {
                     moreRow(icon: "chart.bar.fill", color: .blue,
                             title: isRu ? "Статистика" : "Statistics",

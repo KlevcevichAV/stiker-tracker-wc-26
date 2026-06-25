@@ -17,6 +17,7 @@ struct GroupsView: View {
     @Environment(\.appLanguage)  private var language
     @Binding var selectedTab: Int
     @Binding var albumPageIndex: Int
+    @Binding var expandToGroup: String?
 
     @State private var pages: [AlbumPage] = []
     @State private var expandedGroups: Set<String> = []
@@ -77,6 +78,12 @@ struct GroupsView: View {
             }
         }
         .onAppear { loadPages() }
+        .onChange(of: expandToGroup) { _, letter in
+            guard let letter else { return }
+            mode = .list
+            expandedGroups.insert(letter)
+            expandToGroup = nil
+        }
     }
 
     // MARK: - Mode picker

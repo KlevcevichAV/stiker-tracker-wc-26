@@ -4,6 +4,7 @@ struct ContentView: View {
 
     @State private var selectedTab: Int = 1
     @State private var albumPageIndex: Int = 0
+    @State private var expandToGroup: String? = nil
     @State private var achievements = AchievementsManager()
 
     @AppStorage("appLanguage") private var languageRaw: String = AppLanguage.system.rawValue
@@ -19,7 +20,8 @@ struct ContentView: View {
 
             // ── 1. Группы ────────────────────────────────────────────────
             GroupsView(selectedTab: $selectedTab,
-                       albumPageIndex: $albumPageIndex)
+                       albumPageIndex: $albumPageIndex,
+                       expandToGroup: $expandToGroup)
                 .environment(\.appLanguage, language)
                 .tabItem {
                     Label(isRu ? "Группы" : "Groups",
@@ -38,7 +40,10 @@ struct ContentView: View {
                 .tag(1)
 
             // ── 3. Ещё ───────────────────────────────────────────────────
-            MoreView(achievements: achievements)
+            MoreView(achievements: achievements,
+                     selectedTab: $selectedTab,
+                     albumPageIndex: $albumPageIndex,
+                     expandToGroup: $expandToGroup)
                 .environment(\.appLanguage, language)
                 .tabItem {
                     Label(isRu ? "Ещё" : "More",
