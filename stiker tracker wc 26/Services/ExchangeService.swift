@@ -10,11 +10,18 @@ enum ExchangeService {
                        partner: String = "",
                        meetingDate: Date = Date(),
                        archived: Bool = false,
+                       archiveCancelled: Bool = false,
+                       archiveCancellationReason: CancellationReason? = nil,
                        context: ModelContext) {
         let exchange = ExchangeModel(giving: giving, wanting: wanting, partner: partner, meetingDate: meetingDate)
         if archived {
-            exchange.status = .completed
             exchange.isArchived = true
+            if archiveCancelled {
+                exchange.status = .cancelled
+                exchange.cancellationReason = archiveCancellationReason
+            } else {
+                exchange.status = .completed
+            }
         }
         context.insert(exchange)
         try? context.save()

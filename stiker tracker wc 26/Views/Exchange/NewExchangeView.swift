@@ -40,6 +40,8 @@ struct NewExchangeView: View {
     @State private var partnerText: String = ""
     @State private var meetingDate: Date = Date()
     @State private var isArchive: Bool = false
+    @State private var archiveCancelled: Bool = false
+    @State private var archiveCancellationReason: CancellationReason? = nil
 
     /// Пустая форма
     init() {
@@ -208,7 +210,7 @@ struct NewExchangeView: View {
                     }
 
                     // Архивный обмен
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: 10) {
                         Toggle(isOn: $isArchive) {
                             Label(isRu ? "Архивный обмен" : "Archive entry",
                                   systemImage: "archivebox.fill")
@@ -216,11 +218,84 @@ struct NewExchangeView: View {
                                 .foregroundStyle(.secondary)
                         }
                         .tint(.orange)
+                        .onChange(of: isArchive) { _, new in
+                            if !new {
+                                archiveCancelled = false
+                                archiveCancellationReason = nil
+                            }
+                        }
 
                         if isArchive {
-                            Text(isRu
-                                 ? "Обмен будет сохранён как завершённый без изменения наклеек в альбоме"
-                                 : "Exchange will be saved as completed without changing stickers in the album")
+                            // Выбор исхода
+                            HStack(spacing: 8) {
+                                Button {
+                                    archiveCancelled = false
+                                    archiveCancellationReason = nil
+                                } label: {
+                                    Label(isRu ? "Завершён" : "Completed",
+                                          systemImage: "checkmark.circle.fill")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 8)
+                                        .background(!archiveCancelled ? Color.green.opacity(0.15) : Color(.secondarySystemBackground))
+                                        .foregroundStyle(!archiveCancelled ? Color.green : Color.secondary)
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                                .buttonStyle(.plain)
+
+                                Button {
+                                    archiveCancelled = true
+                                } label: {
+                                    Label(isRu ? "Отменён" : "Cancelled",
+                                          systemImage: "xmark.circle.fill")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 8)
+                                        .background(archiveCancelled ? Color.red.opacity(0.12) : Color(.secondarySystemBackground))
+                                        .foregroundStyle(archiveCancelled ? Color.red : Color.secondary)
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                                .buttonStyle(.plain)
+                            }
+
+                            if archiveCancelled {
+                                VStack(spacing: 0) {
+                                    ForEach(CancellationReason.allCases, id: \.self) { reason in
+                                        Button {
+                                            archiveCancellationReason = archiveCancellationReason == reason ? nil : reason
+                                        } label: {
+                                            HStack(spacing: 10) {
+                                                Image(systemName: reason.icon)
+                                                    .foregroundStyle(archiveCancellationReason == reason ? reason.color : .secondary)
+                                                    .font(.system(size: 14))
+                                                    .frame(width: 20)
+                                                Text(isRu ? reason.nameRU : reason.nameEN)
+                                                    .font(.system(size: 14))
+                                                    .foregroundStyle(.primary)
+                                                Spacer()
+                                                if archiveCancellationReason == reason {
+                                                    Image(systemName: "checkmark")
+                                                        .font(.system(size: 13, weight: .semibold))
+                                                        .foregroundStyle(reason.color)
+                                                }
+                                            }
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 10)
+                                        }
+                                        .buttonStyle(.plain)
+
+                                        if reason != CancellationReason.allCases.last {
+                                            Divider().padding(.leading, 42)
+                                        }
+                                    }
+                                }
+                                .background(Color(.secondarySystemBackground),
+                                            in: RoundedRectangle(cornerRadius: 10))
+                            }
+
+                            Text(archiveCancelled
+                                 ? (isRu ? "Обмен будет сохранён как отменённый" : "Exchange will be saved as cancelled")
+                                 : (isRu ? "Обмен будет сохранён как завершённый без изменения наклеек в альбоме" : "Exchange will be saved as completed without changing stickers in the album"))
                                 .font(.system(size: 12))
                                 .foregroundStyle(.secondary)
                         }
@@ -242,6 +317,8 @@ struct NewExchangeView: View {
                             partner: partnerText.trimmingCharacters(in: .whitespaces),
                             meetingDate: meetingDate,
                             archived: isArchive,
+                            archiveCancelled: archiveCancelled,
+                            archiveCancellationReason: archiveCancellationReason,
                             context: context
                         )
                         dismiss()

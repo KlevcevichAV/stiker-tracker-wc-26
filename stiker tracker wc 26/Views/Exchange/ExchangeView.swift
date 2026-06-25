@@ -16,6 +16,7 @@ struct ExchangeView: View {
     @State private var showNewExchange  = false
     @State private var showHistory      = false
     @State private var editingExchange: ExchangeModel? = nil
+    @State private var expandedActiveIDs: Set<String> = []
     @State private var expandedPastIDs: Set<String> = []
     @State private var showPartnerStats = false
     @State private var restoringExchange: ExchangeModel? = nil
@@ -131,29 +132,45 @@ struct ExchangeView: View {
     // MARK: - Active row
 
     private func activeExchangeRow(_ exchange: ExchangeModel) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            // Заголовок с датой и партнёром
-            HStack {
+        let isExpanded = expandedActiveIDs.contains(exchange.id)
+
+        return VStack(alignment: .leading, spacing: 6) {
+            // Заголовок — всегда виден
+            HStack(spacing: 10) {
                 Image(systemName: "arrow.2.squarepath")
                     .foregroundStyle(.teal)
-                    .font(.system(size: 14, weight: .semibold))
-                Text(exchange.effectiveMeetingDate, style: .date)
-                    .font(.system(size: 12))
-                    .foregroundStyle(.secondary)
-                if !exchange.partner.isEmpty {
-                    Text("·")
-                        .foregroundStyle(.secondary)
-                    Label(exchange.partner, systemImage: "person.circle")
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                    if let trust = TrustLevel.compute(for: exchange.partner, in: exchanges) {
-                        Image(systemName: trust.icon)
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(trust.color)
+                    .font(.system(size: 16))
+
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 4) {
+                        Text(exchange.effectiveMeetingDate, style: .date)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                        if !exchange.partner.isEmpty {
+                            Text("·")
+                                .foregroundStyle(.secondary)
+                                .font(.system(size: 12))
+                            Text(exchange.partner)
+                                .font(.system(size: 12))
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                            if let trust = TrustLevel.compute(for: exchange.partner, in: exchanges) {
+                                Image(systemName: trust.icon)
+                                    .font(.system(size: 11, weight: .semibold))
+                                    .foregroundStyle(trust.color)
+                            }
+                        }
+                    }
+                    if !isExpanded {
+                        Text(summaryText(exchange))
+                            .font(.system(size: 13, weight: .medium))
+                            .lineLimit(1)
+                            .foregroundStyle(.primary)
                     }
                 }
+
                 Spacer()
+
                 let isCopied = copiedExchangeID == exchange.id
                 Button {
                     UIPasteboard.general.string = exchangeMessage(exchange)
@@ -167,77 +184,89 @@ struct ExchangeView: View {
                         .foregroundStyle(isCopied ? Color.green : Color.secondary)
                 }
                 .buttonStyle(.plain)
+
                 Button { editingExchange = exchange } label: {
                     Image(systemName: "pencil")
                         .font(.system(size: 13))
                         .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
-            }
-
-            // Карточки
-            HStack(alignment: .top, spacing: 12) {
-                stickerColumn(
-                    title: isRu ? "Отдаю" : "I give",
-                    entries: exchange.giving,
-                    color: .teal
-                )
-
-                Image(systemName: "arrow.right")
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(.secondary)
-                    .padding(.top, 18)
-
-                stickerColumn(
-                    title: isRu ? "Получаю" : "I receive",
-                    entries: exchange.wanting,
-                    color: .green,
-                    ownedIDs: Set(exchange.wanting.map { "\($0.teamCode)\($0.number)" }
-                        .filter { sid in
-                            let s = stickerIndex[sid]
-                            return s?.status == .pasted || s?.status == .duplicate
-                        }),
-                    incomingIDs: Set(exchange.wanting.map { "\($0.teamCode)\($0.number)" }
-                        .filter { sid in
-                            let othersIncoming = activeExchanges
-                                .filter { $0.id != exchange.id }
-                                .flatMap { $0.wanting }
-                                .map { "\($0.teamCode)\($0.number)" }
-                            return othersIncoming.contains(sid)
-                        })
-                )
-            }
-
-            // Кнопки действий
-            HStack(spacing: 8) {
-                Button {
-                    ExchangeService.complete(exchange, context: context, achievements: achievements)
-                } label: {
-                    Label(isRu ? "Завершить" : "Complete", systemImage: "checkmark.circle.fill")
-                        .font(.system(size: 13, weight: .semibold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(Color.green.opacity(0.15))
-                        .foregroundStyle(.green)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                }
-                .buttonStyle(.plain)
 
                 Button {
-                    ExchangeService.cancel(exchange, context: context)
+                    if isExpanded { expandedActiveIDs.remove(exchange.id) }
+                    else          { expandedActiveIDs.insert(exchange.id) }
                 } label: {
-                    Label(isRu ? "Отменить" : "Cancel", systemImage: "xmark.circle.fill")
-                        .font(.system(size: 13, weight: .semibold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(Color.red.opacity(0.10))
-                        .foregroundStyle(.red)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
+            }
+
+            // Раскрытые колонки
+            if isExpanded {
+                HStack(alignment: .top, spacing: 12) {
+                    stickerColumn(
+                        title: isRu ? "Отдаю" : "I give",
+                        entries: exchange.giving,
+                        color: .teal
+                    )
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 18)
+                    stickerColumn(
+                        title: isRu ? "Получаю" : "I receive",
+                        entries: exchange.wanting,
+                        color: .green,
+                        ownedIDs: Set(exchange.wanting.map { "\($0.teamCode)\($0.number)" }
+                            .filter { sid in
+                                let s = stickerIndex[sid]
+                                return s?.status == .pasted || s?.status == .duplicate
+                            }),
+                        incomingIDs: Set(exchange.wanting.map { "\($0.teamCode)\($0.number)" }
+                            .filter { sid in
+                                let othersIncoming = activeExchanges
+                                    .filter { $0.id != exchange.id }
+                                    .flatMap { $0.wanting }
+                                    .map { "\($0.teamCode)\($0.number)" }
+                                return othersIncoming.contains(sid)
+                            })
+                    )
+                }
+                .padding(.leading, 26)
+
+                HStack(spacing: 8) {
+                    Button {
+                        ExchangeService.complete(exchange, context: context, achievements: achievements)
+                    } label: {
+                        Label(isRu ? "Завершить" : "Complete", systemImage: "checkmark.circle.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(Color.green.opacity(0.15))
+                            .foregroundStyle(.green)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .buttonStyle(.plain)
+
+                    Button {
+                        ExchangeService.cancel(exchange, context: context)
+                    } label: {
+                        Label(isRu ? "Отменить" : "Cancel", systemImage: "xmark.circle.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(Color.red.opacity(0.10))
+                            .foregroundStyle(.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.leading, 26)
             }
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, 2)
     }
 
     // MARK: - Past row
