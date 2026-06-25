@@ -82,6 +82,21 @@ struct NewExchangeView: View {
         return ExchangeService.reservedCount(for: id, in: activeExchanges)
     }
 
+    /// Сколько штук данного стикера уже ожидается в активных обменах
+    private func alreadyIncoming(teamCode: String, number: Int) -> Int {
+        let id = "\(teamCode)\(number)"
+        return ExchangeService.incomingCount(for: id, in: activeExchanges)
+    }
+
+    /// Карточки из "Что получаю" которые уже ожидаются в другом активном обмене
+    private var conflictingWanting: [(teamCode: String, number: Int)] {
+        wantingSelections.flatMap { sel in
+            sel.numbers.compactMap { n -> (String, Int)? in
+                alreadyIncoming(teamCode: sel.teamCode, number: n) > 0 ? (sel.teamCode, n) : nil
+            }
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -110,8 +125,32 @@ struct NewExchangeView: View {
                         teams: teams,
                         stickerIndex: stickerIndex,
                         reservedFn: alreadyReserved,
+                        incomingFn: alreadyIncoming,
                         isRu: isRu
                     )
+
+                    if !conflictingWanting.isEmpty {
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.yellow)
+                                .font(.system(size: 14))
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(isRu ? "Уже ожидается в другом обмене" : "Already pending in another exchange")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundStyle(.primary)
+                                let names = conflictingWanting
+                                    .map { "\($0.teamCode) \($0.number == 0 ? "00" : "\($0.number)")" }
+                                    .joined(separator: ", ")
+                                Text(names)
+                                    .font(.system(size: 12, design: .monospaced))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.yellow.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.yellow.opacity(0.4), lineWidth: 1))
+                    }
 
                     Divider()
 
@@ -261,6 +300,7 @@ struct StickerPickerSection: View {
     let teams: [TeamModel]
     let stickerIndex: [String: [Int: StickerModel]]
     let reservedFn: (String, Int) -> Int
+    var incomingFn: (String, Int) -> Int = { _, _ in 0 }
     let isRu: Bool
     var isArchive: Bool = false
 
@@ -302,18 +342,33 @@ struct StickerPickerSection: View {
     private var addedChips: some View {
         VStack(alignment: .leading, spacing: 6) {
             ForEach(selections) { sel in
+                let conflictNums: Set<Int> = mode == .wanting
+                    ? Set(sel.numbers.filter { incomingFn(sel.teamCode, $0) > 0 })
+                    : []
+                let hasConflict = !conflictNums.isEmpty
                 HStack(spacing: 6) {
                     Text(sel.teamFlag)
                         .font(.system(size: 16))
                     Text(sel.teamCode)
                         .font(.system(size: 13, weight: .bold, design: .monospaced))
-                        .foregroundStyle(color)
+                        .foregroundStyle(hasConflict ? Color.yellow : color)
                     Text(":")
                         .foregroundStyle(.secondary)
-                    Text(sel.numbers.sorted().map { $0 == 0 ? "00" : "\($0)" }.joined(separator: ", "))
-                        .font(.system(size: 11, weight: .semibold, design: .rounded))
-                        .foregroundStyle(color)
-                        .lineLimit(2)
+                    // Числа: конфликтные — жёлтым, остальные — обычным цветом
+                    HStack(spacing: 3) {
+                        ForEach(sel.numbers.sorted(), id: \.self) { n in
+                            let isConflict = conflictNums.contains(n)
+                            Text(n == 0 ? "00" : "\(n)")
+                                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                                .foregroundStyle(isConflict ? Color.yellow : color)
+                                .padding(.horizontal, isConflict ? 5 : 0)
+                                .padding(.vertical, isConflict ? 2 : 0)
+                                .background(
+                                    isConflict ? Color.yellow.opacity(0.2) : Color.clear,
+                                    in: RoundedRectangle(cornerRadius: 4)
+                                )
+                        }
+                    }
                     Spacer()
                     Button {
                         selections.removeAll { $0.id == sel.id }
@@ -326,7 +381,15 @@ struct StickerPickerSection: View {
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
-                .background(color.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
+                .background(
+                    hasConflict ? Color.yellow.opacity(0.08) : color.opacity(0.08),
+                    in: RoundedRectangle(cornerRadius: 10)
+                )
+                .overlay(
+                    hasConflict
+                        ? RoundedRectangle(cornerRadius: 10).strokeBorder(Color.yellow.opacity(0.4), lineWidth: 1)
+                        : nil
+                )
             }
         }
     }
@@ -506,15 +569,18 @@ struct StickerPickerSection: View {
         case .wanting:
             let dupCount = sticker?.duplicateCount ?? 0
             let isPasted = sticker?.status == .pasted || dupCount > 0
+            let incoming = incomingFn(team.code, n)
             let disabledWanting = isArchive && !isPasted
-            let bgColor: Color = isOn             ? color :
-                                 disabledWanting  ? Color(.systemGray5) :
-                                 isPasted         ? color.opacity(0.25) :
-                                                    Color(.secondarySystemBackground)
-            let fgColor: Color = isOn             ? .white :
-                                 disabledWanting  ? Color(.systemGray3) :
-                                 isPasted         ? color :
-                                                    .primary
+            let bgColor: Color = isOn            ? (incoming > 0 ? Color.orange : color) :
+                                 disabledWanting ? Color(.systemGray5) :
+                                 incoming > 0    ? Color.orange.opacity(0.15) :
+                                 isPasted        ? color.opacity(0.25) :
+                                                   Color(.secondarySystemBackground)
+            let fgColor: Color = isOn            ? .white :
+                                 disabledWanting ? Color(.systemGray3) :
+                                 incoming > 0    ? Color.orange :
+                                 isPasted        ? color :
+                                                   .primary
 
             Button {
                 if !disabledWanting {
@@ -530,8 +596,17 @@ struct StickerPickerSection: View {
                         .background(bgColor, in: RoundedRectangle(cornerRadius: 8))
                         .foregroundStyle(fgColor)
 
-                    // Бейдж "уже есть"
-                    if isPasted && !isOn && !disabledWanting {
+                    if incoming > 0 && !isOn {
+                        // Бейдж "уже ожидается в обмене"
+                        Text("↓\(incoming)")
+                            .font(.system(size: 7, weight: .bold, design: .rounded))
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 3)
+                            .padding(.vertical, 1)
+                            .background(Color.orange.opacity(0.9), in: RoundedRectangle(cornerRadius: 3))
+                            .padding(2)
+                    } else if isPasted && !isOn && !disabledWanting && incoming == 0 {
+                        // Бейдж "уже есть"
                         Image(systemName: dupCount > 0 ? "square.on.square.fill" : "checkmark")
                             .font(.system(size: 6, weight: .bold))
                             .foregroundStyle(.white)

@@ -113,7 +113,7 @@ final class ExchangeModel {
     var statusRaw: String    // ExchangeStatus.rawValue
     var partner: String      // никнейм/телефон, необязательно
     var cancellationReasonRaw: String?  // CancellationReason.rawValue, только для cancelled
-    var isArchived: Bool     // true — создан как архивный, альбом не менялся
+    var isArchived: Bool = false     // true — создан как архивный, альбом не менялся
 
     init(giving: [StickerEntry], wanting: [StickerEntry], partner: String = "", meetingDate: Date = Date()) {
         self.id = UUID().uuidString

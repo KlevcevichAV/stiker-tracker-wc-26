@@ -49,6 +49,20 @@ struct EditExchangeView: View {
         return ExchangeService.reservedCount(for: id, in: others)
     }
 
+    private func alreadyIncoming(teamCode: String, number: Int) -> Int {
+        let id = "\(teamCode)\(number)"
+        let others = activeExchanges.filter { $0.id != exchange.id }
+        return ExchangeService.incomingCount(for: id, in: others)
+    }
+
+    private var conflictingWanting: [(teamCode: String, number: Int)] {
+        wantingSelections.flatMap { sel in
+            sel.numbers.compactMap { n -> (String, Int)? in
+                alreadyIncoming(teamCode: sel.teamCode, number: n) > 0 ? (sel.teamCode, n) : nil
+            }
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -77,9 +91,33 @@ struct EditExchangeView: View {
                         teams: teams,
                         stickerIndex: stickerIndex,
                         reservedFn: alreadyReserved,
+                        incomingFn: alreadyIncoming,
                         isRu: isRu,
                         isArchive: !isActive
                     )
+
+                    if !conflictingWanting.isEmpty {
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.yellow)
+                                .font(.system(size: 14))
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(isRu ? "Уже ожидается в другом обмене" : "Already pending in another exchange")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundStyle(.primary)
+                                let names = conflictingWanting
+                                    .map { "\($0.teamCode) \($0.number == 0 ? "00" : "\($0.number)")" }
+                                    .joined(separator: ", ")
+                                Text(names)
+                                    .font(.system(size: 12, design: .monospaced))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.yellow.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.yellow.opacity(0.4), lineWidth: 1))
+                    }
 
                     Divider()
 

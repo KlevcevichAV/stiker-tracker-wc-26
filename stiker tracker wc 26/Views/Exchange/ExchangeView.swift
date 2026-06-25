@@ -196,6 +196,14 @@ struct ExchangeView: View {
                         .filter { sid in
                             let s = stickerIndex[sid]
                             return s?.status == .pasted || s?.status == .duplicate
+                        }),
+                    incomingIDs: Set(exchange.wanting.map { "\($0.teamCode)\($0.number)" }
+                        .filter { sid in
+                            let othersIncoming = activeExchanges
+                                .filter { $0.id != exchange.id }
+                                .flatMap { $0.wanting }
+                                .map { "\($0.teamCode)\($0.number)" }
+                            return othersIncoming.contains(sid)
                         })
                 )
             }
@@ -343,7 +351,8 @@ struct ExchangeView: View {
     // MARK: - Sticker column
 
     private func stickerColumn(title: String, entries: [StickerEntry],
-                                color: Color, ownedIDs: Set<String> = []) -> some View {
+                                color: Color, ownedIDs: Set<String> = [],
+                                incomingIDs: Set<String> = []) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 4) {
                 Text(title)
@@ -363,8 +372,9 @@ struct ExchangeView: View {
                         .font(.system(size: 11, weight: .bold, design: .monospaced))
                         .foregroundStyle(color)
                     ForEach(items) { entry in
-                        let sid   = "\(entry.teamCode)\(entry.number)"
-                        let owned = ownedIDs.contains(sid)
+                        let sid      = "\(entry.teamCode)\(entry.number)"
+                        let owned    = ownedIDs.contains(sid)
+                        let incoming = incomingIDs.contains(sid)
                         let label = entry.count > 1
                             ? "\(entry.number)×\(entry.count)"
                             : "\(entry.number)"
@@ -374,19 +384,23 @@ struct ExchangeView: View {
                                 .padding(.horizontal, 4)
                                 .padding(.vertical, 2)
                                 .background(
-                                    (owned ? Color.orange : color).opacity(0.15),
+                                    (owned || incoming ? Color.orange : color).opacity(0.15),
                                     in: RoundedRectangle(cornerRadius: 4)
                                 )
-                                .foregroundStyle(owned ? Color.orange : color)
+                                .foregroundStyle(owned || incoming ? Color.orange : color)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 4)
                                         .strokeBorder(
-                                            owned ? Color.orange.opacity(0.5) : Color.clear,
+                                            (owned || incoming) ? Color.orange.opacity(0.5) : Color.clear,
                                             lineWidth: 1
                                         )
                                 )
                             if owned {
                                 Text(isRu ? "есть" : "owned")
+                                    .font(.system(size: 8, weight: .medium))
+                                    .foregroundStyle(Color.orange)
+                            } else if incoming {
+                                Text(isRu ? "ждёшь" : "pending")
                                     .font(.system(size: 8, weight: .medium))
                                     .foregroundStyle(Color.orange)
                             }

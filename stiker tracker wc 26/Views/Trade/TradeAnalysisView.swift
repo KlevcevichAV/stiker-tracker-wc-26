@@ -317,11 +317,16 @@ struct TradeAnalysisView: View {
         let allStickers = (try? context.fetch(FetchDescriptor<StickerModel>())) ?? []
         let ourMap = Dictionary(uniqueKeysWithValues: allStickers.map { ($0.id, $0) })
 
+        // Загружаем активные обмены
+        let activeExchanges = (try? context.fetch(
+            FetchDescriptor<ExchangeModel>(predicate: #Predicate { $0.statusRaw == "active" })
+        )) ?? []
+
         // Парсим сообщение
         let parsed = TradeMessageParser.parse(text)
 
         // Сопоставляем
-        result = TradeAnalysisMatcher.match(parsed: parsed, ourStickers: ourMap)
+        result = TradeAnalysisMatcher.match(parsed: parsed, ourStickers: ourMap, activeExchanges: activeExchanges)
         isAnalyzing = false
     }
 }
@@ -381,14 +386,22 @@ struct TradeAnalysisResult {
 
 enum TradeAnalysisMatcher {
 
-    static func match(parsed: ParsedTradeMessage, ourStickers: [String: StickerModel]) -> TradeAnalysisResult {
+    static func match(parsed: ParsedTradeMessage, ourStickers: [String: StickerModel], activeExchanges: [ExchangeModel] = []) -> TradeAnalysisResult {
         var result = TradeAnalysisResult()
 
-        // Режим 2: их повторки → что нам нужно
+        // Стикеры, которые уже ожидаем получить в активных обменах
+        let alreadyIncoming = Set(
+            activeExchanges
+                .filter { $0.status == .active }
+                .flatMap { $0.wanting }
+                .map { "\($0.teamCode)\($0.number)" }
+        )
+
+        // Режим 2: их повторки → что нам нужно (и ещё не ожидается)
         let haveEntries = parsed.have
         result.theirDupesWeNeed = haveEntries.filter { entry in
             let key = "\(entry.teamCode)\(entry.number)"
-            return ourStickers[key]?.status == .missing
+            return ourStickers[key]?.status == .missing && !alreadyIncoming.contains(key)
         }
 
         // Режим 3: их поиск → что у нас в дублях
@@ -399,10 +412,10 @@ enum TradeAnalysisMatcher {
         }
 
         // Режим 1: взаимный
-        // Что нам нужно и у них есть
+        // Что нам нужно и у них есть (и ещё не ожидается)
         let theyHaveWeNeed = haveEntries.filter { entry in
             let key = "\(entry.teamCode)\(entry.number)"
-            return ourStickers[key]?.status == .missing
+            return ourStickers[key]?.status == .missing && !alreadyIncoming.contains(key)
         }
         // Что им нужно и у нас в дублях
         let weHaveTheyNeed = needEntries.filter { entry in
@@ -414,8 +427,8 @@ enum TradeAnalysisMatcher {
         let theyHaveWeNeedKeys = Set(theyHaveWeNeed.map { "\($0.teamCode)\($0.number)" })
         let weHaveTheyNeedKeys = Set(weHaveTheyNeed.map { "\($0.teamCode)\($0.number)" })
 
-        // Нам нужно, но у них нет (нет в have, но наши стикеры missing)
-        let ourMissingKeys = Set(ourStickers.values.filter { $0.status == .missing }.map { $0.id })
+        // Нам нужно, но у них нет (нет в have, но наши стикеры missing) — без уже ожидаемых
+        let ourMissingKeys = Set(ourStickers.values.filter { $0.status == .missing }.map { $0.id }).subtracting(alreadyIncoming)
         let needKeysFromThem = Set(haveEntries.map { "\($0.teamCode)\($0.number)" })
         let weNeedButTheyDontHave = ourMissingKeys.subtracting(needKeysFromThem)
 
