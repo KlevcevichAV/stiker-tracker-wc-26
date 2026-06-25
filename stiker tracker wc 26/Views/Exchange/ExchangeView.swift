@@ -444,9 +444,25 @@ struct ExchangeView: View {
     // MARK: - Summary text
 
     private func summaryText(_ exchange: ExchangeModel) -> String {
-        let giveIDs = exchange.giving.map { "\($0.teamCode)\($0.number)" }.joined(separator: ",")
-        let wantIDs = exchange.wanting.map { "\($0.teamCode)\($0.number)" }.joined(separator: ",")
-        return "\(giveIDs) → \(wantIDs)"
+        let give = exchange.giving.reduce(0) { $0 + $1.count }
+        let want = exchange.wanting.reduce(0) { $0 + $1.count }
+        let total = give + want
+        if isRu {
+            return "\(total) \(cardWord(total, ru: true)) · \(give) отдаю, \(want) получаю"
+        } else {
+            return "\(total) \(cardWord(total, ru: false)) · \(give) give, \(want) receive"
+        }
+    }
+
+    private func cardWord(_ n: Int, ru: Bool) -> String {
+        guard ru else { return n == 1 ? "card" : "cards" }
+        let mod10 = n % 10, mod100 = n % 100
+        if mod100 >= 11 && mod100 <= 14 { return "карточек" }
+        switch mod10 {
+        case 1: return "карточка"
+        case 2, 3, 4: return "карточки"
+        default: return "карточек"
+        }
     }
 
     private func exchangeMessage(_ exchange: ExchangeModel) -> String {
