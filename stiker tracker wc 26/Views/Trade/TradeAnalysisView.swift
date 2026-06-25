@@ -36,6 +36,8 @@ struct TradeAnalysisView: View {
     @State private var mode: AnalysisMode = .mutual
     @State private var result: TradeAnalysisResult? = nil
     @State private var isAnalyzing = false
+    @State private var isAIAnalyzing = false
+    @State private var aiError: String? = nil
     @State private var exchangePrefill: ExchangePrefill? = nil
     @FocusState private var inputFocused: Bool
 
@@ -45,7 +47,15 @@ struct TradeAnalysisView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 16) {
                 inputSection
-                analyzeButton
+                analyzeButtons
+                if let aiError {
+                    Text(aiError)
+                        .font(.system(size: 13))
+                        .foregroundStyle(.red)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(12)
+                        .background(Color.red.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
+                }
                 if let result {
                     modePicker
                     resultSection(result)
@@ -89,29 +99,54 @@ struct TradeAnalysisView: View {
         .frame(minHeight: 130, maxHeight: 220)
     }
 
-    // MARK: - Analyze button
+    // MARK: - Analyze buttons
 
-    private var analyzeButton: some View {
-        Button {
-            analyze()
-        } label: {
-            HStack(spacing: 8) {
-                if isAnalyzing {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                        .tint(.white)
+    private var analyzeButtons: some View {
+        let isEmpty = inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let busy = isAnalyzing || isAIAnalyzing
+        return HStack(spacing: 10) {
+            Button {
+                analyze()
+            } label: {
+                HStack(spacing: 6) {
+                    if isAnalyzing {
+                        ProgressView().scaleEffect(0.8).tint(.white)
+                    } else {
+                        Image(systemName: "doc.text.magnifyingglass")
+                            .font(.system(size: 14))
+                    }
+                    Text(isRu ? "Анализировать" : "Analyze")
+                        .font(.system(size: 14, weight: .semibold))
                 }
-                Text(isRu ? "Анализировать" : "Analyze")
-                    .font(.system(size: 15, weight: .semibold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(isEmpty || busy ? Color(.systemGray4) : Color.blue,
+                            in: RoundedRectangle(cornerRadius: 12))
+                .foregroundStyle(.white)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                        ? Color(.systemGray4) : Color.blue,
-                        in: RoundedRectangle(cornerRadius: 12))
-            .foregroundStyle(.white)
+            .disabled(isEmpty || busy)
+
+            Button {
+                analyzeWithAI()
+            } label: {
+                HStack(spacing: 6) {
+                    if isAIAnalyzing {
+                        ProgressView().scaleEffect(0.8).tint(.white)
+                    } else {
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 14))
+                    }
+                    Text(isRu ? "Анализ ИИ" : "AI Analyze")
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(isEmpty || busy ? Color(.systemGray4) : Color.purple,
+                            in: RoundedRectangle(cornerRadius: 12))
+                .foregroundStyle(.white)
+            }
+            .disabled(isEmpty || busy)
         }
-        .disabled(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
     }
 
     // MARK: - Mode picker
@@ -328,6 +363,36 @@ struct TradeAnalysisView: View {
         // Сопоставляем
         result = TradeAnalysisMatcher.match(parsed: parsed, ourStickers: ourMap, activeExchanges: activeExchanges)
         isAnalyzing = false
+    }
+
+    // MARK: - AI Analyze logic
+
+    private func analyzeWithAI() {
+        inputFocused = false
+        isAIAnalyzing = true
+        aiError = nil
+        let text = inputText
+
+        let allStickers = (try? context.fetch(FetchDescriptor<StickerModel>())) ?? []
+        let ourMap = Dictionary(uniqueKeysWithValues: allStickers.map { ($0.id, $0) })
+        let activeExchanges = (try? context.fetch(
+            FetchDescriptor<ExchangeModel>(predicate: #Predicate { $0.statusRaw == "active" })
+        )) ?? []
+
+        Task {
+            do {
+                let parsed = try await AITradeParser.parse(text: text)
+                await MainActor.run {
+                    result = TradeAnalysisMatcher.match(parsed: parsed, ourStickers: ourMap, activeExchanges: activeExchanges)
+                    isAIAnalyzing = false
+                }
+            } catch {
+                await MainActor.run {
+                    aiError = error.localizedDescription
+                    isAIAnalyzing = false
+                }
+            }
+        }
     }
 }
 
