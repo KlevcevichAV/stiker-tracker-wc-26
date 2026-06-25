@@ -16,14 +16,21 @@ struct TradeMessageView: View {
 
     @AppStorage("tradeMessagePrefix") private var prefix: String = ""
     @AppStorage("tradeMessageSuffix") private var suffix: String = ""
+    @AppStorage("tradeMessagePrefixEnabled") private var prefixEnabled: Bool = true
+    @AppStorage("tradeMessageSuffixEnabled") private var suffixEnabled: Bool = true
 
     private var isRu: Bool { language.isRussian }
 
     private var fullMessage: String {
-        let parts = [prefix.trimmingCharacters(in: .whitespacesAndNewlines),
-                     message,
-                     suffix.trimmingCharacters(in: .whitespacesAndNewlines)]
-            .filter { !$0.isEmpty }
+        wrappedMessage(message)
+    }
+
+    private func wrappedMessage(_ body: String) -> String {
+        let parts = [
+            prefixEnabled ? prefix.trimmingCharacters(in: .whitespacesAndNewlines) : "",
+            body,
+            suffixEnabled ? suffix.trimmingCharacters(in: .whitespacesAndNewlines) : ""
+        ].filter { !$0.isEmpty }
         return parts.joined(separator: "\n\n")
     }
 
@@ -56,7 +63,8 @@ struct TradeMessageView: View {
                     prefixSuffixField(
                         title: isRu ? "Текст в начале" : "Text at the top",
                         placeholder: isRu ? "Например: Обмен, Минск" : "E.g. Trade, Berlin",
-                        text: $prefix
+                        text: $prefix,
+                        enabled: $prefixEnabled
                     )
 
                     // Блок "Ищу"
@@ -64,7 +72,8 @@ struct TradeMessageView: View {
                         messageBlock(
                             text: missingText,
                             copyLabel: isRu ? "Скопировать «Ищу»" : "Copy «Looking for»",
-                            isCopied: $copiedMissing
+                            isCopied: $copiedMissing,
+                            fullCopyText: wrappedMessage(missingText)
                         )
                     }
 
@@ -73,7 +82,8 @@ struct TradeMessageView: View {
                         messageBlock(
                             text: dupText,
                             copyLabel: isRu ? "Скопировать «Повторки»" : "Copy «Duplicates»",
-                            isCopied: $copiedDup
+                            isCopied: $copiedDup,
+                            fullCopyText: wrappedMessage(dupText)
                         )
                     }
 
@@ -81,7 +91,8 @@ struct TradeMessageView: View {
                     prefixSuffixField(
                         title: isRu ? "Текст в конце" : "Text at the bottom",
                         placeholder: isRu ? "Например: пишите в личку" : "E.g. DM me",
-                        text: $suffix
+                        text: $suffix,
+                        enabled: $suffixEnabled
                     )
                 }
                 .padding(16)
@@ -111,7 +122,7 @@ struct TradeMessageView: View {
         }
     }
 
-    private func messageBlock(text: String, copyLabel: String, isCopied: Binding<Bool>) -> some View {
+    private func messageBlock(text: String, copyLabel: String, isCopied: Binding<Bool>, fullCopyText: String) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(text)
                 .font(.system(size: 14, design: .monospaced))
@@ -122,7 +133,7 @@ struct TradeMessageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10))
 
             Button {
-                UIPasteboard.general.string = text
+                UIPasteboard.general.string = fullCopyText
                 isCopied.wrappedValue = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) { isCopied.wrappedValue = false }
             } label: {
@@ -145,18 +156,28 @@ struct TradeMessageView: View {
 
     // MARK: - Prefix / Suffix field
 
-    private func prefixSuffixField(title: String, placeholder: String, text: Binding<String>) -> some View {
+    private func prefixSuffixField(title: String, placeholder: String,
+                                   text: Binding<String>, enabled: Binding<Bool>) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(.secondary)
-                .textCase(.uppercase)
+            HStack {
+                Text(title)
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                Spacer()
+                Toggle("", isOn: enabled)
+                    .labelsHidden()
+                    .scaleEffect(0.75)
+                    .tint(.accentColor)
+            }
             TextField(placeholder, text: text, axis: .vertical)
                 .font(.system(size: 14))
                 .padding(10)
                 .background(Color(.secondarySystemBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .lineLimit(1...4)
+                .opacity(enabled.wrappedValue ? 1 : 0.4)
+                .disabled(!enabled.wrappedValue)
         }
     }
 
