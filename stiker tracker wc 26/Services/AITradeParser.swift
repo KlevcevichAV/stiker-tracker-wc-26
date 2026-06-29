@@ -105,7 +105,7 @@ enum AITradeParser {
                     let code = item["teamCode"] as? String,
                     let number = item["number"] as? Int
                 else { return nil }
-                return StickerEntry(teamCode: code, number: number, count: 1)
+                return StickerEntry(teamCode: code.uppercased(), number: number, count: 1)
             }
         }
 

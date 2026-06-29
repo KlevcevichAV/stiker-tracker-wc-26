@@ -69,9 +69,9 @@ enum TradeMessageParser {
 
     // MARK: - Private: check for team code
 
-    /// Проверяет, содержит ли строка код команды (3–4 заглавные латинские буквы)
+    /// Проверяет, содержит ли строка код команды (3–4 латинские буквы в любом регистре)
     private static func containsTeamCode(_ line: String) -> Bool {
-        let pattern = #"(?<![A-Z])[A-Z]{3,4}(?![A-Z])"#
+        let pattern = #"(?<![A-Za-z])[A-Za-z]{3,4}(?![A-Za-z])"#
         return line.range(of: pattern, options: .regularExpression) != nil
     }
 
@@ -85,7 +85,7 @@ enum TradeMessageParser {
     private static func parseTeamLine(_ line: String) -> [StickerEntry] {
         // Сначала пробуем формат 2: токены вида КОДЧИСЛО[(N)] через запятую
         // Паттерн: 3-4 заглавные буквы сразу за которыми число (без пробела)
-        let compactPattern = #"([A-Z]{3,4})(\d+)\s*(?:\([xхх×]?(\d+)\)|\*(\d+))?"#
+        let compactPattern = #"([A-Za-z]{3,4})(\d+)\s*(?:\([xхх×]?(\d+)\)|\*(\d+))?"#
         let compactRegex = try? NSRegularExpression(pattern: compactPattern)
         let nsLine = line as NSString
         let compactMatches = compactRegex?.matches(in: line, range: NSRange(line.startIndex..., in: line)) ?? []
@@ -96,7 +96,7 @@ enum TradeMessageParser {
                 guard let rCode = Range(m.range(at: 1), in: line),
                       let rNum  = Range(m.range(at: 2), in: line),
                       let num   = Int(line[rNum]) else { continue }
-                let code = String(line[rCode])
+                let code = String(line[rCode]).uppercased()
                 var qty = 1
                 if m.range(at: 3).location != NSNotFound,
                    let r3 = Range(m.range(at: 3), in: line), let q = Int(line[r3]) { qty = q }
@@ -117,9 +117,9 @@ enum TradeMessageParser {
         }
 
         // Формат 1: "КОД [эмодзи] [: ] ЧИСЛО, ЧИСЛО, ..."
-        guard let codeRange = line.range(of: #"(?<![A-Z])[A-Z]{3,4}(?![A-Z])"#,
+        guard let codeRange = line.range(of: #"(?<![A-Za-z])[A-Za-z]{3,4}(?![A-Za-z])"#,
                                           options: .regularExpression) else { return [] }
-        let teamCode = String(line[codeRange])
+        let teamCode = String(line[codeRange]).uppercased()
         let afterCode = String(line[codeRange.upperBound...])
         let numbersString = stripFlagsAndColon(afterCode)
         let stripped = numbersString.trimmingCharacters(in: .whitespaces)

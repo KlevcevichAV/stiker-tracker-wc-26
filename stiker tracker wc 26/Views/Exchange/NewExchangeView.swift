@@ -90,6 +90,22 @@ struct NewExchangeView: View {
         return ExchangeService.incomingCount(for: id, in: activeExchanges)
     }
 
+    /// true если после отдачи этой карточки не останется ни одной (с учётом уже зарезервированных в других обменах)
+    private func isLastCopy(teamCode: String, number: Int) -> Bool {
+        let sticker = allStickers.first { $0.teamCode == teamCode && $0.number == number }
+        let reserved = alreadyReserved(teamCode: teamCode, number: number)
+        return (sticker?.duplicateCount ?? 0) - reserved <= 0
+    }
+
+    /// Карточки из "Что отдаю" где после этого обмена не останется ни одной (последняя)
+    private var lastCopyGiving: [(teamCode: String, number: Int)] {
+        givingSelections.flatMap { sel in
+            sel.numbers.compactMap { n -> (String, Int)? in
+                isLastCopy(teamCode: sel.teamCode, number: n) ? (sel.teamCode, n) : nil
+            }
+        }
+    }
+
     /// Карточки из "Что получаю" которые уже ожидаются в другом активном обмене
     private var conflictingWanting: [(teamCode: String, number: Int)] {
         wantingSelections.flatMap { sel in
@@ -112,6 +128,7 @@ struct NewExchangeView: View {
                         teams: teams,
                         stickerIndex: stickerIndex,
                         reservedFn: alreadyReserved,
+                        lastCopyFn: isLastCopy,
                         isRu: isRu,
                         isArchive: isArchive
                     )
@@ -152,6 +169,29 @@ struct NewExchangeView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color.yellow.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
                         .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.yellow.opacity(0.4), lineWidth: 1))
+                    }
+
+                    if !lastCopyGiving.isEmpty {
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.orange)
+                                .font(.system(size: 14))
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(isRu ? "Последняя карточка в коллекции" : "Last copy in your collection")
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundStyle(.primary)
+                                let names = lastCopyGiving
+                                    .map { "\($0.teamCode) \($0.number == 0 ? "00" : "\($0.number)")" }
+                                    .joined(separator: ", ")
+                                Text(names)
+                                    .font(.system(size: 12, design: .monospaced))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.orange.opacity(0.10), in: RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.orange.opacity(0.4), lineWidth: 1))
                     }
 
                     Divider()
@@ -378,6 +418,7 @@ struct StickerPickerSection: View {
     let stickerIndex: [String: [Int: StickerModel]]
     let reservedFn: (String, Int) -> Int
     var incomingFn: (String, Int) -> Int = { _, _ in 0 }
+    var lastCopyFn: (String, Int) -> Bool = { _, _ in false }
     let isRu: Bool
     var isArchive: Bool = false
 
@@ -422,26 +463,32 @@ struct StickerPickerSection: View {
                 let conflictNums: Set<Int> = mode == .wanting
                     ? Set(sel.numbers.filter { incomingFn(sel.teamCode, $0) > 0 })
                     : []
-                let hasConflict = !conflictNums.isEmpty
+                let lastCopyNums: Set<Int> = mode == .giving
+                    ? Set(sel.numbers.filter { lastCopyFn(sel.teamCode, $0) })
+                    : []
+                let hasConflict  = !conflictNums.isEmpty
+                let hasLastCopy  = !lastCopyNums.isEmpty
+                let chipAccent: Color = hasConflict ? .yellow : hasLastCopy ? .orange : color
                 HStack(spacing: 6) {
                     Text(sel.teamFlag)
                         .font(.system(size: 16))
                     Text(sel.teamCode)
                         .font(.system(size: 13, weight: .bold, design: .monospaced))
-                        .foregroundStyle(hasConflict ? Color.yellow : color)
+                        .foregroundStyle(chipAccent)
                     Text(":")
                         .foregroundStyle(.secondary)
-                    // Числа: конфликтные — жёлтым, остальные — обычным цветом
                     HStack(spacing: 3) {
                         ForEach(sel.numbers.sorted(), id: \.self) { n in
-                            let isConflict = conflictNums.contains(n)
+                            let isConflict  = conflictNums.contains(n)
+                            let isLastCopy  = lastCopyNums.contains(n)
+                            let numAccent: Color = isConflict ? .yellow : isLastCopy ? .orange : color
                             Text(n == 0 ? "00" : "\(n)")
                                 .font(.system(size: 11, weight: .semibold, design: .rounded))
-                                .foregroundStyle(isConflict ? Color.yellow : color)
-                                .padding(.horizontal, isConflict ? 5 : 0)
-                                .padding(.vertical, isConflict ? 2 : 0)
+                                .foregroundStyle(numAccent)
+                                .padding(.horizontal, (isConflict || isLastCopy) ? 5 : 0)
+                                .padding(.vertical,   (isConflict || isLastCopy) ? 2 : 0)
                                 .background(
-                                    isConflict ? Color.yellow.opacity(0.2) : Color.clear,
+                                    (isConflict || isLastCopy) ? numAccent.opacity(0.2) : Color.clear,
                                     in: RoundedRectangle(cornerRadius: 4)
                                 )
                         }
@@ -459,12 +506,14 @@ struct StickerPickerSection: View {
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
                 .background(
-                    hasConflict ? Color.yellow.opacity(0.08) : color.opacity(0.08),
+                    hasConflict ? Color.yellow.opacity(0.08) :
+                    hasLastCopy ? Color.orange.opacity(0.08) :
+                                  color.opacity(0.08),
                     in: RoundedRectangle(cornerRadius: 10)
                 )
                 .overlay(
-                    hasConflict
-                        ? RoundedRectangle(cornerRadius: 10).strokeBorder(Color.yellow.opacity(0.4), lineWidth: 1)
+                    (hasConflict || hasLastCopy)
+                        ? RoundedRectangle(cornerRadius: 10).strokeBorder(chipAccent.opacity(0.4), lineWidth: 1)
                         : nil
                 )
             }

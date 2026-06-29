@@ -202,7 +202,8 @@ struct TradeAnalysisView: View {
                 emptyText: isRu ? "Ничего подходящего в наших дублях" : "Nothing matching in our dupes",
                 accentColor: .orange,
                 givingItems: r.theirSearchWeHave,
-                reserved: r.alreadyReserved
+                reserved: r.alreadyReserved,
+                lastCopy: r.lastCopyWarning
             )
         }
     }
@@ -246,7 +247,8 @@ struct TradeAnalysisView: View {
                     title: isRu ? "Им нужно, у нас в дублях (\(canGive.count))" : "They need, we have in dupes (\(canGive.count))",
                     items: canGive,
                     color: .blue,
-                    reserved: result.alreadyReserved
+                    reserved: result.alreadyReserved,
+                    lastCopy: result.lastCopyWarning
                 )
             }
             exchangeButtons(giving: canGive, wanting: canGet,
@@ -275,12 +277,13 @@ struct TradeAnalysisView: View {
     @ViewBuilder
     private func simpleResultView(items: [StickerEntry], title: String, emptyText: String, accentColor: Color,
                                    givingItems: [StickerEntry] = [], wantingItems: [StickerEntry] = [],
-                                   reserved: Set<String> = [], incoming: Set<String> = []) -> some View {
+                                   reserved: Set<String> = [], incoming: Set<String> = [],
+                                   lastCopy: Set<String> = []) -> some View {
         if items.isEmpty {
             emptyCard(text: emptyText)
         } else {
             stickerCard(title: "\(title) (\(items.count))", items: items, color: accentColor,
-                        reserved: reserved, incoming: incoming)
+                        reserved: reserved, incoming: incoming, lastCopy: lastCopy)
             if !givingItems.isEmpty || !wantingItems.isEmpty {
                 exchangeButtons(giving: givingItems, wanting: wantingItems,
                                 reserved: reserved, incoming: incoming)
@@ -319,7 +322,8 @@ struct TradeAnalysisView: View {
     }
 
     private func stickerCard(title: String, items: [StickerEntry], color: Color,
-                              reserved: Set<String> = [], incoming: Set<String> = []) -> some View {
+                              reserved: Set<String> = [], incoming: Set<String> = [],
+                              lastCopy: Set<String> = []) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .font(.system(size: 13, weight: .bold))
@@ -331,14 +335,13 @@ struct TradeAnalysisView: View {
 
             FlowLayout(spacing: 6) {
                 ForEach(grouped, id: \.key) { code, entries in
-                    ForEach(entries) { entry in
-                        let key = "\(entry.teamCode)\(entry.number)"
-                        let label: String? = incoming.contains(key)
-                            ? (isRu ? "получим" : "incoming")
-                            : reserved.contains(key)
-                                ? (isRu ? "отдаём" : "reserved")
-                                : nil
-                        stickerChip(entry: entry, color: color, exchangeLabel: label)
+                    ForEach(entries, id: \.id) { (entry: StickerEntry) in
+                        stickerChip(
+                            entry: entry,
+                            color: color,
+                            exchangeLabel: chipLabel(for: entry, incoming: incoming, lastCopy: lastCopy, reserved: reserved, isRu: isRu),
+                            labelColor: chipLabelColor(for: entry, incoming: incoming, lastCopy: lastCopy, color: color)
+                        )
                     }
                 }
             }
@@ -349,10 +352,28 @@ struct TradeAnalysisView: View {
                     in: RoundedRectangle(cornerRadius: 14))
     }
 
-    private func stickerChip(entry: StickerEntry, color: Color, exchangeLabel: String?) -> some View {
+    private func chipLabel(for entry: StickerEntry, incoming: Set<String>, lastCopy: Set<String>, reserved: Set<String>, isRu: Bool) -> String? {
+        let key = "\(entry.teamCode)\(entry.number)"
+        if incoming.contains(key) { return isRu ? "получим" : "incoming" }
+        if lastCopy.contains(key)  { return isRu ? "последняя" : "last copy" }
+        if reserved.contains(key)  { return isRu ? "отдаём" : "reserved" }
+        return nil
+    }
+
+    private func chipLabelColor(for entry: StickerEntry, incoming: Set<String>, lastCopy: Set<String>, color: Color) -> Color {
+        let key = "\(entry.teamCode)\(entry.number)"
+        if lastCopy.contains(key) { return .orange }
+        return color == .secondary ? .primary : color
+    }
+
+    private func stickerChip(entry: StickerEntry, color: Color, exchangeLabel: String?, labelColor: Color? = nil) -> some View {
         let numberText = entry.count > 1 ? "\(entry.number)×\(entry.count)" : "\(entry.number)"
         let chipColor: Color = color == .secondary ? Color(.systemGray4) : color.opacity(0.15)
         let fgColor: Color = color == .secondary ? .primary : color
+        let effectiveLabelColor = labelColor ?? fgColor
+        let borderColor: Color = exchangeLabel != nil
+            ? (labelColor == .orange ? .orange : (color == .secondary ? Color.primary : color))
+            : .clear
 
         return VStack(spacing: 2) {
             Text("\(entry.teamCode) \(numberText)")
@@ -364,14 +385,14 @@ struct TradeAnalysisView: View {
             if let label = exchangeLabel {
                 Text(label)
                     .font(.system(size: 9, weight: .medium))
-                    .foregroundStyle(fgColor)
+                    .foregroundStyle(effectiveLabelColor)
                     .padding(.bottom, 3)
             }
         }
         .background(chipColor, in: RoundedRectangle(cornerRadius: 7))
         .overlay(
             exchangeLabel != nil
-                ? RoundedRectangle(cornerRadius: 7).stroke(color == .secondary ? Color.primary : color, lineWidth: 1.5)
+                ? RoundedRectangle(cornerRadius: 7).stroke(borderColor, lineWidth: 1.5)
                 : nil
         )
     }
@@ -536,6 +557,7 @@ struct TradeAnalysisResult {
     var theirSearchWeHave: [StickerEntry] = []
     var alreadyReserved: Set<String> = []   // giving в активных обменах
     var alreadyIncoming: Set<String> = []   // wanting в активных обменах
+    var lastCopyWarning: Set<String> = []   // отдаём последний экземпляр (duplicateCount - зарезервировано <= 1)
 }
 
 // MARK: - Matcher
@@ -561,38 +583,55 @@ enum TradeAnalysisMatcher {
                 .map { "\($0.teamCode)\($0.number)" }
         )
 
-        // Режим 2: их повторки → что нам нужно (и ещё не ожидается)
+        // Сколько экземпляров каждого стикера уже зарезервировано
+        var reservedCount: [String: Int] = [:]
+        for ex in activeExchanges where ex.status == .active {
+            for entry in ex.giving {
+                let key = "\(entry.teamCode)\(entry.number)"
+                reservedCount[key, default: 0] += entry.count
+            }
+        }
+
+        // Предупреждение: если после ещё одной отдачи останется 0 экземпляров
+        let lastCopyWarning = Set(
+            reservedCount.compactMap { key, reserved -> String? in
+                guard let sticker = ourStickers[key] else { return nil }
+                return sticker.duplicateCount - reserved <= 0 ? key : nil
+            }
+        )
+
+        // Режим 2: их повторки → что нам нужно
         let haveEntries = parsed.have
         result.theirDupesWeNeed = haveEntries.filter { entry in
             let key = "\(entry.teamCode)\(entry.number)"
-            return ourStickers[key]?.status == .missing && !alreadyIncoming.contains(key)
+            return ourStickers[key]?.status == .missing || alreadyIncoming.contains(key)
         }
 
         // Режим 3: их поиск → что у нас в дублях
         let needEntries = parsed.need
         result.theirSearchWeHave = needEntries.filter { entry in
             let key = "\(entry.teamCode)\(entry.number)"
-            return ourStickers[key]?.status == .duplicate
+            return ourStickers[key]?.status == .duplicate || alreadyReserved.contains(key)
         }
 
         // Режим 1: взаимный
-        // Что нам нужно и у них есть (и ещё не ожидается)
+        // Что нам нужно и у них есть (включая уже ожидаемые — они подсветятся)
         let theyHaveWeNeed = haveEntries.filter { entry in
             let key = "\(entry.teamCode)\(entry.number)"
-            return ourStickers[key]?.status == .missing && !alreadyIncoming.contains(key)
+            return ourStickers[key]?.status == .missing || alreadyIncoming.contains(key)
         }
-        // Что им нужно и у нас в дублях
+        // Что им нужно и у нас в дублях (включая уже зарезервированные)
         let weHaveTheyNeed = needEntries.filter { entry in
             let key = "\(entry.teamCode)\(entry.number)"
-            return ourStickers[key]?.status == .duplicate
+            return ourStickers[key]?.status == .duplicate || alreadyReserved.contains(key)
         }
 
         // Ключи для быстрых проверок
-        let theyHaveWeNeedKeys = Set(theyHaveWeNeed.map { "\($0.teamCode)\($0.number)" })
         let weHaveTheyNeedKeys = Set(weHaveTheyNeed.map { "\($0.teamCode)\($0.number)" })
 
-        // Нам нужно, но у них нет (нет в have, но наши стикеры missing) — без уже ожидаемых
-        let ourMissingKeys = Set(ourStickers.values.filter { $0.status == .missing }.map { $0.id }).subtracting(alreadyIncoming)
+        // Нам нужно, но у них нет — исключаем и уже ожидаемые, и те, что у них есть
+        let ourMissingKeys = Set(ourStickers.values.filter { $0.status == .missing }.map { $0.id })
+            .subtracting(alreadyIncoming)
         let needKeysFromThem = Set(haveEntries.map { "\($0.teamCode)\($0.number)" })
         let weNeedButTheyDontHave = ourMissingKeys.subtracting(needKeysFromThem)
 
@@ -615,6 +654,7 @@ enum TradeAnalysisMatcher {
 
         result.alreadyIncoming = alreadyIncoming
         result.alreadyReserved = alreadyReserved
+        result.lastCopyWarning = lastCopyWarning
 
         return result
     }
