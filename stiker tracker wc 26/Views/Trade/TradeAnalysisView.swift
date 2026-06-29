@@ -34,6 +34,9 @@ struct TradeAnalysisView: View {
 
     @AppStorage("openModelAPIKey") private var openModelAPIKey: String = ""
 
+    @Query(sort: \SavedAnalysisModel.createdAt, order: .reverse)
+    private var savedAnalyses: [SavedAnalysisModel]
+
     @State private var inputText  = ""
     @State private var mode: AnalysisMode = .mutual
     @State private var result: TradeAnalysisResult? = nil
@@ -41,6 +44,8 @@ struct TradeAnalysisView: View {
     @State private var isAIAnalyzing = false
     @State private var aiError: String? = nil
     @State private var exchangePrefill: ExchangePrefill? = nil
+    @State private var savedBanner = false
+    @State private var historyExpanded = false
     @FocusState private var inputFocused: Bool
 
     private var isRu: Bool { language.isRussian }
@@ -50,6 +55,14 @@ struct TradeAnalysisView: View {
             VStack(spacing: 16) {
                 inputSection
                 analyzeButtons
+                if savedBanner {
+                    Label(isRu ? "Сохранено" : "Saved", systemImage: "checkmark.circle.fill")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.green)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 4)
+                        .transition(.opacity)
+                }
                 if let aiError {
                     Text(aiError)
                         .font(.system(size: 13))
@@ -62,12 +75,25 @@ struct TradeAnalysisView: View {
                     modePicker
                     resultSection(result)
                 }
+                if !savedAnalyses.isEmpty {
+                    historySection
+                }
             }
             .padding(16)
         }
         .background(Color(.systemGroupedBackground))
         .navigationTitle(isRu ? "Анализ обменов" : "Trade Analysis")
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    saveAnalysis()
+                } label: {
+                    Image(systemName: "square.and.arrow.down")
+                }
+                .disabled(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+        }
         .sheet(item: $exchangePrefill) { prefill in
             NewExchangeView(prefillGiving: prefill.giving, prefillWanting: prefill.wanting)
                 .environment(\.appLanguage, language)
@@ -449,6 +475,101 @@ struct TradeAnalysisView: View {
         .padding(16)
         .background(Color(.secondarySystemGroupedBackground),
                     in: RoundedRectangle(cornerRadius: 14))
+    }
+
+    // MARK: - History section
+
+    private var historySection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    historyExpanded.toggle()
+                }
+            } label: {
+                HStack {
+                    Image(systemName: historyExpanded ? "chevron.down" : "chevron.right")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                    Text(isRu ? "Сохранённые анализы (\(savedAnalyses.count))" : "Saved analyses (\(savedAnalyses.count))")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.primary)
+                    Spacer()
+                }
+                .padding(.vertical, 4)
+            }
+            .buttonStyle(.plain)
+
+            if historyExpanded {
+                VStack(spacing: 1) {
+                    ForEach(savedAnalyses) { item in
+                        Button {
+                            inputText = item.messageText
+                            analyze()
+                            withAnimation { historyExpanded = false }
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(item.note.isEmpty ? (isRu ? "Без названия" : "Untitled") : item.note)
+                                        .font(.system(size: 13, weight: .medium))
+                                        .foregroundStyle(.primary)
+                                        .lineLimit(1)
+                                    Text(item.createdAt.formatted(date: .abbreviated, time: .omitted))
+                                        .font(.system(size: 11))
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                Image(systemName: "arrow.up.left")
+                                    .font(.system(size: 12))
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                        }
+                        .buttonStyle(.plain)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                context.delete(item)
+                            } label: {
+                                Label(isRu ? "Удалить" : "Delete", systemImage: "trash")
+                            }
+                        }
+
+                        if item.id != savedAnalyses.last?.id {
+                            Divider().padding(.leading, 12)
+                        }
+                    }
+                }
+                .background(Color(.secondarySystemGroupedBackground),
+                            in: RoundedRectangle(cornerRadius: 12))
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+    }
+
+    // MARK: - Save logic
+
+    private func saveAnalysis() {
+        let text = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return }
+
+        let existing = savedAnalyses.first { $0.messageText == text }
+        if let existing {
+            existing.createdAt = Date()
+        } else {
+            let record = SavedAnalysisModel(messageText: text, note: autoNote(for: text))
+            context.insert(record)
+        }
+        try? context.save()
+
+        withAnimation { savedBanner = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation { savedBanner = false }
+        }
+    }
+
+    private func autoNote(for text: String) -> String {
+        let first = text.split(separator: "\n", omittingEmptySubsequences: true).first ?? ""
+        return String(first.trimmingCharacters(in: .whitespaces).prefix(40))
     }
 
     // MARK: - Analyze logic
