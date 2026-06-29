@@ -290,7 +290,7 @@ struct TradeAnalysisView: View {
 
     // MARK: - Components
 
-    private func counterBadge(value: Int, label: String, color: Color) -> some View {
+    private func counterBadge(value: Int, label: String, color: Color, items: [StickerEntry] = []) -> some View {
         VStack(spacing: 4) {
             Text("\(value)")
                 .font(.system(size: 28, weight: .black, design: .rounded))
@@ -299,6 +299,18 @@ struct TradeAnalysisView: View {
                 .font(.system(size: 11, weight: .medium))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+            if !items.isEmpty {
+                Button {
+                    UIPasteboard.general.string = items
+                        .map { e in e.count > 1 ? "\(e.teamCode) \(e.number)×\(e.count)" : "\(e.teamCode) \(e.number)" }
+                        .joined(separator: ", ")
+                } label: {
+                    Image(systemName: "doc.on.doc")
+                        .font(.system(size: 12))
+                        .foregroundStyle(color.opacity(0.7))
+                }
+                .buttonStyle(.plain)
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
