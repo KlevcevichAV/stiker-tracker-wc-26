@@ -185,14 +185,15 @@ struct TradeAnalysisView: View {
     private func resultSection(_ r: TradeAnalysisResult) -> some View {
         switch mode {
         case .mutual:
-            mutualResultView(r.mutual)
+            mutualResultView(r.mutual, result: r)
         case .theirDuplicates:
             simpleResultView(
                 items: r.theirDupesWeNeed,
                 title: isRu ? "Из их повторок нам нужны" : "From their dupes, we need",
                 emptyText: isRu ? "Из их повторок ничего не нужно" : "Nothing needed from their dupes",
                 accentColor: .green,
-                wantingItems: r.theirDupesWeNeed
+                wantingItems: r.theirDupesWeNeed,
+                incoming: r.alreadyIncoming
             )
         case .theirSearch:
             simpleResultView(
@@ -200,7 +201,8 @@ struct TradeAnalysisView: View {
                 title: isRu ? "Из их поиска у нас в дублях" : "From their search, we have in dupes",
                 emptyText: isRu ? "Ничего подходящего в наших дублях" : "Nothing matching in our dupes",
                 accentColor: .orange,
-                givingItems: r.theirSearchWeHave
+                givingItems: r.theirSearchWeHave,
+                reserved: r.alreadyReserved
             )
         }
     }
@@ -208,7 +210,7 @@ struct TradeAnalysisView: View {
     // MARK: - Mutual result view
 
     @ViewBuilder
-    private func mutualResultView(_ m: TradeMatch.MutualResult) -> some View {
+    private func mutualResultView(_ m: TradeMatch.MutualResult, result: TradeAnalysisResult) -> some View {
         let canGive = m.weHaveTheyNeed
         let canGet  = m.theyHaveWeNeed
 
@@ -217,12 +219,14 @@ struct TradeAnalysisView: View {
             counterBadge(
                 value: canGet.count,
                 label: isRu ? "Нам дадут" : "They give us",
-                color: .green
+                color: .green,
+                items: canGet
             )
             counterBadge(
                 value: canGive.count,
                 label: isRu ? "Мы дадим" : "We give them",
-                color: .blue
+                color: .blue,
+                items: canGive
             )
         }
 
@@ -233,17 +237,20 @@ struct TradeAnalysisView: View {
                 stickerCard(
                     title: isRu ? "Нам нужно, у них есть (\(canGet.count))" : "We need, they have (\(canGet.count))",
                     items: canGet,
-                    color: .green
+                    color: .green,
+                    incoming: result.alreadyIncoming
                 )
             }
             if !canGive.isEmpty {
                 stickerCard(
                     title: isRu ? "Им нужно, у нас в дублях (\(canGive.count))" : "They need, we have in dupes (\(canGive.count))",
                     items: canGive,
-                    color: .blue
+                    color: .blue,
+                    reserved: result.alreadyReserved
                 )
             }
-            createExchangeButton(giving: canGive, wanting: canGet)
+            exchangeButtons(giving: canGive, wanting: canGet,
+                            reserved: result.alreadyReserved, incoming: result.alreadyIncoming)
         }
 
         // Дополнительно
@@ -266,13 +273,17 @@ struct TradeAnalysisView: View {
     // MARK: - Simple result view
 
     @ViewBuilder
-    private func simpleResultView(items: [StickerEntry], title: String, emptyText: String, accentColor: Color, givingItems: [StickerEntry] = [], wantingItems: [StickerEntry] = []) -> some View {
+    private func simpleResultView(items: [StickerEntry], title: String, emptyText: String, accentColor: Color,
+                                   givingItems: [StickerEntry] = [], wantingItems: [StickerEntry] = [],
+                                   reserved: Set<String> = [], incoming: Set<String> = []) -> some View {
         if items.isEmpty {
             emptyCard(text: emptyText)
         } else {
-            stickerCard(title: "\(title) (\(items.count))", items: items, color: accentColor)
+            stickerCard(title: "\(title) (\(items.count))", items: items, color: accentColor,
+                        reserved: reserved, incoming: incoming)
             if !givingItems.isEmpty || !wantingItems.isEmpty {
-                createExchangeButton(giving: givingItems, wanting: wantingItems)
+                exchangeButtons(giving: givingItems, wanting: wantingItems,
+                                reserved: reserved, incoming: incoming)
             }
         }
     }
@@ -295,7 +306,8 @@ struct TradeAnalysisView: View {
                     in: RoundedRectangle(cornerRadius: 12))
     }
 
-    private func stickerCard(title: String, items: [StickerEntry], color: Color) -> some View {
+    private func stickerCard(title: String, items: [StickerEntry], color: Color,
+                              reserved: Set<String> = [], incoming: Set<String> = []) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .font(.system(size: 13, weight: .bold))
@@ -307,7 +319,15 @@ struct TradeAnalysisView: View {
 
             FlowLayout(spacing: 6) {
                 ForEach(grouped, id: \.key) { code, entries in
-                    stickerChip(code: code, entries: entries, color: color)
+                    ForEach(entries) { entry in
+                        let key = "\(entry.teamCode)\(entry.number)"
+                        let label: String? = incoming.contains(key)
+                            ? (isRu ? "получим" : "incoming")
+                            : reserved.contains(key)
+                                ? (isRu ? "отдаём" : "reserved")
+                                : nil
+                        stickerChip(entry: entry, color: color, exchangeLabel: label)
+                    }
                 }
             }
         }
@@ -317,18 +337,31 @@ struct TradeAnalysisView: View {
                     in: RoundedRectangle(cornerRadius: 14))
     }
 
-    private func stickerChip(code: String, entries: [StickerEntry], color: Color) -> some View {
-        let numbers = entries.map { e in
-            e.count > 1 ? "\(e.number)×\(e.count)" : "\(e.number)"
-        }.joined(separator: ",")
+    private func stickerChip(entry: StickerEntry, color: Color, exchangeLabel: String?) -> some View {
+        let numberText = entry.count > 1 ? "\(entry.number)×\(entry.count)" : "\(entry.number)"
         let chipColor: Color = color == .secondary ? Color(.systemGray4) : color.opacity(0.15)
+        let fgColor: Color = color == .secondary ? .primary : color
 
-        return Text("\(code) \(numbers)")
-            .font(.system(size: 12, weight: .semibold, design: .monospaced))
-            .foregroundStyle(color == .secondary ? .primary : color)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(chipColor, in: RoundedRectangle(cornerRadius: 7))
+        return VStack(spacing: 2) {
+            Text("\(entry.teamCode) \(numberText)")
+                .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                .foregroundStyle(fgColor)
+                .padding(.horizontal, 8)
+                .padding(.vertical, exchangeLabel == nil ? 4 : 3)
+
+            if let label = exchangeLabel {
+                Text(label)
+                    .font(.system(size: 9, weight: .medium))
+                    .foregroundStyle(fgColor)
+                    .padding(.bottom, 3)
+            }
+        }
+        .background(chipColor, in: RoundedRectangle(cornerRadius: 7))
+        .overlay(
+            exchangeLabel != nil
+                ? RoundedRectangle(cornerRadius: 7).stroke(color == .secondary ? Color.primary : color, lineWidth: 1.5)
+                : nil
+        )
     }
 
     private func createExchangeButton(giving: [StickerEntry], wanting: [StickerEntry]) -> some View {
@@ -344,6 +377,31 @@ struct TradeAnalysisView: View {
                 .foregroundStyle(.teal)
         }
         .buttonStyle(.plain)
+    }
+
+    @ViewBuilder
+    private func exchangeButtons(giving: [StickerEntry], wanting: [StickerEntry],
+                                  reserved: Set<String>, incoming: Set<String>) -> some View {
+        let cleanGiving  = giving.filter  { !reserved.contains("\($0.teamCode)\($0.number)") }
+        let cleanWanting = wanting.filter { !incoming.contains("\($0.teamCode)\($0.number)") }
+        let hasConflict  = cleanGiving.count < giving.count || cleanWanting.count < wanting.count
+
+        createExchangeButton(giving: giving, wanting: wanting)
+
+        if hasConflict && (!cleanGiving.isEmpty || !cleanWanting.isEmpty) {
+            Button {
+                exchangePrefill = ExchangePrefill(giving: cleanGiving, wanting: cleanWanting)
+            } label: {
+                Label(isRu ? "Создать без повторов" : "Create without duplicates",
+                      systemImage: "arrow.2.squarepath.badge.minus")
+                    .font(.system(size: 15, weight: .semibold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color(.systemGray5), in: RoundedRectangle(cornerRadius: 12))
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.plain)
+        }
     }
 
     private func emptyCard(text: String) -> some View {
@@ -464,6 +522,8 @@ struct TradeAnalysisResult {
     var mutual = TradeMatch.MutualResult()
     var theirDupesWeNeed: [StickerEntry] = []
     var theirSearchWeHave: [StickerEntry] = []
+    var alreadyReserved: Set<String> = []   // giving в активных обменах
+    var alreadyIncoming: Set<String> = []   // wanting в активных обменах
 }
 
 // MARK: - Matcher
@@ -478,6 +538,14 @@ enum TradeAnalysisMatcher {
             activeExchanges
                 .filter { $0.status == .active }
                 .flatMap { $0.wanting }
+                .map { "\($0.teamCode)\($0.number)" }
+        )
+
+        // Стикеры, уже зарезервированные для отдачи в активных обменах
+        let alreadyReserved = Set(
+            activeExchanges
+                .filter { $0.status == .active }
+                .flatMap { $0.giving }
                 .map { "\($0.teamCode)\($0.number)" }
         )
 
@@ -532,6 +600,9 @@ enum TradeAnalysisMatcher {
                 return StickerEntry(teamCode: s.teamCode, number: s.number, count: s.duplicateCount)
             }
         )
+
+        result.alreadyIncoming = alreadyIncoming
+        result.alreadyReserved = alreadyReserved
 
         return result
     }
