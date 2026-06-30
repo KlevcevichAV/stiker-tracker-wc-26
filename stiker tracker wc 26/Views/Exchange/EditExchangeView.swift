@@ -288,6 +288,16 @@ struct EditExchangeView: View {
         exchange.wanting            = wantingSelections.flatMap { $0.toEntries() }
 
         try? context.save()
+
+        if exchange.status == .active {
+            SheetsService.sendExchangeUpdated(
+                id: exchange.id,
+                partner: exchange.partner,
+                giving: exchange.giving,
+                wanting: exchange.wanting
+            )
+        }
+
         dismiss()
     }
 }

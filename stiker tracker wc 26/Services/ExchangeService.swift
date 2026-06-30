@@ -25,6 +25,9 @@ enum ExchangeService {
         }
         context.insert(exchange)
         try? context.save()
+        if !archived {
+            SheetsService.sendExchangeCreated(id: exchange.id, partner: partner, giving: giving, wanting: wanting)
+        }
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 
@@ -62,6 +65,7 @@ enum ExchangeService {
 
         exchange.status = .completed
         try? context.save()
+        SheetsService.sendExchangeCompleted(id: exchange.id, partner: exchange.partner, giving: exchange.giving, wanting: exchange.wanting)
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 
@@ -70,6 +74,7 @@ enum ExchangeService {
     static func cancel(_ exchange: ExchangeModel, context: ModelContext) {
         exchange.status = .cancelled
         try? context.save()
+        SheetsService.sendExchangeCancelled(id: exchange.id, partner: exchange.partner, giving: exchange.giving, wanting: exchange.wanting)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 

@@ -149,6 +149,13 @@ struct AddPurchaseView: View {
             let p = PurchaseModel(kind: kind, quantity: quantity, price: parsedPrice, date: date)
             context.insert(p)
             try? context.save()
+            SheetsService.sendPurchase(
+                kind: isRu ? kind.nameRU : kind.nameEN,
+                quantity: quantity,
+                price: parsedPrice,
+                totalCost: parsedPrice * Double(quantity),
+                stickerCount: stickerCount
+            )
         }
         dismiss()
     }

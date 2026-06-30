@@ -12,6 +12,11 @@ struct SettingsView: View {
     @State private var isImporting = false
     @State private var alertMessage: String?
     @State private var showAPIKeySheet = false
+    @State private var showSheetsSheet = false
+    @State private var isSyncing = false
+    @State private var syncProgress: Double = 0
+    @State private var syncTotal: Int = 0
+    @State private var syncMessage: String?
 
     private var language: Binding<AppLanguage> {
         Binding(
@@ -29,6 +34,7 @@ struct SettingsView: View {
             List {
                 languageSection
                 apiKeySection
+                sheetsSection
                 backupSection
             }
             .listStyle(.insetGrouped)
@@ -52,6 +58,9 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showAPIKeySheet) {
             APIKeyEntryView()
+        }
+        .sheet(isPresented: $showSheetsSheet) {
+            SheetsURLEntryView()
         }
     }
 
@@ -115,6 +124,91 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Google Sheets section
+
+    private var sheetsSection: some View {
+        Section {
+            Button {
+                showSheetsSheet = true
+            } label: {
+                HStack {
+                    Label("Google Sheets URL", systemImage: "tablecells")
+                    Spacer()
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                        .font(.system(size: 16))
+                }
+            }
+
+            Button {
+                syncAllToSheets()
+            } label: {
+                HStack {
+                    Label(isRu ? "Синхронизировать всё" : "Sync all data", systemImage: "arrow.triangle.2.circlepath")
+                    if isSyncing {
+                        Spacer()
+                        Text("\(Int(syncProgress))/\(syncTotal)")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                        ProgressView(value: syncTotal > 0 ? syncProgress / Double(syncTotal) : 0)
+                            .frame(width: 50)
+                    }
+                }
+            }
+            .disabled(isSyncing)
+
+            if let msg = syncMessage {
+                Text(msg)
+                    .font(.system(size: 13))
+                    .foregroundStyle(.green)
+            }
+        } header: {
+            Text("Google Sheets")
+        } footer: {
+            Text(isRu
+                 ? "Новые обмены и покупки отправляются автоматически. «Синхронизировать всё» отправит все текущие данные."
+                 : "New exchanges and purchases are sent automatically. \"Sync all\" sends all existing data.")
+                .font(.footnote)
+        }
+    }
+
+    private func syncAllToSheets() {
+        isSyncing = true
+        syncProgress = 0
+        syncTotal = 0
+        syncMessage = nil
+
+        let exchanges = (try? context.fetch(FetchDescriptor<ExchangeModel>())) ?? []
+        let purchases = (try? context.fetch(FetchDescriptor<PurchaseModel>())) ?? []
+        let stickers  = (try? context.fetch(FetchDescriptor<StickerModel>())) ?? []
+        let teams     = (try? context.fetch(FetchDescriptor<TeamModel>())) ?? []
+
+        let recordCount = exchanges.filter { $0.status == .active || $0.status == .completed }.count + purchases.count
+        syncTotal = recordCount + 1 // +1 для коллекции
+
+        Task {
+            await SheetsService.syncAll(
+                exchanges: exchanges,
+                purchases: purchases,
+                stickers: stickers,
+                teams: teams,
+                isRu: isRu
+            ) { done, total in
+                Task { @MainActor in
+                    syncProgress = Double(done)
+                }
+            }
+            await MainActor.run {
+                isSyncing = false
+                syncMessage = isRu
+                    ? "Готово: \(recordCount) записей + коллекция"
+                    : "Done: \(recordCount) records + collection"
+            }
+            try? await Task.sleep(nanoseconds: 3_000_000_000)
+            await MainActor.run { syncMessage = nil }
+        }
+    }
+
     // MARK: - Backup section
 
     private var backupSection: some View {
@@ -156,9 +250,11 @@ struct SettingsView: View {
         isExporting = true
         Task.detached(priority: .userInitiated) {
             do {
-                let data = try await MainActor.run { try BackupService.exportData(context: context) }
+                let (data, fileName) = try await MainActor.run {
+                    (try BackupService.exportData(context: context), "sticker_backup_\(formattedDate()).json")
+                }
                 let url = FileManager.default.temporaryDirectory
-                    .appendingPathComponent("sticker_backup_\(formattedDate()).json")
+                    .appendingPathComponent(fileName)
                 try data.write(to: url, options: .atomic)
                 await MainActor.run {
                     isExporting = false
@@ -270,6 +366,86 @@ private struct APIKeyEntryView: View {
             }
         }
         .onAppear { draftKey = savedKey }
+    }
+}
+
+// MARK: - Sheets URL Entry Sheet
+
+private struct SheetsURLEntryView: View {
+
+    @AppStorage("appLanguage") private var languageRaw: String = AppLanguage.system.rawValue
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var draftURL: String = SheetsService.scriptURL
+    @FocusState private var textFocused: Bool
+
+    private var isRu: Bool { (AppLanguage(rawValue: languageRaw) ?? .system).isRussian }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    // Нативная кнопка — работает на реальном устройстве без запроса разрешений
+                    PasteButton(payloadType: String.self) { strings in
+                        if let str = strings.first {
+                            draftURL = str.trimmingCharacters(in: .whitespacesAndNewlines)
+                        }
+                    }
+                    .labelStyle(.titleAndIcon)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    // Поле для ручного ввода / вставки через контекстное меню
+                    TextField(
+                        isRu ? "Или введите URL вручную..." : "Or type URL manually...",
+                        text: $draftURL,
+                        axis: .vertical
+                    )
+                    .lineLimit(2...5)
+                    .font(.system(size: 12, design: .monospaced))
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.URL)
+                    .focused($textFocused)
+
+                    Button(role: .destructive) {
+                        UserDefaults.standard.removeObject(forKey: "sheetsScriptURL")
+                        draftURL = SheetsService.scriptURL
+                    } label: {
+                        Label(isRu ? "Сбросить до дефолтного" : "Reset to default", systemImage: "arrow.counterclockwise")
+                    }
+                } header: {
+                    Text("Apps Script URL")
+                } footer: {
+                    if draftURL.isEmpty {
+                        Text(isRu
+                             ? "Скопируй URL скрипта и нажми «Вставить» — или тапни на текстовое поле и выбери Paste"
+                             : "Copy the script URL and tap Paste — or tap the text field and choose Paste")
+                            .font(.footnote)
+                    } else {
+                        Text(isRu ? "URL сохранится при нажатии «Сохранить»" : "URL will be saved when you tap Save")
+                            .font(.footnote)
+                            .foregroundStyle(.green)
+                    }
+                }
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Google Sheets")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(isRu ? "Отмена" : "Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(isRu ? "Сохранить" : "Save") {
+                        SheetsService.scriptURL = draftURL.trimmingCharacters(in: .whitespacesAndNewlines)
+                        dismiss()
+                    }
+                    .fontWeight(.semibold)
+                    .disabled(draftURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+        }
+        .onAppear { draftURL = SheetsService.scriptURL }
     }
 }
 
