@@ -502,35 +502,41 @@ struct TradeAnalysisView: View {
             if historyExpanded {
                 VStack(spacing: 1) {
                     ForEach(savedAnalyses) { item in
-                        Button {
-                            inputText = item.messageText
-                            analyze()
-                            withAnimation { historyExpanded = false }
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(item.note.isEmpty ? (isRu ? "Без названия" : "Untitled") : item.note)
-                                        .font(.system(size: 13, weight: .medium))
-                                        .foregroundStyle(.primary)
-                                        .lineLimit(1)
-                                    Text(item.createdAt.formatted(date: .abbreviated, time: .omitted))
-                                        .font(.system(size: 11))
+                        HStack(spacing: 0) {
+                            Button {
+                                inputText = item.messageText
+                                analyze()
+                                withAnimation { historyExpanded = false }
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(item.note.isEmpty ? (isRu ? "Без названия" : "Untitled") : item.note)
+                                            .font(.system(size: 13, weight: .medium))
+                                            .foregroundStyle(.primary)
+                                            .lineLimit(1)
+                                        Text(item.createdAt.formatted(date: .abbreviated, time: .omitted))
+                                            .font(.system(size: 11))
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "arrow.up.left")
+                                        .font(.system(size: 12))
                                         .foregroundStyle(.secondary)
                                 }
-                                Spacer()
-                                Image(systemName: "arrow.up.left")
-                                    .font(.system(size: 12))
-                                    .foregroundStyle(.secondary)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
                             }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
-                        }
-                        .buttonStyle(.plain)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            .buttonStyle(.plain)
+
                             Button(role: .destructive) {
                                 context.delete(item)
+                                try? context.save()
                             } label: {
-                                Label(isRu ? "Удалить" : "Delete", systemImage: "trash")
+                                Image(systemName: "trash")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(.red)
+                                    .padding(.horizontal, 14)
+                                    .frame(maxHeight: .infinity)
                             }
                         }
 

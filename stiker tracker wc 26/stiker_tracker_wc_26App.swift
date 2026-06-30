@@ -16,6 +16,7 @@ struct stiker_tracker_wc_26App: App {
             AchievementRecord.self,
             ExchangeModel.self,
             PurchaseModel.self,
+            SaleModel.self,
             SavedAnalysisModel.self,
         ])
 

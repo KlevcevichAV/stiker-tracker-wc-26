@@ -9,6 +9,9 @@ struct FinanceView: View {
     @Query(sort: \PurchaseModel.date, order: .reverse)
     private var purchases: [PurchaseModel]
 
+    @Query(sort: \SaleModel.date, order: .reverse)
+    private var sales: [SaleModel]
+
     @Query
     private var allStickers: [StickerModel]
 
@@ -17,12 +20,15 @@ struct FinanceView: View {
 
     @State private var showAdd = false
     @State private var editingPurchase: PurchaseModel? = nil
+    @State private var showAddSale = false
+    @State private var editingSale: SaleModel? = nil
 
     private var isRu: Bool { language.isRussian }
 
-    private var totalSpent: Double  { purchases.reduce(0) { $0 + $1.totalCost } }
-    private var totalStickers: Int  { purchases.reduce(0) { $0 + $1.stickerCount } }
-    private var totalPacks: Int     { purchases.reduce(0) { $0 + $1.kind.packsPerUnit * $1.quantity } }
+    private var totalSpent: Double   { purchases.reduce(0) { $0 + $1.totalCost } }
+    private var totalStickers: Int   { purchases.reduce(0) { $0 + $1.stickerCount } }
+    private var totalPacks: Int      { purchases.reduce(0) { $0 + $1.kind.packsPerUnit * $1.quantity } }
+    private var totalEarned: Double  { sales.reduce(0) { $0 + $1.price } }
 
     /// Реальное кол-во наклеек: вклеенные + все дубли
     private var actualStickers: Int {
@@ -59,8 +65,17 @@ struct FinanceView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showAdd = true
+                    Menu {
+                        Button {
+                            showAdd = true
+                        } label: {
+                            Label(isRu ? "Добавить покупку" : "Add purchase", systemImage: "cart.badge.plus")
+                        }
+                        Button {
+                            showAddSale = true
+                        } label: {
+                            Label(isRu ? "Добавить продажу" : "Add sale", systemImage: "banknote")
+                        }
                     } label: {
                         Image(systemName: "plus").fontWeight(.semibold)
                     }
@@ -74,6 +89,14 @@ struct FinanceView: View {
                 AddPurchaseView(purchase: purchase)
                     .environment(\.appLanguage, language)
             }
+            .sheet(isPresented: $showAddSale) {
+                AddSaleView()
+                    .environment(\.appLanguage, language)
+            }
+            .sheet(item: $editingSale) { sale in
+                AddSaleView(sale: sale)
+                    .environment(\.appLanguage, language)
+            }
         }
         .environment(\.appLanguage, language)
     }
@@ -84,10 +107,16 @@ struct FinanceView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 16) {
                 summaryCard
+                if !sales.isEmpty {
+                    balanceCard
+                }
                 if totalStickers > 0 {
                     stickerComparisonCard
                 }
                 purchaseList
+                if !sales.isEmpty {
+                    salesList
+                }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 16)
@@ -351,8 +380,8 @@ struct FinanceView: View {
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(.secondary)
             Text(isRu
-                 ? "Нажми «+», чтобы добавить покупку"
-                 : "Tap «+» to add a purchase")
+                 ? "Нажми «+», чтобы добавить покупку или продажу"
+                 : "Tap «+» to add a purchase or sale")
                 .font(.system(size: 14))
                 .foregroundStyle(.tertiary)
                 .multilineTextAlignment(.center)
@@ -373,6 +402,113 @@ struct FinanceView: View {
         .sheet(isPresented: $showAdd) {
             AddPurchaseView()
                 .environment(\.appLanguage, language)
+        }
+        .sheet(isPresented: $showAddSale) {
+            AddSaleView()
+                .environment(\.appLanguage, language)
+        }
+    }
+
+    // MARK: - Balance card
+
+    private var balanceCard: some View {
+        let balance = totalEarned - totalSpent
+        let isProfit = balance >= 0
+        let accent: Color = isProfit ? .green : .orange
+
+        return HStack(spacing: 0) {
+            summaryCell(
+                icon: "arrow.up.circle.fill",
+                color: .green,
+                title: isRu ? "Продано" : "Sold",
+                value: formatMoney(totalEarned)
+            )
+            Divider().frame(height: 40)
+            summaryCell(
+                icon: "arrow.down.circle.fill",
+                color: .red,
+                title: isRu ? "Потрачено" : "Spent",
+                value: formatMoney(totalSpent)
+            )
+            Divider().frame(height: 40)
+            summaryCell(
+                icon: isProfit ? "chart.line.uptrend.xyaxis" : "chart.line.downtrend.xyaxis",
+                color: accent,
+                title: isRu ? "Баланс" : "Balance",
+                value: (isProfit ? "+" : "") + formatMoney(balance)
+            )
+        }
+        .padding(.vertical, 14)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    // MARK: - Sales list
+
+    private var salesList: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
+                Text(isRu ? "Продажи" : "Sales")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 14)
+                    .padding(.top, 12)
+                    .padding(.bottom, 6)
+                Spacer()
+            }
+            ForEach(sales) { sale in
+                saleRow(sale)
+                    .contentShape(Rectangle())
+                    .onTapGesture { editingSale = sale }
+
+                if sale.id != sales.last?.id {
+                    Divider().padding(.leading, 52)
+                }
+            }
+        }
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private func saleRow(_ sale: SaleModel) -> some View {
+        HStack(spacing: 12) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.green.opacity(0.15))
+                    .frame(width: 36, height: 36)
+                Image(systemName: "banknote.fill")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(.green)
+            }
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(sale.comment.isEmpty ? (isRu ? "Продажа" : "Sale") : sale.comment)
+                    .font(.system(size: 14, weight: .semibold))
+                    .lineLimit(1)
+                Text(sale.date, style: .date)
+                    .font(.system(size: 11))
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+
+            Text(formatMoney(sale.price))
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundStyle(.green)
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(.tertiary)
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button(role: .destructive) {
+                context.delete(sale)
+                try? context.save()
+            } label: {
+                Label(isRu ? "Удалить" : "Delete", systemImage: "trash")
+            }
         }
     }
 

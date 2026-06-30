@@ -6,8 +6,11 @@ struct BackupService {
     // MARK: - Export
 
     static func exportData(context: ModelContext) throws -> Data {
-        let stickers = try context.fetch(FetchDescriptor<StickerModel>())
-        let exchanges = try context.fetch(FetchDescriptor<ExchangeModel>())
+        let stickers    = try context.fetch(FetchDescriptor<StickerModel>())
+        let exchanges   = try context.fetch(FetchDescriptor<ExchangeModel>())
+        let purchases   = try context.fetch(FetchDescriptor<PurchaseModel>())
+        let sales       = try context.fetch(FetchDescriptor<SaleModel>())
+        let achievements = try context.fetch(FetchDescriptor<AchievementRecord>())
 
         let stickerBackups = stickers
             .filter { $0.statusRaw != StickerStatus.missing.rawValue || $0.duplicateCount > 0 }
@@ -24,11 +27,26 @@ struct BackupService {
             )
         }
 
+        let purchaseBackups = purchases.map { p in
+            PurchaseBackup(id: p.id, kindRaw: p.kindRaw, quantity: p.quantity, price: p.price, date: p.date)
+        }
+
+        let saleBackups = sales.map { s in
+            SaleBackup(id: s.id, price: s.price, date: s.date, comment: s.comment)
+        }
+
+        let achievementBackups = achievements.map { a in
+            AchievementBackup(achievementID: a.achievementID, unlockedAt: a.unlockedAt)
+        }
+
         let backup = AlbumBackup(
-            version: 1,
+            version: 2,
             exportedAt: Date(),
             stickers: stickerBackups,
-            exchanges: exchangeBackups
+            exchanges: exchangeBackups,
+            purchases: purchaseBackups,
+            sales: saleBackups,
+            achievements: achievementBackups
         )
 
         let encoder = JSONEncoder()
@@ -70,6 +88,37 @@ struct BackupService {
             context.insert(ex)
         }
 
+        // Restore purchases
+        let existingPurchases = try context.fetch(FetchDescriptor<PurchaseModel>())
+        existingPurchases.forEach { context.delete($0) }
+
+        for b in backup.purchases ?? [] {
+            let p = PurchaseModel(kind: PurchaseKind(rawValue: b.kindRaw) ?? .pack,
+                                  quantity: b.quantity,
+                                  price: b.price,
+                                  date: b.date)
+            context.insert(p)
+        }
+
+        // Restore sales
+        let existingSales = try context.fetch(FetchDescriptor<SaleModel>())
+        existingSales.forEach { context.delete($0) }
+
+        for b in backup.sales ?? [] {
+            let s = SaleModel(price: b.price, date: b.date, comment: b.comment)
+            context.insert(s)
+        }
+
+        // Restore achievements
+        let existingAchievements = try context.fetch(FetchDescriptor<AchievementRecord>())
+        existingAchievements.forEach { context.delete($0) }
+
+        for b in backup.achievements ?? [] {
+            let a = AchievementRecord(achievementID: b.achievementID)
+            a.unlockedAt = b.unlockedAt
+            context.insert(a)
+        }
+
         try context.save()
     }
 }
@@ -81,6 +130,9 @@ private struct AlbumBackup: Codable {
     let exportedAt: Date
     let stickers: [StickerBackup]
     let exchanges: [ExchangeBackup]
+    let purchases: [PurchaseBackup]?
+    let sales: [SaleBackup]?
+    let achievements: [AchievementBackup]?
 }
 
 private struct StickerBackup: Codable {
@@ -96,4 +148,24 @@ private struct ExchangeBackup: Codable {
     let wantingRaw: String
     let statusRaw: String
     let partner: String
+}
+
+private struct PurchaseBackup: Codable {
+    let id: String
+    let kindRaw: String
+    let quantity: Int
+    let price: Double
+    let date: Date
+}
+
+private struct SaleBackup: Codable {
+    let id: String
+    let price: Double
+    let date: Date
+    let comment: String
+}
+
+private struct AchievementBackup: Codable {
+    let achievementID: String
+    let unlockedAt: Date
 }
