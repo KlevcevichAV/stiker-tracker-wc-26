@@ -247,13 +247,15 @@ struct TradeAnalysisView: View {
                 value: canGet.count,
                 label: isRu ? "Нам дадут" : "They give us",
                 color: .green,
-                items: canGet
+                items: canGet,
+                excluded: result.alreadyIncoming
             )
             counterBadge(
                 value: canGive.count,
                 label: isRu ? "Мы дадим" : "We give them",
                 color: .blue,
-                items: canGive
+                items: canGive,
+                excluded: result.lastCopyWarning
             )
         }
 
@@ -283,18 +285,38 @@ struct TradeAnalysisView: View {
 
         // Дополнительно
         if !m.weNeedButTheyDontHave.isEmpty {
-            stickerCard(
-                title: isRu ? "Нам нужно, но у них нет (\(m.weNeedButTheyDontHave.count))" : "We need, but they don't have (\(m.weNeedButTheyDontHave.count))",
-                items: m.weNeedButTheyDontHave,
-                color: .secondary
-            )
+            HStack(alignment: .top, spacing: 12) {
+                stickerCard(
+                    title: isRu ? "Нам нужно, но у них нет (\(m.weNeedButTheyDontHave.count))" : "We need, but they don't have (\(m.weNeedButTheyDontHave.count))",
+                    items: m.weNeedButTheyDontHave,
+                    color: .secondary
+                )
+                counterBadge(
+                    value: m.weNeedButTheyDontHave.count,
+                    label: isRu ? "Всего" : "Total",
+                    color: .secondary,
+                    items: m.weNeedButTheyDontHave,
+                    excluded: result.alreadyIncoming
+                )
+                .frame(width: 80)
+            }
         }
         if !m.weHaveButTheyDontNeed.isEmpty {
-            stickerCard(
-                title: isRu ? "Можем предложить, но им не нужно (\(m.weHaveButTheyDontNeed.count))" : "We can offer, but they don't need (\(m.weHaveButTheyDontNeed.count))",
-                items: m.weHaveButTheyDontNeed,
-                color: .secondary
-            )
+            HStack(alignment: .top, spacing: 12) {
+                stickerCard(
+                    title: isRu ? "Можем предложить, но им не нужно (\(m.weHaveButTheyDontNeed.count))" : "We can offer, but they don't need (\(m.weHaveButTheyDontNeed.count))",
+                    items: m.weHaveButTheyDontNeed,
+                    color: .secondary
+                )
+                counterBadge(
+                    value: m.weHaveButTheyDontNeed.count,
+                    label: isRu ? "Всего" : "Total",
+                    color: .secondary,
+                    items: m.weHaveButTheyDontNeed,
+                    excluded: result.lastCopyWarning
+                )
+                .frame(width: 80)
+            }
         }
     }
 
@@ -308,8 +330,20 @@ struct TradeAnalysisView: View {
         if items.isEmpty {
             emptyCard(text: emptyText)
         } else {
-            stickerCard(title: "\(title) (\(items.count))", items: items, color: accentColor,
-                        reserved: reserved, incoming: incoming, lastCopy: lastCopy)
+            HStack(alignment: .top, spacing: 12) {
+                stickerCard(title: "\(title) (\(items.count))", items: items, color: accentColor,
+                            reserved: reserved, incoming: incoming, lastCopy: lastCopy)
+                
+                counterBadge(
+                    value: items.count,
+                    label: isRu ? "Всего" : "Total",
+                    color: accentColor,
+                    items: items,
+                    excluded: accentColor == .green ? incoming : lastCopy
+                )
+                .frame(width: 80)
+            }
+            
             if !givingItems.isEmpty || !wantingItems.isEmpty {
                 exchangeButtons(giving: givingItems, wanting: wantingItems,
                                 reserved: reserved, incoming: incoming)
@@ -319,7 +353,8 @@ struct TradeAnalysisView: View {
 
     // MARK: - Components
 
-    private func counterBadge(value: Int, label: String, color: Color, items: [StickerEntry] = []) -> some View {
+    private func counterBadge(value: Int, label: String, color: Color, items: [StickerEntry] = [],
+                              excluded: Set<String> = []) -> some View {
         VStack(spacing: 4) {
             Text("\(value)")
                 .font(.system(size: 28, weight: .black, design: .rounded))
@@ -330,7 +365,8 @@ struct TradeAnalysisView: View {
                 .multilineTextAlignment(.center)
             if !items.isEmpty {
                 Button {
-                    UIPasteboard.general.string = items
+                    let filtered = items.filter { !excluded.contains("\($0.teamCode)\($0.number)") }
+                    UIPasteboard.general.string = filtered
                         .map { e in e.count > 1 ? "\(e.teamCode) \(e.number)×\(e.count)" : "\(e.teamCode) \(e.number)" }
                         .joined(separator: ", ")
                 } label: {

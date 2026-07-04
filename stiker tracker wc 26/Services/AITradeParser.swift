@@ -19,8 +19,8 @@ enum AITradeParser {
     2. "need" — stickers the person NEEDS (they're looking for these)
 
     Common section headers in messages:
-    - "have" / "повторки" / "есть" / "на обмен" / "дубли" → these are "have" entries
-    - "need" / "ищу" / "нужны" / "looking for" → these are "need" entries
+    - "have" / "повторки" / "есть" / "на обмен" / "дубли" / "ПОВТОРЫ (Есть)" → these are "have" entries
+    - "need" / "ищу" / "нужны" / "looking for" / "ИЩУ (Нужно)" → these are "need" entries
 
     Each sticker is identified by a team code (3-4 uppercase Latin letters) and a number.
     Examples: "ARG 1", "FWC 12", "BRA 5"

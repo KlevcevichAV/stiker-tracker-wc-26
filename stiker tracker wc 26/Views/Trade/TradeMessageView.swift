@@ -277,14 +277,14 @@ struct TradeMessageView: View {
 
         var parts: [String] = []
         if !missingLines.isEmpty {
-            let block = (isRu ? "Ищу:" : "Looking for:") + "\n" + missingLines.joined(separator: "\n")
+            let block = (isRu ? "🔍 ИЩУ (Нужно):" : "Looking for:") + "\n" + missingLines.joined(separator: "\n")
             missingText = block
             parts.append(block)
         } else {
             missingText = ""
         }
         if !dupLines.isEmpty {
-            let block = (isRu ? "Повторки:" : "Duplicates:") + "\n" + dupLines.joined(separator: "\n")
+            let block = (isRu ? "🔄 ПОВТОРЫ (Есть):" : "Duplicates:") + "\n" + dupLines.joined(separator: "\n")
             dupText = block
             parts.append(block)
         } else {
